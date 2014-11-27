@@ -1,0 +1,49 @@
+---
+layout: post
+title: Installer la version de développement de GWT
+date: 2009-09-06 16:19:00.000000000 +02:00
+categories:
+- GWT
+tags:
+- GWT
+status: publish
+type: post
+published: true
+meta:
+  _twitterrelated_short_url: http://bit.ly/d5P4mq
+  _twitterrelated_short_urlHash: 84a75ef1f979386d978281a2e8dfc7ce
+  _edit_last: '1'
+  _activeshortener: bitly
+  dsq_thread_id: '567715882'
+author:
+  login: admin
+  email: raphael.brugier@gmail.com
+  display_name: Raphaël
+  first_name: Raphaël
+  last_name: ''
+---
+<p>Un court billet sous forme de note sur la compilation et l'installation de la version en développement de GWT.<br />
+La version d'Eclipse utilisée est Galileo (3.5).</p>
+<h3>Compiler les sources</h3>
+<pre class="bash bash" style="font-family:inherit"><span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop ~<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ <span style="color: #7a0874; font-weight: bold;">cd</span> ~ <span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop ~<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ <span style="color: #c20cb9; font-weight: bold;">mkdir</span> gwt <span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop ~<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ <span style="color: #7a0874; font-weight: bold;">cd</span> gwt <span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop gwt<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ <span style="color: #c20cb9; font-weight: bold;">svn</span> checkout http:<span style="color: #000000; font-weight: bold;">//</span>google-web-toolkit.googlecode.com<span style="color: #000000; font-weight: bold;">/</span><span style="color: #c20cb9; font-weight: bold;">svn</span><span style="color: #000000; font-weight: bold;">/</span>tools<span style="color: #000000; font-weight: bold;">/</span> tools <span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop gwt<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ <span style="color: #c20cb9; font-weight: bold;">svn</span> checkout http:<span style="color: #000000; font-weight: bold;">//</span>google-web-toolkit.googlecode.com<span style="color: #000000; font-weight: bold;">/</span><span style="color: #c20cb9; font-weight: bold;">svn</span><span style="color: #000000; font-weight: bold;">/</span>trunk<span style="color: #000000; font-weight: bold;">/</span> trunk <span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop gwt<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ <span style="color: #7a0874; font-weight: bold;">cd</span> ~<span style="color: #000000; font-weight: bold;">/</span>gwt<span style="color: #000000; font-weight: bold;">/</span>trunk <span style="color: #7a0874; font-weight: bold;">&#91;</span>raf<span style="color: #000000; font-weight: bold;">@</span>raf-desktop gwt<span style="color: #7a0874; font-weight: bold;">&#93;</span>$ ant</pre>
+<p></p>
+<h3>Eclipse</h3>
+<p>La compilation produit 3 archives contenant le SDK pour les 3 OS&nbsp;: Windows, Linux et Mac.<br />
+Il reste donc à remplacer le sdk GWT d'un projet vers la bonne archive. </p>
+<h3>Activer le Out Of Process Hosted Mode (OOPHM)</h3>
+<p>Par défaut le nouveau hosted mod de GWT 2 n'est pas activé. Il faut ajouter le jar correspondant, gwt-dev-oophm.jar, au buildpath du projet et s'assurer que le jar est utilisé avant le jar par défaut de GWT.<br />
+Click - droit -&gt; Build path -&gt;  configure build path -&gt; librairies -&gt; Add external Jar -&gt; choisir "gwt-dev-oophm.jar"  qui se trouve dans le sdk compilé. </p>
+<h3>64 bits</h3>
+<p>Histoire de rajouter du challenge, mon pc tourne en 64 bits :)<br />
+Avec le OOPHM, plus besoin d'utiliser un jdk 32 bits! Je peux enfin utiliser complètement le 64 bits! </p>
+<h4>Divers</h4>
+<p>J'ai perdu pas mal de temps bloqué sur une erreur au lancement du hosted mode&nbsp;: "Caused by: java.net.UnknownHostException at java.net.InetAddress.getLocalHost(InetAddress.java:1353)"</p>
+<p>En fait c'était du à une mauvaise configuration de mon fichier /etc/hosts sous Archlinux.<br />
+A savoir donc&nbsp;: lorsqu'on spécifie un "hostname" dans rc.conf, il faut aussi le spécifier dans /etc/hosts<br />
+Soit:</p>
+<pre>#&lt;ip-address&gt;	&lt;hostname.domain.org&gt;	&lt;hostname&gt;<br />
+127.0.0.1		localhost.domain	localhost raf-desktop</pre>
+<p></p>
+<h4>Sources</h4>
+<p><a href="http://code.google.com/intl/fr/webtoolkit/doc/1.6/DevGuideCompilingAndDebugging.html#DevGuideHostedMode" hreflang="en">Compiling GWT</a><br />
+<a href="http://code.google.com/p/google-web-toolkit/wiki/UsingOOPHM" hreflang="en">OOPHM</a></p>
