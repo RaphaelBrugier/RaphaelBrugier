@@ -25,7 +25,7 @@ author:
 ---
 Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.
 
-You can [see the result there.](http://www.raphael-brugier.fr/public/gwt/wpLogin/WpLogin.html) Or you can [download and run the eclipse project from there](http://www.raphael-brugier.fr/public/gwt/wpLogin/wpLogin.zip).
+You can [see the result there.]({{ site.baseurl }}assets/posts/wpLogin/WpLogin.html) Or you can [download and run the eclipse project from there]({{ site.baseurl }}assets/posts/wpLogin/wpLogin.zip).
 
 To start I've just copied the html from my wordpress login page into the htmlPanel. Then I've renamed all the "id" on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I've replaced the &lt;form&gt; by a &lt;div&gt;. I've added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I've just added two styles for the body.
 
@@ -197,11 +197,11 @@ The main file that you want to see is WpForm.ui.xml :
 
 			<p class="{style.nav}">
 				<a title="Récupération de mot de passe"
-					href="http://www.raphael-brugier.fr/blog/">Mot de passe oublié&nbsp;?</a>
+					href="http://{{ site.baseurl }}">Mot de passe oublié ?</a>
 			</p>
 		</div>
 		<p class="{style.backtoblog}">
-			<a title="Êtes-vous perdu(e)&nbsp;?" href="http://www.raphael-brugier.fr/blog/">← Retour sur Le blog de
+			<a title="Êtes-vous perdu(e)?" href="{{ site.baseurl }}">← Retour sur Le blog de
 				Raph</a>
 		</p>
 	</g:HTMLPanel>
@@ -226,4 +226,4 @@ And that's all !  So now, please don't follow the advices of writing all your ht
 
 Happy coding !
 
-[Result page](http://www.raphael-brugier.fr/public/gwt/wpLogin/WpLogin.html) Or you can [Download the eclipse project](http://www.raphael-brugier.fr/public/gwt/wpLogin/wpLogin.zip)
+[Result page]({{ site.baseurl }}assets/posts/wpLogin/WpLogin.html) Or you can [Download the eclipse project]({{ site.baseurl }}assets/posts/wpLogin/wpLogin.zip)
