@@ -26,11 +26,15 @@
         {% endif %}
       {% endfor %}
 
-      <a class="sidebar-nav-item" href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">Download</a>
-      <a class="sidebar-nav-item" href="{{ site.github.repo }}">GitHub project</a>
-      <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
     </nav>
+  </div>
+  <div class="container sidebar-sticky-footer">
+    <a href="https://twitter.com/rbrugier">
+      <img class="social-image" src="{{ site.baseurl }}assets/twitter-icon.png" alt=""/>
+    </a>
+    <a href="https://www.linkedin.com/in/raphaelbrugier">
+      <img class="social-image"src="{{ site.baseurl }}assets/linkedin-icon.png" alt=""/>
+    </a>
 
-    <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
   </div>
 </div>

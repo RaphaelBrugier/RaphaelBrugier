@@ -109,9 +109,18 @@ a.sidebar-nav-item:focus {
   .sidebar-sticky {
     position: absolute;
     right:  1rem;
-    bottom: 1rem;
+    top: 1rem;
     left:   1rem;
   }
+}
+
+@media (min-width: 48em) {
+    .sidebar-sticky-footer {
+        position: absolute;
+        right:  1rem;
+        bottom: 1rem;
+        left:   1rem;
+    }
 }
 
 
@@ -247,4 +256,8 @@ a.sidebar-nav-item:focus {
 .theme-base-0f .content a,
 .theme-base-0f .related-posts li a:hover {
   color: #8f5536;
+}
+
+.social-image {
+    display: inline;
 }
