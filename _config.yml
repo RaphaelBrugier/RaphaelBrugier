@@ -13,6 +13,8 @@ description:      ''
 url:              http://www.raphael-brugier.fr/
 baseurl:          /
 
+permalink:    /posts/:title/
+
 author:
   name:           'Raphaël Brugier'
   url:            https://twitter.com/rbrugier
@@ -24,3 +26,6 @@ version:          2.1.0
 
 github:
   repo:           https://github.com/poole/hyde
+
+gems:
+  - jekyll-redirect-from
