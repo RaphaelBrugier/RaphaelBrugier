@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How-To change the style of your GWT 2.1 ValuePicker
+title: How-To change the style of your GWT 2.1 ValuePicker ?
 date: 2010-12-20 21:59:06.000000000 +01:00
 categories:
 - GWT
@@ -23,14 +23,15 @@ author:
   first_name: Raphaël
   last_name: ''
 ---
-<p>Just write and bind your own Resources to the CellList used in your valuePicker.</p>
-<pre name="code" class="java">
+This class demonstrate how-to change the style of the GWT 2.1 ValuePicker.
+
+{% highlight java %}
 public class Main extends Composite {
 	
-	private static class DefaultCell&lt;T&gt; extends AbstractCell&lt;T&gt; {
-	    private final Renderer&lt;T&gt; renderer;
+	private static class DefaultCell<T> extends AbstractCell<T> {
+	    private final Renderer<T> renderer;
 
-	    DefaultCell(Renderer&lt;T&gt; renderer) {
+	    DefaultCell(Renderer<T> renderer) {
 	      this.renderer = renderer;
 	    }
 
@@ -45,7 +46,7 @@ public class Main extends Composite {
 	    Style cellListStyle();
 	}
 	
-	Renderer&lt;String&gt; renderer = new AbstractRenderer&lt;String&gt;() {
+	Renderer<String> renderer = new AbstractRenderer<String>() {
 		@Override
 		public String render(String object) {
 			return object;
@@ -58,16 +59,16 @@ public class Main extends Composite {
 	
 	@UiField FlowPanel panel;
 
-	interface Binder extends UiBinder&lt;Widget, Main&gt; {
+	interface Binder extends UiBinder<Widget, Main> {
 	}
 
 	public Main() {
 		initWidget(binder.createAndBindUi(this));
 
-		CellList&lt;String&gt; cellList = new CellList&lt;String&gt;(new DefaultCell&lt;String&gt;(renderer), RESOURCES);
+		CellList<String> cellList = new CellList<String>(new DefaultCell<String>(renderer), RESOURCES);
 
-		ValuePicker&lt;String&gt; valueBox = new ValuePicker&lt;String&gt;(cellList);
+		ValuePicker<String> valueBox = new ValuePicker<String>(cellList);
 		valueBox.setAcceptableValues(Arrays.asList("HELLO", "WORLD"));
 		panel.add(valueBox);
 	}
-}</pre>
+{% endhighlight %}
