@@ -2,6 +2,7 @@
 layout: post
 title: GWT and HTML under control
 date: 2011-01-16 16:34:48.000000000 +01:00
+redirect_from: "/blog/2011/01/gwt-and-html-under-control/"
 categories:
 - GWT
 tags:

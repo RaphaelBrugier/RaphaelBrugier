@@ -2,6 +2,7 @@
 layout: post
 title: GWT Sortie de la version 2.0
 date: 2009-12-10 21:51:00.000000000 +01:00
+redirect_from: "/blog/2009/12/gwt-sortie-de-la-version-2-0/"
 categories:
 - GWT
 tags:

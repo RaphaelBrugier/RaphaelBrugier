@@ -2,6 +2,7 @@
 layout: post
 title: How-To change the style of your GWT 2.1 ValuePicker ?
 date: 2010-12-20 21:59:06.000000000 +01:00
+redirect_from: "/blog/2010/12/how-to-change-the-style-of-your-gwt-2-1-valuepicker/"
 categories:
 - GWT
 tags:

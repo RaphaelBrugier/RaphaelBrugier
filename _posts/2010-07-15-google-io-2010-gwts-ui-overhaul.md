@@ -2,6 +2,7 @@
 layout: post
 title: Google I/O 2010 – GWT’s UI overhaul
 date: 2010-07-15 20:28:53.000000000 +02:00
+redirect_from: "/blog/2010/07/google-io-2010-gwts-ui-overhaul/"
 categories:
 - GWT
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: GTAC 2009 – Lessons learned from testing GWT applications
 date: 2010-05-30 16:00:20.000000000 +02:00
+redirect_from: "/blog/2010/05/gtac-2009-lessons-learned-from-testing-gwt-applications/"
 categories:
 - GWT
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: Critique du Livre "Programmation GWT 2"
 date: 2010-01-28 23:04:00.000000000 +01:00
+redirect_from: "/blog/2010/01/critique-du-livre-programmation-gwt-2/"
 categories:
 - GWT
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: Gwt – Surcharger les styles par défauts
 date: 2010-09-11 12:55:17.000000000 +02:00
+redirect_from: "/blog/2010/09/gwt-surcharger-les-styles-par-defauts/"
 categories:
 - GWT
 tags:

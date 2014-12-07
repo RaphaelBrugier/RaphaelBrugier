@@ -2,6 +2,7 @@
 layout: post
 title: Retour sur QCon London 2012
 date: 2012-04-01 18:58:03.000000000 +02:00
+redirect_from: "/blog/2012/04/retour-sur-qcon-london-2012/"
 categories:
 - Technos
 tags:

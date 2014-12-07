@@ -2,6 +2,7 @@
 layout: post
 title: Wordpress login form with GWT and UiBinder
 date: 2011-01-16 16:40:14.000000000 +01:00
+redirect_from: "blog/2011/01/wordpress-login-form-with-gwt-and-uibinder/"
 categories:
 - GWT
 tags: []
