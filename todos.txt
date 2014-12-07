@@ -1,0 +1,4 @@
+* changer les permalinks pour ne pas perdre le référencement
+* vérifier les liens mort de chaque post
+* disqus
+* Google Analytics
