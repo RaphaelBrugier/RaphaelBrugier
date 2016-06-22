@@ -4,10 +4,15 @@ title: About
 ---
 
 <p class="message">
-  Hey there! I'm Raphaël, a software engineer.
+  Hey there! I'm Raphaël, a senior software engineer specialized in the big data space.
 </p>
 
-Currently working at [LesFurets.com](www.lesfurets.com), I'm interested in various fields of computer science. 
+Currently working at [Ippon USA](www.ipponusa.com), I'm interested in various fields of computer science.
+I've done a lot of Java development, scaled a few applications and I am now playing with Scala, Spark and big data technologies.
 
-I had a big interest in GWT few years ago when I wrote most of this blog posts.
-I still do code in Java, and hopefully will write posts about my experience as a software engineer. 
+Previously I was a software engineer in the amazing tech team of [Les Furets.com](www.lesfurets.com) where I have _continuously_ delivered the website and migrated
+the storage system from MySQL to Cassandra.
+
+I'm a regular speaker at Devoxx and local meetups.
+
+I'm French and have recently moved to the nice city of Washington, DC.
