@@ -1,12 +1,13 @@
 ---
 title: "Google IO mai 2009 : Best Practices For Architecting Your GWT App"
-draft: false
 date: 2009-09-06T14:34:00Z
 slug: "google-io-mai-2009-best-practices-for-architecting-your-gwt-app"
 aliases:
     - /blog/2009/09/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/
     - /posts/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/
 disqus_identifier: 368926929
+tags: ["gwt"]
+categories: ["programming"]
 ---
 
 Lors de la conférence annuelle de Google, en mai dernier, Ray Ryan à fait une présentation très intéressante sur les meilleures pratiques pour concevoir une application avec GWT. Cette présentation, a eu beaucoup d'écho dans la communauté GWT et plusieurs frameworks sont apparus pour faciliter l'implémentation de ces "bonne pratiques".
