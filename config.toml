@@ -1,12 +1,19 @@
 baseurl = "http://raphaelbrugier.github.io/"
-title = "Raphael Brugier's blog"
+title = "Raphael Brugier"
 languageCode = "en-us"
 
+[params]
+  viewMorePostLink = "/blog/"
 
 [[params.menu]]
-    name = "Blog"
-    url  = "/blog/"
-    weight = 2
+  name = "Blog"
+  url  = "/blog/"
+  weight = 2
 
 [params.recent_posts]
-    enable = true
+  enable = true
+
+[params.widgets]
+    categories = true
+    tags = true
+    search = true
