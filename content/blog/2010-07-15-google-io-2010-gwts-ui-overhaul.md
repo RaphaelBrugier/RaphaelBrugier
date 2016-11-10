@@ -31,7 +31,7 @@ Le nouveau système de déclaration des interfaces avait été introduit avec Gw
 
 Par exemple, voici du code java :
 
-{{< highlight java >}}
+~~~java
     HorizontalPanel outer = new HorizontalPanel();
     VerticalPanel inner = new VerticalPanel();
     outer.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
@@ -51,10 +51,10 @@ Par exemple, voici du code java :
     initWidget(outer);
     setStyleName("mail-TopPanel");
     links.setStyleName("mail-TopPanelLinks");
-{{< / highlight >}}
+~~~
 
 Et son équivalent UiBInder :
-{{< highlight xml >}}
+~~~xml
 <g:htmlpanel>
     <div class="{style.logo}">
         <div class="{style.statusDiv}">
@@ -67,7 +67,7 @@ Et son équivalent UiBInder :
             </div>
         </div>
     </div></g:htmlpanel>
-{{< / highlight >}}
+~~~
 
 ### Client Bundle :
 
@@ -91,7 +91,7 @@ La solution retenue  pour le nouveau système est d’utiliser des bloc div en p
 
 Voici par exemple le code UiBinder et son résultat html/css
 
-{{< highlight xml >}}
+~~~xml
      <g:docklayoutpanel unit="EM">
          <g:north size="15">
              <g:flowpanel>
@@ -110,9 +110,9 @@ Voici par exemple le code UiBinder et son résultat html/css
              <g:htmlpanel>some html</g:htmlpanel>
          </g:center>
      </g:docklayoutpanel>
-{{< / highlight >}}
+~~~
 
-{{< highlight html >}}
+~~~html
 <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;">
     <div style="position: absolute; overflow: hidden; left: 0em; top: 0em; right: 0em; height: 15em;">
         <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;">
@@ -131,7 +131,7 @@ Voici par exemple le code UiBinder et son résultat html/css
         <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;">some html</div>
     </div>
 </div>
-{{< / highlight >}}
+~~~
 
 On voit bien que les panels qui composent le dockLayout sont placés de façons statiques avec les propriétés css qui s'appliquent à un placement absolu.
 

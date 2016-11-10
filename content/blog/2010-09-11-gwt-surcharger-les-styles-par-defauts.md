@@ -14,7 +14,7 @@ La version 2.0 de Gwt à introduit l'interface CssResource qui permet de lier de
 
 Cependant, il n'est parfois pas aisé de surchargé les styles du thème par défaut. En effet, l'interface les styles déclarés avec CssResources sont injectés uniquement quand nécessaire, et parfois après ceux de la feuille de thème par défaut qui les surchargent donc. Pour pallier à ce problème, il existe une astuce c'est d'utiliser l'annotation @External
 
-{{< highlight java >}}
+~~~java
 public interface WidgetCss extends CssResource {
         public void myButtonStyle();
 }
@@ -24,22 +24,22 @@ public interface WidgetResources extends ClientBundle {
 
         WidgetCss css();
 }
-{{< / highlight >}}
+~~~
 
 Fichier css :
 
-{{< highlight css >}}
+~~~css
 @External .gwt-Button
 .myButtonStyle .gwt-Button{
     color: #424242;
     font-size: 13px;
     cursor: pointer;
 }
-{{< / highlight >}}
+~~~
 
 Utilisation :
 
-{{< highlight java >}}
+~~~java
 public MyWidget() {
     Button button = new Button("click me !");
     button.addStyleName(css().myButtonStyle());
@@ -51,7 +51,7 @@ public MyWidget() {
 private WidgetResources css() {
     return WidgetResources.INSTANCE.css();
 }
-{{< / highlight >}}
+~~~
 
 Et voilà, la déclaration du thème par défaut gwt-button est maintenant surchargée par myButtonStyle.
 

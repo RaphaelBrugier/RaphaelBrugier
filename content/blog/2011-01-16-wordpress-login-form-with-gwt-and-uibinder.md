@@ -17,7 +17,7 @@ You can [see the result there.]({{ site.baseurl }}assets/posts/wpLogin/WpLogin.h
 To start I've just copied the html from my wordpress login page into the htmlPanel. Then I've renamed all the "id" on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I've replaced the &lt;form&gt; by a &lt;div&gt;. I've added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I've just added two styles for the body.
 
 The main file that you want to see is WpForm.ui.xml :
-{{< highlight xml >}}
+~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
@@ -193,10 +193,10 @@ The main file that you want to see is WpForm.ui.xml :
 		</p>
 	</g:HTMLPanel>
 </ui:UiBinder>
-{{< / highlight >}}
+~~~
 
 WpLogin.css  :
-{{< highlight css >}}
+~~~css
     * {
         margin: 0;
         padding: 0;
@@ -207,7 +207,7 @@ WpLogin.css  :
             sans-serif !important;
             background-color: #f9f9f9 !important;
     }
-{{< / highlight >}}
+~~~
 
 And that's all !  So now, please don't follow the advices of writing all your html in a big static String and learn how to use the tool !
 

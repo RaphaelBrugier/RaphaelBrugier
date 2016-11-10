@@ -24,7 +24,7 @@ L'UI Binder tout d'abord est une nouvelle façon de décrire les interfaces GWT 
 Un petit exemple pour comparer une interface écrite "à la" swing et avec UI Binder :
 
 En java :
-{{< highlight java >}}
+~~~java
 final Label label = new Label("Enter your name");
 final Button sendButton = new Button("Send");
 HorizontalPanel hPanel = new HorizontalPanel();
@@ -32,18 +32,18 @@ hPanel.add(label);
 VerticalPanel vPanel = new VerticalPanel();
 vPanel.add(hPanel);
 vPanel.add(button);</pre>
-{{< / highlight >}}
+~~~
 
 Avec Ui binder :
 
-{{< highlight xml >}}
+~~~xml
 <g:verticalpanel>
 	<g:horizontalpanel>
 		<g:label>Enter your name</g:label>
 	</g:horizontalpanel>
 	<g:button text="Send" stylename="{style.pretty}" ui:field="button" />
 </g:verticalpanel>
-{{< / highlight >}}
+~~~
 
 ### Development mode
 
@@ -58,7 +58,7 @@ Comme à chaque nouvelle version, la qualité du code javascript produit par le 
 
 Le code splitting part d'un constat simple : pourquoi télécharger la totalité du code javascript de l'application quand on pourrait télécharger à la demande à la manière du streaming ? Les ingénieurs GWT ont donc ajouté cette fonctionnalité et le premier bénéficiaire en est Wave qui a vu son temps de téléchargement initial considérablement diminué.
 Le principe : différer le téléchargement des blocs indépendants de l'application. Quelques lignes de codes suffisent pour cela :
-{{< highlight java >}}
+~~~java
 GWT.runAsync(new RunAsyncCallback() {
 	public void onFailure(Throwable caught) {
 		Window.alert("Code download failed");
@@ -68,7 +68,7 @@ GWT.runAsync(new RunAsyncCallback() {
              Window.alert("Hello, AJAX");           
 	}         
 });
-{{< / highlight >}}
+~~~
 
 ### Speed Tracer
 

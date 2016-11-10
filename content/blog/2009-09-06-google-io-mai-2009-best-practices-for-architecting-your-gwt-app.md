@@ -41,7 +41,7 @@ Appliqué à GWT il permet de&nbsp;:
 
 Les exemples de code présentés:
 
-{{< highlight java >}}
+~~~java
 /** Le nom Command est déjà utilisé dans GWT et est donc remplacé par Action */
 interface Action<t extends response> { }
 
@@ -97,7 +97,7 @@ interface Action<t extends response> { }
                                                             }
                                                             });
                                                             }</contactdetail></contactdetail></getdetailsresponse></contactdetail></contactdetail></contactdetail></contactdetail></contactdetailid></contactdetailid></contactdetailid></getdetailsresponse></t></t></t></t></t>
-{{< / highlight >}}
+~~~
 
 
 

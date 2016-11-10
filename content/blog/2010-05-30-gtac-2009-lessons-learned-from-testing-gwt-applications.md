@@ -39,7 +39,7 @@ Ici on utilise classiquement Junit pour simuler les interactions utilisateurs. C
 
 Les appels aysnchrones sont la nature même des applications Ajax. C'est le A de Ajax ! Avec ces appels, il n'y a aucune garantie sur le temps nécessaire pour qu'ils réussissent, ni même d'ailleurs s'ils réussiront un jour (les pauvres :s). Ce sont ces mêmes appels que vous utilisez avec le mécanisme RPC de Gwt :
 
-{{< highlight java >}} 
+~~~java 
 myservice.call(new AsyncCallBack() {
     public void onSuccess(QueryResponse response) {
         searchButton.setEnabled(true);
@@ -55,11 +55,11 @@ myservice.call(new AsyncCallBack() {
         //traiter l'échec de l'appel asynchrone
     }
 }
-{{< / highlight >}}
+~~~
 
 Test :
 
-{{< highlight java >}} 
+~~~java 
 MyService myService = mock(MyService.class);
 QueryHandler client = new QueryHandler(mySerice);
 client.performQuery("test query");
@@ -73,7 +73,7 @@ QueryResponse fakeResponse = createFakeResponseForTesting();
 callback.onSuccess(fakeResponse);
 
 //Tester les résultats.
-{{< / highlight >}}
+~~~
 
 Ce que l'on veut tester ici, c'est le résultat d'un appel à la méthode onSuccess avec le résultat d'une réponse de callBack.
 
@@ -85,7 +85,7 @@ Cette méthode, fera tout le travail de traitement nécessaire. Ainsi il est plu
 
 QueryHandler.java :
 
-{{< highlight java >}} 
+~~~java 
 myservice.call(new AsyncCallBack() {
     public void  onSuccess(QueryResponse response) {
         doTraiterReponse(response);
@@ -95,26 +95,26 @@ myservice.call(new AsyncCallBack() {
         //traiter l'échec de l'appel  asynchrone
     }
 }
-{{< / highlight >}}
+~~~
 
 Test :
 
-{{< highlight java >}} 
+~~~java 
 QueryHandler client = new QueryHandler(null) // Plus besoin de service !
 
 QueryResponse fakeResponse = createFakeResponseForTesting();
 client.doTraiterReponse(fakeresponse);
 
 //Tester les résultats
-{{< / highlight >}}
+~~~
 
 ### Problème 2 : Opérations directe sur le DOM (slides 14 à 16)
 
 Gwt permet de manipuler directement le DOM du document HTML :
 
-{{< highlight java >}}
+~~~java
 String selectedLanguage = DOM.getElementByID("languageSelection").getPropertyString("value");
-{{< / highlight >}}
+~~~
 
 Ici, la solution est simple :APPRENDRE L'API !
 
@@ -126,11 +126,11 @@ Ici on aurait utilisé une ListBox dans une panel.
 
 Gwt propose un mécanisme pour encapsuler du code javascript dans des méthodes Java :
 
-{{< highlight java >}} 
+~~~java 
 private native void showPlayer /*{
     $wnd.showPlayer;
 }*/;
-{{< / highlight >}}
+~~~
 
 Ici, le mélange javascript/java ne permet de tester unitairement avec Junit les méthodes natives.
 
@@ -164,7 +164,7 @@ Le slide 32 est particulièrement intéressant, puisque c'est lui qui ma donné 
 
 Avec un Presenter isolé de cette façons, il est facile de le tester unitairement (en pseudo code "java" pour plus de clarté) :
 
-{{< highlight java >}} 
+~~~java 
 public class Presenter {
     Vue vue;
     Model model;
@@ -183,10 +183,10 @@ public class Presenter {
         });
     }
 }
-{{< / highlight >}}
+~~~
 
 Test :
-{{< highlight java >}}
+~~~java
 //With
 Model mockModel = mock(Model.class);
 Vue mockVue = mock(Vue.class);
@@ -199,7 +199,7 @@ vue.setData(testData);
 // Assert
 verify(mockModel).save(testData);
 vue.getButton.click();
-{{< / highlight >}}
+~~~
 
 ### Conclusion
 

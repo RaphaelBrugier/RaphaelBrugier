@@ -12,7 +12,7 @@ tags: ["GWT"]
 
 This class demonstrate how-to change the style of the GWT 2.1 ValuePicker.
 
-{{< highlight java >}}
+~~~java
 public class Main extends Composite {
 	
 	private static class DefaultCell<T> extends AbstractCell<T> {
@@ -58,4 +58,4 @@ public class Main extends Composite {
 		valueBox.setAcceptableValues(Arrays.asList("HELLO", "WORLD"));
 		panel.add(valueBox);
 	}
-{{< / highlight >}}
+~~~

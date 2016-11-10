@@ -28,4 +28,4 @@ But with the version 2.0 GWT also introduces a wonderful feature called UiBinder
 
 Putting your html within a static String is not really that clean and maintainable. So please, for God sake, do not do it ! [Learn the API](http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideUiBinder.html) and [follow the best practices](http://www.google.com/events/io/2010/sessions.html#GWT).
 
-[update] I've now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see [this post](./wordpress-login-form-with-gwt-and-uibinder/).
+[update] I've now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see [this post]({{< relref "blog/2011-01-16-wordpress-login-form-with-gwt-and-uibinder.md" >}}).
