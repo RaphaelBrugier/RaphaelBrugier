@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Raphael Brugier</title>
+    <link>http://raphaelbrugier.github.io/tags/qcon/index.xml</link>
+    <description>Recent content on Raphael Brugier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://raphaelbrugier.github.io/tags/qcon/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Retour sur QCon London 2012</title>
+      <link>http://raphaelbrugier.github.io/blog/retour-sur-qcon-london-2012/</link>
+      <pubDate>Sun, 01 Apr 2012 18:58:03 +0000</pubDate>
+      
+      <guid>http://raphaelbrugier.github.io/blog/retour-sur-qcon-london-2012/</guid>
+      <description>&lt;p&gt;J&amp;rsquo;ai eu l&amp;rsquo;occasion cet année d&amp;rsquo;être envoyé par ma société, Objet Direct, assister aux 3 jours de la conférence QCon à Londres. Une excellente expérience, qui m&amp;rsquo;a permise de voir des présentations très variées aussi bien techniques que méthodologiques. Ça fait du bien de sortir de la mission pour aller voir ce qui se fait ailleurs et ça permet de revenir avec pleins d&amp;rsquo;idées de nouvelles et de motivation.&lt;/p&gt;
+
+&lt;p&gt;J&amp;rsquo;espère pouvoir appliquer toutes les bonnes pratiques que j&amp;rsquo;ai appris là bas prochainement.&lt;/p&gt;
+
+&lt;p&gt;J&amp;rsquo;ai écrit deux articles pour le blog d&amp;rsquo;Objet Direct :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Une synthèse succincte des 3 jours : &lt;a href=&#34;http://blog.objetdirect.com/divers/qcon-london-2012&#34;&gt;QCon London 2012&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Un retour plus détaillé sur une présentation que j&amp;rsquo;ai particulièrement aimé sur GitHub : &amp;ldquo;&lt;a href=&#34;http://blog.objetdirect.com/divers/qcon-2012-how-github-works&#34;&gt;How GitHub Works&lt;/a&gt;&amp;ldquo;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bonne lecture !&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
