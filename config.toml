@@ -3,6 +3,7 @@ title = "Raphael Brugier"
 languageCode = "en-us"
 googleAnalytics = "UA-3393491-2"
 disqusShortname = "raphaelbrugierblog"
+theme = "hugo-universal-theme"
 
 [params]
   viewMorePostLink = "/blog/"
