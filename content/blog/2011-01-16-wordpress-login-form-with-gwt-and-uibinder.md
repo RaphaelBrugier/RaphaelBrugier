@@ -12,7 +12,7 @@ tags: [GWT]
 
 Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.
 
-You can [see the result there.]({{ site.baseurl }}assets/posts/wpLogin/WpLogin.html) Or you can [download and run the eclipse project from there]({{ site.baseurl }}assets/posts/wpLogin/wpLogin.zip).
+You can [see the result there.](/posts/wpLogin/WpLogin.html) Or you can [download and run the eclipse project from there](/posts/wpLogin/wpLogin.zip).
 
 To start I've just copied the html from my wordpress login page into the htmlPanel. Then I've renamed all the "id" on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I've replaced the &lt;form&gt; by a &lt;div&gt;. I've added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I've just added two styles for the body.
 
@@ -213,4 +213,4 @@ And that's all !  So now, please don't follow the advices of writing all your ht
 
 Happy coding !
 
-[Result page]({{ site.baseurl }}assets/posts/wpLogin/WpLogin.html) Or you can [Download the eclipse project]({{ site.baseurl }}assets/posts/wpLogin/wpLogin.zip)
+[Result page](/posts/wpLogin/WpLogin.html) Or you can [Download the eclipse project](/posts/wpLogin/wpLogin.zip)

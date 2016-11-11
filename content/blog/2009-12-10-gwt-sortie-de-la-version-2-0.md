@@ -74,7 +74,7 @@ GWT.runAsync(new RunAsyncCallback() {
 
 Un outil de profiling a été annoncé en même temps que cette nouvelle version de GWT. Speed tracer est en fait une extension pour Google Chrome qui permet de profiler les requêtes, les temps de parsing et les temps de rendus du navigateur. Speed tracer identifie automatiquement les problèmes de performances de votre application.
 
-[![speedTracer.png]({{ site.baseurl }}assets/posts/speedTracer.png "speedTracer.png, déc. 2009")]({{ site.baseurl }}assets/posts/speedTracer.png)
+[![speedTracer.png](/posts/speedTracer.png "speedTracer.png, déc. 2009")](/posts/speedTracer.png)
 
 ### Conclusion
 
