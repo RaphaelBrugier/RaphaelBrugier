@@ -1,6 +1,7 @@
 baseurl = "http://raphaelbrugier.github.io/"
 title = "Raphael Brugier"
 languageCode = "en-us"
+googleAnalytics = "UA-3393491-2"
 
 [params]
   viewMorePostLink = "/blog/"
