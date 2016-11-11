@@ -29,6 +29,6 @@ disqusShortname = "raphaelbrugierblog"
   enable = true
 
 [params.widgets]
-    categories = true
-    tags = true
+    categories = false
+    tags = false
     search = true
