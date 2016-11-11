@@ -10,6 +10,11 @@ languageCode = "en-us"
   url  = "/blog/"
   weight = 2
 
+[[params.menu]]
+  name = "About"
+  url  = "/about/"
+  weight = 3
+
 [params.recent_posts]
   enable = true
 
