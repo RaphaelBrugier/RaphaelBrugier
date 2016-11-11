@@ -6,11 +6,6 @@ languageCode = "en-us"
   viewMorePostLink = "/blog/"
 
 [[params.menu]]
-  name = "Blog"
-  url  = "/blog/"
-  weight = 2
-
-[[params.menu]]
   name = "About"
   url  = "/about/"
   weight = 3
