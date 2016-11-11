@@ -10,6 +10,19 @@ languageCode = "en-us"
   url  = "/about/"
   weight = 3
 
+[[params.social]]
+  name = "twitter"
+  url  = "https://twitter.com/rbrugier"
+  weight = 1
+[[params.social]]
+  name = "linkedin"
+  url  = "https://www.linkedin.com/in/raphaelbrugier"
+  weight = 2
+[[params.social]]
+  name = "github"
+  url  = "https://github.com/RaphaelBrugier"
+  weight = 3
+
 [params.recent_posts]
   enable = true
 
