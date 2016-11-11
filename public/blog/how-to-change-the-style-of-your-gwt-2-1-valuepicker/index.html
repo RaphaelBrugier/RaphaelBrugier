@@ -7,7 +7,7 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>404 Page not found</title>
+  <title>How-To change the style of your GWT 2.1 ValuePicker ?</title>
 
   <meta name="author" content="" />
   <meta name="keywords" content="">
@@ -71,9 +71,9 @@
   <link rel="alternate" href="http://raphaelbrugier.github.io/index.xml" type="application/rss+xml" title="Raphael Brugier">
 
   
-  <meta property="og:title" content="404 Page not found" />
+  <meta property="og:title" content="How-To change the style of your GWT 2.1 ValuePicker ?" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/404//" />
+  <meta property="og:url" content="/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker//" />
   <meta property="og:image" content="" />
 
 </head>
@@ -161,29 +161,158 @@
 
         </header>
 
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>How-To change the style of your GWT 2.1 ValuePicker ?</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
         <div id="content">
             <div class="container">
 
-                <div class="col-sm-6 col-sm-offset-3" id="error-page">
+                <div class="row">
 
-                    <div class="box">
+                    
 
-                        <p class="text-center">
-                            <a href="index.html">
-                                <img src="img/logo.png" alt="Obaju template">
-                            </a>
-                        </p>
+                    <div class="col-md-9" id="blog-post">
 
-                        <h3>We are sorry - this page is not here anymore</h3>
-                        <h4 class="text-muted">Error 404 - Page not found</h4>
+                        <p class="text-muted text-uppercase mb-small text-right">December 20, 2010</p>
 
-                        <p class="buttons"><a href="index.html" class="btn btn-template-main"><i class="fa fa-home"></i> Go to Homepage</a>
-                        </p>
+                        <div id="post-content">
+                          <p>This class demonstrate how-to change the style of the GWT 2.1 ValuePicker.</p>
+
+<pre><code class="language-java">public class Main extends Composite {
+	
+	private static class DefaultCell&lt;T&gt; extends AbstractCell&lt;T&gt; {
+	    private final Renderer&lt;T&gt; renderer;
+
+	    DefaultCell(Renderer&lt;T&gt; renderer) {
+	      this.renderer = renderer;
+	    }
+
+	    @Override
+	    public void render(Context context, T value, SafeHtmlBuilder sb) {
+	      sb.appendEscaped(renderer.render(value));
+	    }
+	  }
+	
+	public interface MyResources extends CellList.Resources {
+	    @Source(&quot;myStyle.css&quot;)
+	    Style cellListStyle();
+	}
+	
+	Renderer&lt;String&gt; renderer = new AbstractRenderer&lt;String&gt;() {
+		@Override
+		public String render(String object) {
+			return object;
+		}
+	};
+	
+	private static MyResources RESOURCES = GWT.create(MyResources.class);
+
+	private static final Binder binder = GWT.create(Binder.class);
+	
+	@UiField FlowPanel panel;
+
+	interface Binder extends UiBinder&lt;Widget, Main&gt; {
+	}
+
+	public Main() {
+		initWidget(binder.createAndBindUi(this));
+
+		CellList&lt;String&gt; cellList = new CellList&lt;String&gt;(new DefaultCell&lt;String&gt;(renderer), RESOURCES);
+
+		ValuePicker&lt;String&gt; valueBox = new ValuePicker&lt;String&gt;(cellList);
+		valueBox.setAcceptableValues(Arrays.asList(&quot;HELLO&quot;, &quot;WORLD&quot;));
+		panel.add(valueBox);
+	}
+</code></pre>
+
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=GWT,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'raphaelbrugierblog';
+    var disqus_identifier = '366572829';
+    var disqus_title = 'How-To change the style of your GWT 2.1 ValuePicker ?';
+    var disqus_url = 'http:\/\/raphaelbrugier.github.io\/blog\/how-to-change-the-style-of-your-gwt-2-1-valuepicker\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
                     </div>
+                    
 
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:http://raphaelbrugier.github.io/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
 
                 </div>
                 
+
             </div>
             
         </div>
@@ -277,5 +406,34 @@
 
 
     </div>
+    
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-3393491-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="http://raphaelbrugier.github.io/js/hpneo.gmaps.js"></script>
+<script src="http://raphaelbrugier.github.io/js/gmaps.init.js"></script>
+<script src="http://raphaelbrugier.github.io/js/front.js"></script>
+
+
+<script src="http://raphaelbrugier.github.io/js/owl.carousel.min.js"></script>
+
+
   </body>
 </html>

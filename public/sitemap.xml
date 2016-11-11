@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/</loc>
+    <lastmod>2016-11-10T19:47:37-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/about/</loc>
+    <lastmod>2016-11-10T19:47:37-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/retour-sur-qcon-london-2012/</loc>
+    <lastmod>2012-04-01T18:58:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/wordpress-login-form-with-gwt-and-uibinder/</loc>
+    <lastmod>2011-01-16T16:40:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/gwt-and-html-under-control/</loc>
+    <lastmod>2011-01-16T16:34:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</loc>
+    <lastmod>2010-12-20T21:59:06+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/gwt-surcharger-les-styles-par-defauts/</loc>
+    <lastmod>2010-09-11T12:55:17+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/google-io-2010-gwts-ui-overhaul/</loc>
+    <lastmod>2010-07-15T20:28:53+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</loc>
+    <lastmod>2010-05-30T16:00:20+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/critique-du-livre-programmation-gwt-2/</loc>
+    <lastmod>2010-01-28T23:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/gwt-sortie-de-la-version-2-0/</loc>
+    <lastmod>2009-12-10T21:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://raphaelbrugier.github.io/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</loc>
+    <lastmod>2009-09-06T14:34:00+00:00</lastmod>
+  </url>
+  
+</urlset>
