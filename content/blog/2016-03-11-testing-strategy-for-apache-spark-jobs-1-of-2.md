@@ -2,7 +2,7 @@
 title = "Testing strategy for Apache Spark jobs – Part 1 of 2"
 slug = "testing-strategy-for-apache-spark-jobs-1-of-2"
 date = "2016-03-12T18:34:26-05:00"
-tags = ["spark", "testing"]
+tags = ["Apache Spark", "testing"]
 categories = ["programming"]
 banner = "img/spark-logo.png"
 +++
