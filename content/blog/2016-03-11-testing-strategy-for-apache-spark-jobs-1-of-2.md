@@ -5,7 +5,6 @@ date = "2016-03-12T18:34:26-05:00"
 tags = ["spark", "testing"]
 categories = ["programming"]
 banner = "img/spark-logo.png"
-draft = true
 +++
 
 Like any other application, Apache Spark jobs deserve good testing practices and coverage.
@@ -100,11 +99,11 @@ Now that we have extracted the logic, we can write a test assuming an input data
 
 The tricky part when writing tests for Spark is the RDD abstraction. Your first idea would probably be to mock the input and the expected. But then, you will not be able to execute the Spark behavior on the RDD passed to the function.
 
-Instead, we have to start a _SparkContext_ to build the input and expected RDDs and run the transformation in a real Spark environment. Indeed, creating a _SparkContext_ for unit testing is the [recommended approach](http://spark.apache.org/docs/latest/programming-guide.html#unit-testing).
+Instead, we have to start a `SparkContext` to build the input and expected RDDs and run the transformation in a real Spark environment. Indeed, creating a `SparkContext` for unit testing is the [recommended approach](http://spark.apache.org/docs/latest/programming-guide.html#unit-testing).
 
-Because starting a _SparkContext_ is time-consuming, you will save a lot of time starting the context only once before all the tests. Also, even if it possible with some tweaking, it is not recommended to have more than one _SparkContext_ living in the JVM. So make sure you stop the context after running all the tests and to disable the parallel execution.
+Because starting a `SparkContext` is time-consuming, you will save a lot of time starting the context only once before all the tests. Also, even if it possible with some tweaking, it is not recommended to have more than one `SparkContext` living in the JVM. So make sure you stop the context after running all the tests and to disable the parallel execution.
 
-Starting and stopping the _SparkContext_ can easily be done with the _BeforeAndAfter_ trait.
+Starting and stopping the `SparkContext` can easily be done with the `BeforeAndAfter` trait.
 
 ~~~scala
 package com.ipponusa
@@ -145,16 +144,16 @@ class WordCounterTest extends FlatSpec with Matchers with BeforeAndAfter {
 
 # Spark-testing-base library
 
-Setting up the _before_ and _after_ methods for all your test cases can become tedious if you have many tests. An alternative could be to hold the Context in a Singleton Object and start it once for all the tests, or to inherits a common trait to implement this behavior.
+Setting up the `before` and `after` methods for all your test cases can become tedious if you have many tests. An alternative could be to hold the Context in a Singleton Object and start it once for all the tests, or to inherits a common trait to implement this behavior.
 
 Also, the previous example works fine when working with a local cluster where all the data can fit in memory.
-But if you are testing with a lot of data, a large sample of your production data for example, calling the _collect()_ method to gather all the data locally to compare with an expected output is no longer an option.
+But if you are testing with a lot of data, a large sample of your production data for example, calling the `collect()` method to gather all the data locally to compare with an expected output is no longer an option.
 
 Fortunately, the spark-testing-base library provides traits and methods to prepare your tests and run distributed comparisons.
 
 Let’s import the library and rewrite the test:
 
-_pom.xml_ extract:
+`pom.xml` extract:
 ~~~xml
 <dependencies>
   <dependency>
@@ -222,7 +221,7 @@ class WordCounterWithSparkTestingTest extends FlatSpec with Matchers with Shared
 }
 ~~~
 
-The test class now extends the _SharedSparkContext_ trait instead of _BeforeAndAfter_. This trait will automatically take care of starting and stopping a _SparkContext_ for you.
+The test class now extends the `SharedSparkContext` trait instead of `BeforeAndAfter`. This trait will automatically take care of starting and stopping a `SparkContext` for you.
 
 The method RDDComparisons.compare(…) is more interesting.
 
@@ -254,7 +253,7 @@ class WordCounterWithSparkTestingTest extends FlatSpec with Matchers with Shared
 }
 ~~~
 
-Here, _RddGenerator.genRDD[String]_ will generate RDDs on top of random Strings.
+Here, `RddGenerator.genRDD[String]` will generate RDDs on top of random Strings.
 
 We declare the property to have the same count result when executing twice the method.
 
@@ -267,7 +266,7 @@ While not very relevant for the wordcount example, it allows to test your job lo
 
 In this article, we have seen how it is possible to refactor and test a Spark job. Testing your jobs will allow faster feedback when implementing them and you can even practice TDD.
 
-The next step would be to run the tests not only on a local cluster, but on a “production-like” cluster with more data on your continuous integration server. Simply override the _setMaster()_ value when configuring the _SparkContext_ to redirect to your test cluster.
+The next step would be to run the tests not only on a local cluster, but on a “production-like” cluster with more data on your continuous integration server. Simply override the `setMaster()` value when configuring the `SparkContext` to redirect to your test cluster.
 
 Finally, I definitely recommend you watch Holden Karau’s session on testing Spark recorded at the last Spark Summit ([video](https://www.youtube.com/watch?v=rOQEiTXNS0g), [slides](http://www.slideshare.net/SparkSummit/beyond-parallelize-and-collect-by-holden-karau)).
 You can find the code for these examples [on Github](https://github.com/raphaelbrugier/spark-testing-example).
