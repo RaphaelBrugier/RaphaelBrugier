@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Using Docker to simplify Cassandra development in JHipster</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.17" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="http://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="http://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="http://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="http://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="http://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="http://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="http://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="http://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="Using Docker to simplify Cassandra development in JHipster" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/blog/using-docker-to-simplify-cassandra-development-in-jhipster//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="http://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Using Docker to simplify Cassandra development in JHipster</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">June 27, 2016</p>
+
+                        <div id="post-content">
+                          <p>JHipster is an open source project that generates a fully working application in seconds. With a minimal configuration, JHipster accelerates the start of new projects by integrating frontend, backend, security and a database.</p>
+
+<p>Cassandra is one of the supported databases and JHipster generates all the configuration needed to access the cluster.</p>
+
+<p>But it is often hard for the developers to configure and maintain a local Cassandra cluster.</p>
+
+<p>Moreover, there is no standard tooling to manage the schema migrations, like Liquibase or Flyway for SQL databases, making it difficult to synchronize the schema between every environment and a local configuration.</p>
+
+<p>JHipster’s goal is to provide the most simple and productive development environment out of the box for the developers, and this tool has been added in the latest (3.4.0) version.</p>
+
+<p>In this post, I’ll describe the design of the tool and the basic commands to use it.</p>
+
+<p></p>
+
+<h1 id="design">Design</h1>
+
+<p>A Docker Compose[1] configuration is generated to start a Cassandra cluster locally with one command. A set of bash scripts automatically save the executed migrations in a dedicated table. This allows you to automatically[2] execute only the new migration scripts when deploying a new version of the application.
+The tool can be used both by the developers to synchronize their local cluster and in production to keep track of the schema migrations.</p>
+
+<p>The standardization of the migration scripts is also used by the integration tests to start an in-memory Cassandra cluster.</p>
+
+<p>[1]: JHipster uses the v2 of the Docker Compose file format and Docker 1.10+ and Compose 1.6+ are required.</p>
+
+<p>[2]: Because the migration scripts are read from a Docker volume, the sources must be located in the use directory.</p>
+
+<h2 id="basic-commands-to-run-the-migration-tool">Basic commands to run the migration tool</h2>
+
+<p>Launch a JHipster application and a Cassandra cluster:</p>
+
+<p>First you need to build a Docker image containing your application:</p>
+
+<pre><code class="language-bash">./mvnw package -Pprod docker:build
+</code></pre>
+
+<p>Then you can run this image and the other services with Docker Compose:</p>
+
+<pre><code class="language-bash">docker-compose -f src/main/docker/app.yml up -d
+</code></pre>
+
+<p>Compose starts 4 Docker containers:</p>
+
+<p>The application image
+- A first Cassandra node acting as the contact point
+- A second node joining the cluster
+- A service executing the schema migrations
+- Thanks to Docker Compose, it is easy to add new nodes in the cluster:</p>
+
+<pre><code class="language-bash">docker-compose -f src/main/docker/app.yml scale yourapp-cassandra-node=2
+</code></pre>
+
+<p>The new node automatically joins the Cassandra cluster using the first node as a contact point.
+The container executing the migrations reads a dedicated folder – <code>config/cql/changelogs/</code> by convention – to find the migration scripts.</p>
+
+<p>Like Liquibase, the migration tool stores the metadata of the executed scripts in a table named schema_version to keep track of executed scripts.</p>
+
+<h2 id="modifying-the-schema-with-jhipster-and-using-the-migration-tool">Modifying the schema with JHipster and using the migration tool:</h2>
+
+<p>With JHipster, it is possible to create a new domain entity in one command with a few questions:</p>
+
+<pre><code class="language-bash">$ yo jhipster:entity book
+Generating field #1? Do you want to add a field to your entity? Yes
+? What is the name of your field? title
+
+? What is the type of your field? String
+
+? Do you want to add validation rules to your field? No
+Generating field #2
+
+? Do you want to add a field to your entity? Yes
+
+? What is the name of your field? author
+
+? What is the type of your field? String
+
+? Do you want to add validation rules to your field? No
+Generating field #3
+
+? Do you want to add a field to your entity? Yes
+
+? What is the name of your field? releaseDate
+
+? What is the type of your field? LocalDate (Warning: only compatible with cassandra v3)
+
+? Do you want to add validation rules to your field? No
+? Do you want to use a Data Transfer Object (DTO)? No, use the entity directly
+
+? Do you want to use separate service class for your business logic? No, the REST controller should use the repository directly
+</code></pre>
+
+<p>JHipster generates AngularJS code for the frontend and java code for the basic CRUD operations. It also generates the CQL script to create the Cassandra table for this new entity:</p>
+
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS book (
+   id uuid,
+   title text,
+   author text,
+   releaseDate date,
+   PRIMARY KEY(id)
+);
+</code></pre>
+
+<p>Without stopping the cluster, you can execute the migration tool to run the CQL script:</p>
+
+<pre><code class="language-bash">docker-compose -f src/main/docker/app.yml up yourapp-cassandra-migration
+</code></pre>
+
+<p>Package the application into a new image and relaunch only its container:</p>
+
+<pre><code class="language-bash">./mvnw package -Pprod docker:build
+docker-compose -f src/main/docker/app.yml up -d --no-deps yourapp-app
+</code></pre>
+
+<p>Without restarting the Cassandra cluster, JHipster has created all the screens, the java code and has executed the migration script to create the new Cassandra table:</p>
+
+<figure>
+    <img src="/img/jhipster-default-books.png" width="100%" />
+</figure>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>By providing a simple tool to manage a Cassandra environment for development, tests and deployment JHipster is also providing best practices to start new applications based on Cassandra.</p>
+
+<p>You can find more on the <a href="http://jhipster.github.io/">JHipster project website</a>.
+Ippon USA is hosting a master class on JHipster with material designed by the JHipster creator, <a href="https://www.eventbrite.com/e/jhipster-master-class-ippon-usa-tickets-21358779685">register here</a>!</p>
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=JHipster,Docker,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'raphaelbrugierblog';
+    var disqus_identifier = 'http:\/\/www.raphael-brugier.com\/blog\/using-docker-to-simplify-cassandra-development-in-jhipster\/';
+    var disqus_title = 'Using Docker to simplify Cassandra development in JHipster';
+    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/using-docker-to-simplify-cassandra-development-in-jhipster\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:http://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/">
+                          
+                            <img src="http://www.raphael-brugier.com/img/logo-jhipster.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/">Using Docker to simplify Cassandra development in JHipster</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/">
+                          
+                            <img src="http://www.raphael-brugier.com/img/spark-logo.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/">A tour of Databricks Community Edition: a hosted Spark service</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/">
+                          
+                            <img src="http://www.raphael-brugier.com/img/spark-logo.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/">Testing strategy for Spark Streaming – Part 2 of 2</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-3393491-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="http://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="http://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="http://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="http://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>
