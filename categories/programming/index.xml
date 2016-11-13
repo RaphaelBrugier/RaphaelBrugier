@@ -9,6 +9,828 @@
     <atom:link href="http://www.raphael-brugier.com/categories/programming/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Using Docker to simplify Cassandra development in JHipster</title>
+      <link>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
+      <pubDate>Mon, 27 Jun 2016 20:33:11 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
+      <description>&lt;p&gt;JHipster is an open source project that generates a fully working application in seconds. With a minimal configuration, JHipster accelerates the start of new projects by integrating frontend, backend, security and a database.&lt;/p&gt;
+
+&lt;p&gt;Cassandra is one of the supported databases and JHipster generates all the configuration needed to access the cluster.&lt;/p&gt;
+
+&lt;p&gt;But it is often hard for the developers to configure and maintain a local Cassandra cluster.&lt;/p&gt;
+
+&lt;p&gt;Moreover, there is no standard tooling to manage the schema migrations, like Liquibase or Flyway for SQL databases, making it difficult to synchronize the schema between every environment and a local configuration.&lt;/p&gt;
+
+&lt;p&gt;JHipster’s goal is to provide the most simple and productive development environment out of the box for the developers, and this tool has been added in the latest (3.4.0) version.&lt;/p&gt;
+
+&lt;p&gt;In this post, I’ll describe the design of the tool and the basic commands to use it.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;design&#34;&gt;Design&lt;/h1&gt;
+
+&lt;p&gt;A Docker Compose[1] configuration is generated to start a Cassandra cluster locally with one command. A set of bash scripts automatically save the executed migrations in a dedicated table. This allows you to automatically[2] execute only the new migration scripts when deploying a new version of the application.
+The tool can be used both by the developers to synchronize their local cluster and in production to keep track of the schema migrations.&lt;/p&gt;
+
+&lt;p&gt;The standardization of the migration scripts is also used by the integration tests to start an in-memory Cassandra cluster.&lt;/p&gt;
+
+&lt;p&gt;[1]: JHipster uses the v2 of the Docker Compose file format and Docker 1.10+ and Compose 1.6+ are required.&lt;/p&gt;
+
+&lt;p&gt;[2]: Because the migration scripts are read from a Docker volume, the sources must be located in the use directory.&lt;/p&gt;
+
+&lt;h2 id=&#34;basic-commands-to-run-the-migration-tool&#34;&gt;Basic commands to run the migration tool&lt;/h2&gt;
+
+&lt;p&gt;Launch a JHipster application and a Cassandra cluster:&lt;/p&gt;
+
+&lt;p&gt;First you need to build a Docker image containing your application:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;./mvnw package -Pprod docker:build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then you can run this image and the other services with Docker Compose:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker-compose -f src/main/docker/app.yml up -d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Compose starts 4 Docker containers:&lt;/p&gt;
+
+&lt;p&gt;The application image
+- A first Cassandra node acting as the contact point
+- A second node joining the cluster
+- A service executing the schema migrations
+- Thanks to Docker Compose, it is easy to add new nodes in the cluster:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker-compose -f src/main/docker/app.yml scale yourapp-cassandra-node=2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The new node automatically joins the Cassandra cluster using the first node as a contact point.
+The container executing the migrations reads a dedicated folder – &lt;code&gt;config/cql/changelogs/&lt;/code&gt; by convention – to find the migration scripts.&lt;/p&gt;
+
+&lt;p&gt;Like Liquibase, the migration tool stores the metadata of the executed scripts in a table named schema_version to keep track of executed scripts.&lt;/p&gt;
+
+&lt;h2 id=&#34;modifying-the-schema-with-jhipster-and-using-the-migration-tool&#34;&gt;Modifying the schema with JHipster and using the migration tool:&lt;/h2&gt;
+
+&lt;p&gt;With JHipster, it is possible to create a new domain entity in one command with a few questions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ yo jhipster:entity book
+Generating field #1? Do you want to add a field to your entity? Yes
+? What is the name of your field? title
+
+? What is the type of your field? String
+
+? Do you want to add validation rules to your field? No
+Generating field #2
+
+? Do you want to add a field to your entity? Yes
+
+? What is the name of your field? author
+
+? What is the type of your field? String
+
+? Do you want to add validation rules to your field? No
+Generating field #3
+
+? Do you want to add a field to your entity? Yes
+
+? What is the name of your field? releaseDate
+
+? What is the type of your field? LocalDate (Warning: only compatible with cassandra v3)
+
+? Do you want to add validation rules to your field? No
+? Do you want to use a Data Transfer Object (DTO)? No, use the entity directly
+
+? Do you want to use separate service class for your business logic? No, the REST controller should use the repository directly
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;JHipster generates AngularJS code for the frontend and java code for the basic CRUD operations. It also generates the CQL script to create the Cassandra table for this new entity:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;CREATE TABLE IF NOT EXISTS book (
+   id uuid,
+   title text,
+   author text,
+   releaseDate date,
+   PRIMARY KEY(id)
+);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Without stopping the cluster, you can execute the migration tool to run the CQL script:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker-compose -f src/main/docker/app.yml up yourapp-cassandra-migration
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Package the application into a new image and relaunch only its container:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;./mvnw package -Pprod docker:build
+docker-compose -f src/main/docker/app.yml up -d --no-deps yourapp-app
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Without restarting the Cassandra cluster, JHipster has created all the screens, the java code and has executed the migration script to create the new Cassandra table:&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;img src=&#34;http://www.raphael-brugier.com/img/jhipster-default-books.png&#34; width=&#34;100%&#34; /&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;By providing a simple tool to manage a Cassandra environment for development, tests and deployment JHipster is also providing best practices to start new applications based on Cassandra.&lt;/p&gt;
+
+&lt;p&gt;You can find more on the &lt;a href=&#34;http://jhipster.github.io/&#34;&gt;JHipster project website&lt;/a&gt;.
+Ippon USA is hosting a master class on JHipster with material designed by the JHipster creator, &lt;a href=&#34;https://www.eventbrite.com/e/jhipster-master-class-ippon-usa-tickets-21358779685&#34;&gt;register here&lt;/a&gt;!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>A tour of Databricks Community Edition: a hosted Spark service</title>
+      <link>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
+      <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
+      <description>&lt;p&gt;With the &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html&#34;&gt;recent announcement&lt;/a&gt; of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
+Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Databricks Cloud offers many features:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A cluster management service.
+
+&lt;ul&gt;
+&lt;li&gt;The service will spin up Amazon EC2 instances with Spark nodes already set up for you.&lt;/li&gt;
+&lt;li&gt;Free 6GB memory cluster for the Community Edition and billed hourly per node for the regular version.&lt;/li&gt;
+&lt;li&gt;The price will depend on the size of the instances and you can even mix on-demand and spot instances.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;A notebook, to write Spark code either in Scala, Python or R, with version control and user role management.&lt;/li&gt;
+&lt;li&gt;A scheduling service to turn notebooks or fat JARs into managed jobs.
+
+&lt;ul&gt;
+&lt;li&gt;The service also allows to manage streaming jobs and have failure notifications, as well as auto restart capabilities.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;And &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-dashboards.html&#34;&gt;more recently&lt;/a&gt;, a dashboarding service to turn your notebooks snippets into custom dashboard components.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The notebook is where you will spend most of your time. It offers a fully interactive Spark environment, with the capabilities to add any dependencies from the Maven Central repository or to upload your own JARs to the cluster.&lt;/p&gt;
+
+&lt;p&gt;Notebooks have been used for years for data exploration, but with the rise of Data Science, there has been a lot of traction for tools such as &lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter&lt;/a&gt;, &lt;a href=&#34;http://spark-notebook.io/&#34;&gt;Spark notebook&lt;/a&gt;, or &lt;a href=&#34;https://zeppelin.incubator.apache.org/&#34;&gt;Apache Zeppelin&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Jupyter is an historical Python notebook (formerly known as IPython) that have been added a Spark extension, you could use Python of course, but also R and Scala. It’s more mature than Zeppelin and Jupyter notebooks are even integrated in &lt;a href=&#34;https://github.com/blog/1995-github-jupyter-notebooks-3&#34;&gt;GitHub&lt;/a&gt;.
+But it would requires some extra configuration to get Scala and Spark support.&lt;/p&gt;
+
+&lt;p&gt;Spark notebook was one of the first notebook to appear for Spark. It is limited to the Scala language, so it might not be the best choice if you have data analysts working primarily with Python.&lt;/p&gt;
+
+&lt;p&gt;Zeppelin is still an incubating project from the Apache Foundation but it has received a lot of traction lately and it is promising. Compared to Databricks Cloud’s built-in notebook, Zeppelin is not dedicated to Spark but supports many more technologies via various connectors such as Cassandra or Flink. You will of course have to manage the deployment and configuration by yourself, but with the main benefit of having a fined-grained control over the infrastructure. While the Community Edition of Databricks Cloud involves some restrictions – smaller Amazon EC2 instances and no access to the scheduling component – it is still a great tool to get started with Spark, especially for learning and fast prototyping.&lt;/p&gt;
+
+&lt;p&gt;To complete this introduction, let’s write an example of a Twitter stream processing and some visualizations.&lt;/p&gt;
+
+&lt;p&gt;In this example, we’ll subscribe to the Twitter stream API which delivers roughly a 1% sample of all the tweets published in realtime. We’ll use Spark Streaming to process the stream and identify the language and country of each tweet.
+We will store a sliding window of the results as a table and display the results as built-in visualizations in the notebook.&lt;/p&gt;
+
+&lt;h1 id=&#34;step-0-community-edition-access&#34;&gt;Step 0: Community Edition access&lt;/h1&gt;
+
+&lt;p&gt;You first need to &lt;a href=&#34;http://go.databricks.com/databricks-community-edition-beta-waitlist&#34;&gt;subscribe&lt;/a&gt; to Databricks Community Edition. This is still a private beta version but you should receive your invitation within one week.&lt;/p&gt;
+
+&lt;p&gt;Once you have the Databricks Cloud, &lt;a href=&#34;https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/7631468844903857/1641217975453210/8780643444584178/latest.html&#34;&gt;import my notebook&lt;/a&gt;. This notebook is a partial reuse of the Databricks &lt;a href=&#34;https://docs.cloud.databricks.com/docs/latest/databricks_guide/index.html#08%20Spark%20Streaming/03%20Twitter%20Hashtag%20Count%20-%20Scala.html&#34;&gt;Twitter hash count&lt;/a&gt; example.&lt;/p&gt;
+
+&lt;h1 id=&#34;step-1-prerequisite-libraries-and-imports&#34;&gt;Step 1: prerequisite libraries and imports&lt;/h1&gt;
+
+&lt;p&gt;The example uses the Apache Tika library for the language recognition of the tweets.
+To attach the dependency to your Spark cluster, follow these steps:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the workspace, in your user space, open the “Create” dialog box and choose “library”&lt;/li&gt;
+&lt;li&gt;Choose “maven coordinate” as a source&lt;/li&gt;
+&lt;li&gt;Use “org.apache.tika:tika-core:1.12” as the Coordinate&lt;/li&gt;
+&lt;li&gt;Make sure the “Attach automatically to all clusters.” box is checked in the library details of your workspace.&lt;/li&gt;
+&lt;li&gt;The library and its dependencies will now be deployed to the cluster nodes.&lt;/li&gt;
+&lt;li&gt;To verify this, you can access the “Cluster” tab and see “1 library loaded” in the your cluster.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/clusterView.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;step-2-twitter-credentials&#34;&gt;Step 2: Twitter credentials&lt;/h1&gt;
+
+&lt;p&gt;Because this example requires a connection to the Twitter stream API, you should create a Twitter application and acquire an OAuth token.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Go to &lt;a href=&#34;https://apps.twitter.com/&#34;&gt;https://apps.twitter.com/&lt;/a&gt; and follow the steps to create your Twitter application.&lt;/li&gt;
+&lt;li&gt;You should then answer Step 2 questions to enter your credentials.&lt;/li&gt;
+&lt;li&gt;These credentials will then be automatically picked by the Twitter4j library and the Spark Streaming wrapper to create a Twitter stream.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/twitterCredentials.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;step-3-run-the-twitter-streaming-job&#34;&gt;Step 3: Run the Twitter streaming job&lt;/h1&gt;
+
+&lt;p&gt;Execute step 3’s code in the notebook, so as to create a StreamingContext and run it in the cluster.&lt;/p&gt;
+
+&lt;p&gt;The code will initialize the Twitter stream, and for each tweet received, it will:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Transform the country code from a two-letter code to a three-letter code. This is because the Databricks notebook requires an ISO 3166-1 alpha-3 code for the country.&lt;/li&gt;
+&lt;li&gt;Detect the language of the tweet using the Tika library. Because tweets are small portions of text containing hashtags, usernames, etc; the detection could unfortunately be inaccurate.&lt;/li&gt;
+&lt;li&gt;Wrap the result in a Tweet case class.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The output of the stream, a sliding window of the last 30 seconds tweets, is then written to a temporary “SQL” table, to be queryable.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;case class Tweet(user: String, text: String, countryCode: String, language: String)
+
+// Initialize the language identifier library
+LanguageIdentifier.initProfiles()
+
+// Initialize a map to convert Countries from 2 chars iso encoding to 3 characters
+val iso2toIso3Map: Map[String, String] = Locale.getISOCountries()
+  .map(iso2 =&amp;gt; iso2 -&amp;gt; new Locale(&amp;quot;&amp;quot;, iso2).getISO3Country)
+  .toMap
+
+// detect a language from a text content using the Apache Tika library
+def detectLanguage(text: String): String = {
+    new LanguageIdentifier(text).getLanguage
+}
+
+// This is the function that creates the SteamingContext and sets up the Spark Streaming job.
+def creatingFunc(): StreamingContext = {
+  // Create a Spark Streaming Context.
+  val slideInterval = Seconds(1)
+  val ssc = new StreamingContext(sc, slideInterval)
+  ssc.remember(Duration(100))
+  // Create a Twitter Stream for the input source. 
+  val auth = Some(new OAuthAuthorization(new ConfigurationBuilder().build()))
+
+  val twitterStream = TwitterUtils.createStream(ssc, auth)
+          .filter(t=&amp;gt; t.getPlace != null)
+          .map(t =&amp;gt; Tweet(t.getUser.getName, t.getText, iso2toIso3Map.getOrElse(t.getPlace.getCountryCode, &amp;quot;&amp;quot;), detectLanguage(t.getText)))
+                .window(windowDuration = Seconds(30), slideDuration = Seconds(10))
+            .foreachRDD { rdd =&amp;gt; 
+              val sqlContext = SQLContext.getOrCreate(SparkContext.getOrCreate())
+                  // this is used to implicitly convert an RDD to a DataFrame.
+                import sqlContext.implicits._
+                rdd.toDF().registerTempTable(&amp;quot;tweets&amp;quot;)
+            }
+  ssc
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;step-4-visualizations&#34;&gt;Step 4: Visualizations&lt;/h1&gt;
+
+&lt;p&gt;Now, tweets are automatically stored and updated from the sliding window and we can query the table and use the notebook’s built-in visualizations.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Tweets by country:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/tweetsByCountry.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Tweets by language:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/tweetsByLanguage.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can run virtually any SQL query on the last 30 seconds of the 1% sample of tweets emitted from all-over the world!&lt;/p&gt;
+
+&lt;p&gt;Even if the visualizations can be exported to a dashboard, they still need to be refreshed manually. This is because you cannot create Spark jobs in the community edition. However, the non-Community version allows to &lt;a href=&#34;https://community.cloud.databricks.com/?o=7631468844903857#externalnotebook/https%3A%2F%2Fdocs.cloud.databricks.com%2Fdocs%2Flatest%2Fdatabricks_guide%2Findex.html%2302%2520Product%2520Overview%2F06%2520Jobs.html&#34;&gt;turn this notebook into an actual Spark Streaming job&lt;/a&gt; running indefinitely while refreshing a dashboard of visualizations.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Databricks Community Edition offers a nice subset of Databricks Cloud for free. It is a nice playground to start with Spark and notebooks. It also offers the integration of the very complete &lt;a href=&#34;https://community.cloud.databricks.com/?o=7631468844903857#externalnotebook/https%3A%2F%2Fdocs.cloud.databricks.com%2Fdocs%2Flatest%2Fcourses%2Findex.html%23Introduction%2520to%2520Big%2520Data%2520with%2520Apache%2520Spark%2520(CS100-1x)%2FIntroduction%2520(README).html&#34;&gt;Introduction to Big Data with Apache Spark&lt;/a&gt; course taught by Berkeley University.&lt;/p&gt;
+
+&lt;p&gt;Besides this, before jumping to the professional edition, you will have to consider the tradeoffs between an all-in-one service like Databricks Cloud – that can become pricey for long running jobs – versus managed clusters (Amazon EMR, Google Dataproc, …) or in-house hosting with fine grained control of the infrastructure of the nodes but with additional maintenance costs.&lt;/p&gt;
+
+&lt;p&gt;See the notebook in action in &lt;a href=&#34;https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/7631468844903857/1641217975453210/8780643444584178/latest.html&#34;&gt;Databricks cloud&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing strategy for Spark Streaming – Part 2 of 2</title>
+      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
+      <pubDate>Wed, 30 Mar 2016 19:25:01 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
+
+&lt;p&gt;In this post, we will look at applying the same pattern to another important part of the Spark engine: Spark Streaming.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;spark-streaming-example&#34;&gt;Spark Streaming example&lt;/h1&gt;
+
+&lt;p&gt;Spark Streaming is an extension of Spark to implement streaming processing on top of the batch engine. The base idea is to accumulate a flow of events in micro-batches and then process them separately. As for a signal, the stream is discretized and thus named DStream in the Spark API.&lt;/p&gt;
+
+&lt;p&gt;For this example, we will simply generate a stream of characters in input, and have each character capitalized in the output stream. To spice up the thing, the output will be a sliding window.&lt;/p&gt;
+
+&lt;p&gt;We will configure the batch duration to 1 second, the window duration to 3 seconds and the slide duration to 2 seconds.&lt;/p&gt;
+
+&lt;p&gt;This is better explained with the following diagram:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/sparkCapitalizedWindowedStream.png&#34; alt=&#34;Spark capitalized windowed stream&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And the code implementing this process:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+
+import org.apache.spark.SparkConf
+import org.apache.spark.rdd.RDD
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+import scala.collection.mutable
+
+object MainStreaming {
+
+  val sparkConf = new SparkConf()
+    .setMaster(&amp;quot;local[*]&amp;quot;)
+    .setAppName(&amp;quot;spark-streaming-testing-example&amp;quot;)
+
+  val ssc = new StreamingContext(sparkConf, Seconds(1))
+
+  def main(args: Array[String]) {
+
+    val rddQueue = new mutable.Queue[RDD[Char]]()
+
+    ssc.queueStream(rddQueue)
+      .map(_.toUpper)
+      .window(windowDuration = Seconds(3), slideDuration = Seconds(2))
+      .print()
+
+    ssc.start()
+
+    for (c &amp;lt;- &#39;a&#39; to &#39;z&#39;) {
+      rddQueue += ssc.sparkContext.parallelize(List(c))
+    }
+
+    ssc.awaitTermination()
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, we simulate a stream of characters by continuously adding them as RDDs of one character in a mutable Queue.&lt;/p&gt;
+
+&lt;p&gt;We create a QueueStream to wrap the Queue as an InputDStream. Because the QueueInputDStream is mainly designed for testing, each RDD is consumed one by one by default. We have configured the StreamingContext to have batches of 1 second, hence each character will be consumed by the stream logic every 1 second.&lt;/p&gt;
+
+&lt;p&gt;When you run this code, the Spark engine will print the last 3 capitalized letters every 2 seconds.&lt;/p&gt;
+
+&lt;h1 id=&#34;testing-stream-operations&#34;&gt;Testing stream operations&lt;/h1&gt;
+
+&lt;p&gt;As in the previous article, the pattern to make the code testable consists in extracting the logic in a separate function that takes a DStream in parameter and that returns the resulting DStream.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import org.apache.spark.streaming.Seconds
+import org.apache.spark.streaming.dstream.DStream
+
+object StreamOperations {
+
+  def capitalizeWindowed(input: DStream[Char]): DStream[Char] = {
+    input.map(_.toUpper)
+          .window(windowDuration = Seconds(3), slideDuration = Seconds(2))
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The main problem with testing Streams is their time-based nature. To compare the output stream to an expected other set of data, you will have to do the assertion at the instant where the engine consumes the input. Adding &lt;code&gt;Thread.Sleep(...)&lt;/code&gt; would be an inaccurate solution and will have the major drawback to dramatically slow down your tests.&lt;/p&gt;
+
+&lt;p&gt;The appropriate solution to control the time is to use the “Virtual Clock” pattern, where you replace the system’s clock with your own implementation. During the execution of the test, you can then change the value returned by the clock and therefore control the timing.&lt;/p&gt;
+
+&lt;p&gt;Internally, Spark uses this pattern with a &lt;a href=&#34;https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/util/Clock.scala#L23&#34;&gt;Clock&lt;/a&gt; interface and a default implementation returning the system time. It allows to replace this implementation by your own implementation by setting the &lt;code&gt;spark.streaming.clock&lt;/code&gt; param when configuring the &lt;code&gt;SparkContext&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This is how Spark internal unit tests work, by replacing the &lt;a href=&#34;https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/util/Clock.scala#L31&#34;&gt;SystemClock&lt;/a&gt; implementation with &lt;a href=&#34;https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/util/ManualClock.scala#L27&#34;&gt;ManualClock&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the Clock interface has a package protected visibility limited to the &lt;code&gt;org.apache.spark package&lt;/code&gt;. But we can workaround this by placing our own implementation extending the interface in this same package.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package org.apache.spark
+import java.util.Date
+import org.apache.spark.streaming.Duration
+
+class FixedClock(var currentTime: Long) extends org.apache.spark.util.Clock {
+
+  def this() = this(0L)
+
+  def setCurrentTime(time: Date): Unit = synchronized {
+    currentTime = time.getTime
+    notifyAll()
+  }
+
+  def addTime(duration: Duration): Unit = synchronized {
+    currentTime += duration.toMillis
+    notifyAll()
+  }
+
+  override def getTimeMillis(): Long = synchronized {
+    currentTime
+  }
+
+  override def waitTillTime(targetTime: Long): Long = synchronized {
+    while (currentTime &amp;lt; targetTime) {
+      wait(10)
+    }
+    getTimeMillis()
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then add an utility method to workaround the private accessibility of the &lt;code&gt;Clock&lt;/code&gt; in the &lt;code&gt;StreamingContext&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package org.apache.spark.streaming
+import org.apache.spark.FixedClock
+
+object Clock {
+  def getFixedClock(ssc: StreamingContext): FixedClock = {
+    ssc.scheduler.clock.asInstanceOf[FixedClock]
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The test can now be written:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import java.util.concurrent.TimeUnit
+import org.apache.spark.rdd.RDD
+import org.apache.spark.streaming.{Clock, Seconds, StreamingContext}
+import org.apache.spark.{FixedClock, SparkConf, SparkContext}
+import org.scalatest.concurrent.Eventually
+import org.scalatest.time.{Millis, Span}
+import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
+import scala.concurrent.duration.Duration
+
+class StreamingTest extends FlatSpec with Matchers with BeforeAndAfter with Eventually {
+
+  var sc:SparkContext = _
+  var ssc: StreamingContext = _
+  var fixedClock: FixedClock = _
+
+  override implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(1500, Millis)))
+
+  before {
+    val sparkConf = new SparkConf()
+      .setMaster(&amp;quot;local[*]&amp;quot;)
+      .setAppName(&amp;quot;test-streaming&amp;quot;)
+      .set(&amp;quot;spark.streaming.clock&amp;quot;, &amp;quot;org.apache.spark.FixedClock&amp;quot;)
+
+    ssc = new StreamingContext(sparkConf, Seconds(1))
+    sc = ssc.sparkContext
+    fixedClock = Clock.getFixedClock(ssc)
+  }
+
+  after {
+    ssc.stop(stopSparkContext = true, stopGracefully = false)
+  }
+
+  behavior of &amp;quot;stream transformation&amp;quot;
+
+  it should &amp;quot;apply transformation&amp;quot; in {
+    val inputData: mutable.Queue[RDD[Char]] = mutable.Queue()
+    var outputCollector = ListBuffer.empty[Array[Char]]
+
+    val inputStream = ssc.queueStream(inputData)
+    val outputStream = StreamOperations.capitalizeWindowed(inputStream)
+
+    outputStream.foreachRDD(rdd=&amp;gt; {outputCollector += rdd.collect()})
+
+    ssc.start()
+
+    inputData += sc.makeRDD(List(&#39;a&#39;))
+    wait1sec() // T = 1s
+
+    inputData += sc.makeRDD(List(&#39;b&#39;))
+    wait1sec() // T = 2s
+
+    assertOutput(outputCollector, List(&#39;A&#39;,&#39;B&#39;))
+
+    inputData += sc.makeRDD(List(&#39;c&#39;))
+    wait1sec() // T = 3s
+
+    inputData += sc.makeRDD(List(&#39;d&#39;))
+    wait1sec() // T = 4s
+    assertOutput(outputCollector, List(&#39;B&#39;, &#39;C&#39;, &#39;D&#39;))
+
+    // wait until next slide
+    wait1sec() // T = 5s
+    wait1sec() // T = 6s
+    assertOutput(outputCollector, List(&#39;D&#39;))
+  }
+
+  def assertOutput(result: Iterable[Array[Char]], expected: List[Char]) =
+    eventually {
+      result.last.toSet should equal(expected.toSet)
+    }
+
+  def wait1sec(): Unit = {
+    fixedClock.addTime(Seconds(1))
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here again, we start a StreamingContext before running the test and we’ll stop it after.
+We also replace the clock with our own implementation so that we can control the time.
+Like in the &lt;code&gt;Main&lt;/code&gt; example, we use a &lt;code&gt;QueueInputDStream&lt;/code&gt; to simulate the input of data.
+We also use a &lt;code&gt;ListBuffer&lt;/code&gt; to stack the resulting value of the &lt;code&gt;OuputDStream&lt;/code&gt; collected with the &lt;code&gt;forEachRDD(…)&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;One extra tricky thing…&lt;/p&gt;
+
+&lt;p&gt;Because the processing of the DStream occurs in a separated thread, when we change the time to the exact instant of the sliding window trigger, it still requires a few extra ms to do the actual computation.
+Thus, as suggested in &lt;a href=&#34;http://mkuthan.github.io/blog/2015/03/01/spark-unit-testing/&#34;&gt;this post&lt;/a&gt; about testing Spark, we protect the assertion with an eventually block from ScalaTest’s Eventually trait.
+The patienceConfig set the timeout to retry the assertion multiple times before a time-out.&lt;/p&gt;
+
+&lt;p&gt;We now have a fast and predictable test to ensure the streaming operations’ correctness!&lt;/p&gt;
+
+&lt;h1 id=&#34;spark-testing-base-library&#34;&gt;Spark-testing-base library&lt;/h1&gt;
+
+&lt;p&gt;The &lt;a href=&#34;https://github.com/holdenk/spark-testing-base&#34;&gt;Spark-testing-base&lt;/a&gt; library have some built-in trait and methods to help you test the streaming logic.&lt;/p&gt;
+
+&lt;p&gt;When using the library, the &lt;code&gt;FixedClock&lt;/code&gt; workaround is also already implemented.&lt;/p&gt;
+
+&lt;p&gt;Let’s rewrite the window test with the StreamingSuiteBase trait:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import com.holdenkarau.spark.testing.StreamingSuiteBase
+
+class StreamingWithSparkTestingTest extends StreamingSuiteBase {
+
+  test(&amp;quot;capitalize by window&amp;quot;) {
+    val input = List(List(&#39;a&#39;), List(&#39;b&#39;), List(&#39;c&#39;), List(&#39;d&#39;), List(&#39;e&#39;))
+
+    val slide1 = List(&#39;A&#39;, &#39;B&#39;)
+    val slide2 = List(&#39;B&#39;, &#39;C&#39;, &#39;D&#39;)
+    val expected = List(slide1, slide2)
+
+    testOperation(input, StreamOperations.capitalizeWindowed, expected)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;StreamingSuiteBase&lt;/code&gt; trait will take care of all the setup we had manually prepared in the previous test: starting and stopping the &lt;code&gt;StreamingContext&lt;/code&gt;, replacing the &lt;code&gt;Clock&lt;/code&gt; in the engine, and incrementing the time when each element is consumed.&lt;/p&gt;
+
+&lt;p&gt;Unlike the &lt;code&gt;RDDComparisons.compare(...)&lt;/code&gt; method shown in the previous article, where the comparison was distributed, the elements are collected locally from the OutputDStream. Be sure not to produce too much data in your tests or you can rapidly run out of memory.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;While requiring more setup and care than testing batch jobs, it is also possible to test Spark Streaming jobs.
+Controlling the time is the key to having a predictable output to compare results to expected ones.&lt;/p&gt;
+
+&lt;p&gt;The Spark-testing-base library can be very helpful, especially to avoid the workarounds.&lt;/p&gt;
+
+&lt;p&gt;You can find the code of these examples on &lt;a href=&#34;https://github.com/raphaelbrugier/spark-testing-example&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing strategy for Apache Spark jobs – Part 1 of 2</title>
+      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
+      <pubDate>Sat, 12 Mar 2016 18:34:26 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
+      <description>&lt;p&gt;Like any other application, Apache Spark jobs deserve good testing practices and coverage.&lt;/p&gt;
+
+&lt;p&gt;Indeed, the costs of running jobs with production data makes unit testing a must-do to have a fast feedback loop and discover the errors earlier.&lt;/p&gt;
+
+&lt;p&gt;But because of its distributed nature and the RDD abstraction on top of the data, Spark requires special care for testing.&lt;/p&gt;
+
+&lt;p&gt;In this post, we’ll explore how to design your code for testing, how to setup a simple unit-test for your job logic and how the &lt;a href=&#34;https://github.com/holdenk/spark-testing-base&#34;&gt;spark-testing-base&lt;/a&gt; library can help.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;design-for-testing&#34;&gt;Design for testing&lt;/h1&gt;
+
+&lt;p&gt;From a higher point of view, any Spark job can be described as an “immutable” a transformation of distributed data.&lt;/p&gt;
+
+&lt;p&gt;In particular, any Spark job can be refactored to a composition of functions taking data as input, the so-called RDD, and returning data, hence a RDD again.&lt;/p&gt;
+
+&lt;p&gt;Extracting the logic of the job into functions will make it possible to reuse the functions across different jobs and to isolate the behavior to test it in a deterministic environment.&lt;/p&gt;
+
+&lt;p&gt;To separate the logic from the scheduling and configuration of the job, you will also want to isolate the logic to a separated object.&lt;/p&gt;
+
+&lt;p&gt;Let’s apply this pattern to the well-known word count example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import org.apache.spark.{SparkConf, SparkContext}
+
+object Main {
+
+  val sparkConf = new SparkConf()
+    .setMaster(&amp;quot;local[*]&amp;quot;)
+    .setAppName(&amp;quot;spark-testing-example&amp;quot;)
+  val sc = new SparkContext(sparkConf)
+
+  def main(args: Array[String]) {
+    val countByWordRdd =  sc.textFile(&amp;quot;src/main/resources/intro.txt&amp;quot;)
+      .flatMap(l =&amp;gt; l.split(&amp;quot;\\W+&amp;quot;))
+      .map(word =&amp;gt; (word, 1))
+      .reduceByKey(_ + _)
+
+    countByWordRdd.foreach(println)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Extracting a method is a &lt;a href=&#34;http://refactoring.com/catalog/extractMethod.html&#34;&gt;classic refactoring pattern&lt;/a&gt;. Therefore, this can be easily done with a few keystrokes within your favorite IDE:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Extract the input data in a separated variable to separate it from the logic&lt;/li&gt;
+&lt;li&gt;Extract the logic in a count method (select + refactor -&amp;gt; extract -&amp;gt; method)&lt;/li&gt;
+&lt;li&gt;Move the method to a new object, WordCounter&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
+
+object Main {
+
+  val sparkConf = new SparkConf()
+    .setMaster(&amp;quot;local[*]&amp;quot;)
+    .setAppName(&amp;quot;spark-testing-example&amp;quot;)
+  val sc = new SparkContext(sparkConf)
+
+  def main(args: Array[String]) {
+    val input: RDD[String] = sc.textFile(&amp;quot;src/main/resources/intro.txt&amp;quot;)
+    val countByWordRdd: RDD[(String, Int)] = WordCounter.count(input)
+
+    countByWordRdd.foreach(println)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import org.apache.spark.rdd.RDD
+
+object WordCounter {
+  def count(lines: RDD[String]): RDD[(String, Int)] = {
+    val wordsCount = lines.flatMap(l =&amp;gt; l.split(&amp;quot;\\W+&amp;quot;))
+      .map(word =&amp;gt; (word, 1))
+      .reduceByKey(_ + _)
+    wordsCount
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;basic-test&#34;&gt;Basic test&lt;/h1&gt;
+
+&lt;p&gt;Now that we have extracted the logic, we can write a test assuming an input data and asserting the result of the function to an expected data. We will use &lt;a href=&#34;http://www.scalatest.org/&#34;&gt;ScalaTest&lt;/a&gt; as a testing framework.&lt;/p&gt;
+
+&lt;p&gt;The tricky part when writing tests for Spark is the RDD abstraction. Your first idea would probably be to mock the input and the expected. But then, you will not be able to execute the Spark behavior on the RDD passed to the function.&lt;/p&gt;
+
+&lt;p&gt;Instead, we have to start a &lt;code&gt;SparkContext&lt;/code&gt; to build the input and expected RDDs and run the transformation in a real Spark environment. Indeed, creating a &lt;code&gt;SparkContext&lt;/code&gt; for unit testing is the &lt;a href=&#34;http://spark.apache.org/docs/latest/programming-guide.html#unit-testing&#34;&gt;recommended approach&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Because starting a &lt;code&gt;SparkContext&lt;/code&gt; is time-consuming, you will save a lot of time starting the context only once before all the tests. Also, even if it possible with some tweaking, it is not recommended to have more than one &lt;code&gt;SparkContext&lt;/code&gt; living in the JVM. So make sure you stop the context after running all the tests and to disable the parallel execution.&lt;/p&gt;
+
+&lt;p&gt;Starting and stopping the &lt;code&gt;SparkContext&lt;/code&gt; can easily be done with the &lt;code&gt;BeforeAndAfter&lt;/code&gt; trait.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
+import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
+
+class WordCounterTest extends FlatSpec with Matchers with BeforeAndAfter {
+
+  var sc:SparkContext = _
+
+  before {
+    val sparkConf = new SparkConf()
+      .setMaster(&amp;quot;local[*]&amp;quot;)
+      .setAppName(&amp;quot;test-wordcount&amp;quot;)
+    sc = new SparkContext(sparkConf)
+  }
+
+  after {
+    sc.stop()
+  }
+
+  behavior of &amp;quot;Words counter&amp;quot;
+
+  it should &amp;quot;count words in a text&amp;quot; in {
+    val text =
+      &amp;quot;&amp;quot;&amp;quot;Hello Spark
+        |Hello world
+      &amp;quot;&amp;quot;&amp;quot;.stripMargin
+    val lines: RDD[String] = sc.parallelize(List(text))
+    val wordCounts: RDD[(String, Int)] = WordCounter.count(lines)
+
+    wordCounts.collect() should contain allOf ((&amp;quot;Hello&amp;quot;, 2), (&amp;quot;Spark&amp;quot;, 1), (&amp;quot;world&amp;quot;, 1))
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;spark-testing-base-library&#34;&gt;Spark-testing-base library&lt;/h1&gt;
+
+&lt;p&gt;Setting up the &lt;code&gt;before&lt;/code&gt; and &lt;code&gt;after&lt;/code&gt; methods for all your test cases can become tedious if you have many tests. An alternative could be to hold the Context in a Singleton Object and start it once for all the tests, or to inherits a common trait to implement this behavior.&lt;/p&gt;
+
+&lt;p&gt;Also, the previous example works fine when working with a local cluster where all the data can fit in memory.
+But if you are testing with a lot of data, a large sample of your production data for example, calling the &lt;code&gt;collect()&lt;/code&gt; method to gather all the data locally to compare with an expected output is no longer an option.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, the spark-testing-base library provides traits and methods to prepare your tests and run distributed comparisons.&lt;/p&gt;
+
+&lt;p&gt;Let’s import the library and rewrite the test:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;pom.xml&lt;/code&gt; extract:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;dependencies&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spark-core_${scala.dep.version}&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${spark.version}&amp;lt;/version&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+  &amp;lt;!--spark-testing has a dependency to spark-sql, spark-hive, spark-mllib --&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spark-sql_${scala.dep.version}&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${spark.version}&amp;lt;/version&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spark-hive_${scala.dep.version}&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${spark.version}&amp;lt;/version&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.apache.spark&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spark-mllib_${scala.dep.version}&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${spark.version}&amp;lt;/version&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.scalatest&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;scalatest_${scala.dep.version}&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;2.2.6&amp;lt;/version&amp;gt;
+    &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;com.holdenkarau&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spark-testing-base_${scala.dep.version}&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${spark.version}_0.3.2-SNAPSHOT&amp;lt;/version&amp;gt;
+  &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+&amp;lt;/dependencies&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;package com.ipponusa
+import com.holdenkarau.spark.testing.{RDDComparisons, RDDGenerator, SharedSparkContext}
+import org.apache.spark.rdd.RDD
+import org.scalacheck.Arbitrary
+import org.scalacheck.Prop._
+import org.scalatest.prop.Checkers
+import org.scalatest.{FlatSpec, Matchers}
+
+@RunWith(classOf[JUnitRunner])
+class WordCounterWithSparkTestingTest extends FlatSpec with Matchers with SharedSparkContext{
+
+  behavior of &amp;quot;Words counter&amp;quot;
+
+  it should &amp;quot;count words in a text&amp;quot; in {
+    val text =
+      &amp;quot;&amp;quot;&amp;quot;Hello Spark
+        |Hello world
+      &amp;quot;&amp;quot;&amp;quot;.stripMargin
+
+    val inputRdd: RDD[String] = sc.parallelize(List(text))
+    val expectedRdd: RDD[(String, Int)] = sc.parallelize(List((&amp;quot;Hello&amp;quot;, 2), (&amp;quot;Spark&amp;quot;, 1), (&amp;quot;world&amp;quot;, 1)))
+
+    val resRdd: RDD[(String, Int)] = WordCounter.count(inputRdd)
+    assert(None === RDDComparisons.compare(resRdd, expectedRdd))
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The test class now extends the &lt;code&gt;SharedSparkContext&lt;/code&gt; trait instead of &lt;code&gt;BeforeAndAfter&lt;/code&gt;. This trait will automatically take care of starting and stopping a &lt;code&gt;SparkContext&lt;/code&gt; for you.&lt;/p&gt;
+
+&lt;p&gt;The method RDDComparisons.compare(…) is more interesting.&lt;/p&gt;
+
+&lt;p&gt;Instead of locally collecting the data to be compared, the comparison will be run as RDD operations on Spark nodes. Even if this may involve a lot of shuffling operations, the data is still distributed and thus can fit in memory.&lt;/p&gt;
+
+&lt;p&gt;Of course, in the same manner, the input and expected data would not be loaded locally but most probably from external distributed storage.&lt;/p&gt;
+
+&lt;p&gt;Like HDFS for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;val inputRdd = sc.textFile(&amp;quot;hdfs://127.0.0.1:9000/data/test/bigInput.txt&amp;quot;)
+val expectedRdd = sc.textFile(&amp;quot;hdfs://127.0.0.1:9000/data/test/bigExpected.txt&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The spark-testing-base library also provides methods for property-based testing via an integration of the &lt;a href=&#34;https://www.scalacheck.org/&#34;&gt;ScalaCheck&lt;/a&gt; library.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;class WordCounterWithSparkTestingTest extends FlatSpec with Matchers with SharedSparkContext with Checkers {
+
+  behavior of &amp;quot;Words counter&amp;quot;
+  
+  it should &amp;quot;have stable count, with generated RDDs&amp;quot; in {
+     val stableProperty =
+       forAll(RDDGenerator.genRDD[String](sc)(Arbitrary.arbitrary[String])) {
+         rdd =&amp;gt; None === RDDComparisons.compare(WordCounter.count(rdd), WordCounter.count(rdd))
+       }
+     check(stableProperty)
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here, &lt;code&gt;RddGenerator.genRDD[String]&lt;/code&gt; will generate RDDs on top of random Strings.&lt;/p&gt;
+
+&lt;p&gt;We declare the property to have the same count result when executing twice the method.&lt;/p&gt;
+
+&lt;p&gt;We then test the property with the ScalaCheck method.&lt;/p&gt;
+
+&lt;p&gt;While not very relevant for the wordcount example, it allows to test your job logic against randomly generated data as input and therefore test the reliability of your code.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;In this article, we have seen how it is possible to refactor and test a Spark job. Testing your jobs will allow faster feedback when implementing them and you can even practice TDD.&lt;/p&gt;
+
+&lt;p&gt;The next step would be to run the tests not only on a local cluster, but on a “production-like” cluster with more data on your continuous integration server. Simply override the &lt;code&gt;setMaster()&lt;/code&gt; value when configuring the &lt;code&gt;SparkContext&lt;/code&gt; to redirect to your test cluster.&lt;/p&gt;
+
+&lt;p&gt;Finally, I definitely recommend you watch Holden Karau’s session on testing Spark recorded at the last Spark Summit (&lt;a href=&#34;https://www.youtube.com/watch?v=rOQEiTXNS0g&#34;&gt;video&lt;/a&gt;, &lt;a href=&#34;http://www.slideshare.net/SparkSummit/beyond-parallelize-and-collect-by-holden-karau&#34;&gt;slides&lt;/a&gt;).
+You can find the code for these examples &lt;a href=&#34;https://github.com/raphaelbrugier/spark-testing-example&#34;&gt;on Github&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Retour sur QCon London 2012</title>
       <link>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
       <pubDate>Sun, 01 Apr 2012 18:58:03 +0000</pubDate>
