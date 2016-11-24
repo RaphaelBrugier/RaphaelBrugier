@@ -6,8 +6,86 @@
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Nov 2016 19:47:37 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 23 Nov 2016 18:37:21 -0500</lastBuildDate>
     <atom:link href="http://www.raphael-brugier.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>git commit fixup</title>
+      <link>http://www.raphael-brugier.com/blog/git-commit-fixup/</link>
+      <pubDate>Wed, 23 Nov 2016 18:37:21 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
+      <description>&lt;p&gt;In this article, I will describe a git option to quickly fix a previous commit.
+This sometimes happens when I want to fix a typo in a previous commit after few new commits.
+The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent commits adding features to facilitate the code reviews.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;(!) Of course, like any &amp;ldquo;rewriting history&amp;rdquo; command which modifies a previous command, it should be used with caution and never used to modify a commit already push.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-options&#34;&gt;The options&lt;/h2&gt;
+
+&lt;p&gt;The option is &lt;code&gt;--fixup&lt;/code&gt; to create a commit fixing a previous one:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit --fixup &amp;lt;commit to fix&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And to automatically apply the &lt;code&gt;fixup&lt;/code&gt; commit when rebasing, add &lt;code&gt;--autosquash&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git rebase -i origin/master --autosquash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;example&#34;&gt;Example:&lt;/h2&gt;
+
+&lt;p&gt;Starting with the following git history:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$git log --oneline --decorate
+d36dc2f code code code
+7add401 add README
+fb5b59c initial commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you realize you did a typo in the initial README file you can fix and want to modify the &amp;lsquo;add README&amp;rsquo; commit instead of creating a new commit for a typo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;${fix the typo}
+$git add .
+$git commit --fixup 7add401
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Git has created a commit with a message prefixed with &amp;lsquo;!fixup&amp;rsquo; :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$git log --oneline --decorate
+7fd8071 (HEAD -&amp;gt; master) fixup! add README
+d36dc2f code code code
+7add401 add README
+fb5b59c initial commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, you can rewrite the git history of the 3 previous commits with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git rebase --interactive --autosquash HEAD~3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the result:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$git log --oneline --decorate
+3ec6daa (HEAD -&amp;gt; master) code code code
+d6c4c24 add README
+fb5b59c initial commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;--autosquash&lt;/code&gt; option has automatically reordered and applied the fixup commit.
+Note that this option only works with an interactive rebase.&lt;/p&gt;
+
+&lt;p&gt;Since the &lt;code&gt;--autosquash&lt;/code&gt; option only applies to fixup commit, it is safe to  enable it by default in the git config:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global rebase.autosquash true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And voilà! No more almost empty commits to fix typos.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://robots.thoughtbot.com/autosquashing-git-commits&#34;&gt;source&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>about</title>
@@ -1714,130 +1792,6 @@ Le principe : différer le téléchargement des blocs indépendants de l&amp;rs
 &lt;h4 id=&#34;sources&#34;&gt;Sources :&lt;/h4&gt;
 
 &lt;p&gt;Google camp fire on GWT and Speed Tracer : &lt;a href=&#34;http://www.youtube.com/watch?v=D2ibM4oufdM&#34;&gt;part 1&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=JQpuDB2Jxfg&amp;amp;amp;feature=channel&#34;&gt;part 2&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=QrnbKZ3hxls&amp;amp;amp;feature=channel&#34;&gt;part 3&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=WM6KPW8ZyjU&amp;amp;amp;feature=channel&#34;&gt;part 4&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=mnSNVfxK19Y&amp;amp;amp;feature=channel&#34;&gt;part 5&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=Kfh6IX-yhsc&amp;amp;amp;feature=channel&#34;&gt;part 6&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Google IO mai 2009 : Best Practices For Architecting Your GWT App</title>
-      <link>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</link>
-      <pubDate>Sun, 06 Sep 2009 14:34:00 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</guid>
-      <description>
-
-&lt;p&gt;Lors de la conférence annuelle de Google, en mai dernier, Ray Ryan à fait une présentation très intéressante sur les meilleures pratiques pour concevoir une application avec GWT. Cette présentation, a eu beaucoup d&amp;rsquo;écho dans la communauté GWT et plusieurs frameworks sont apparus pour faciliter l&amp;rsquo;implémentation de ces &amp;ldquo;bonne pratiques&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;&lt;object width=&#34;425&#34; height=&#34;344&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/PDuhR18-EdM&amp;hl=fr&amp;fs=1&amp;&#34; /&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34; /&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34; /&gt;&lt;embed src=&#34;http://www.youtube.com/v/PDuhR18-EdM&amp;hl=fr&amp;fs=1&amp;&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;425&#34; height=&#34;344&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-
-&lt;p&gt;Voici un résumé sous forme de note de quelques points importants abordés dans cette présentation.&lt;/p&gt;
-
-&lt;h4 id=&#34;ajax&#34;&gt;AJAX&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Il faut minimiser la taille des objets retournés au client. Par exemple en ayant une liste d&amp;rsquo;identifiants d&amp;rsquo;objets en attribut plutôt qu&amp;rsquo;une liste d&amp;rsquo;objets.&lt;/li&gt;
-&lt;li&gt;Il faut spécifier le type d&amp;rsquo;une liste lorsque cela est possible:
-&lt;code&gt;ArrayList&amp;lt;Object&amp;gt; maListe;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;plutôt que&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;List&amp;lt;Object&amp;gt; maListe;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;En effet, le compilateur GWT produira moins de code javascript s&amp;rsquo;il connaît plus précisément le type de liste.&lt;/p&gt;
-
-&lt;h4 id=&#34;command-pattern&#34;&gt;Command Pattern&lt;/h4&gt;
-
-&lt;p&gt;Le &amp;ldquo;Command Pattern&amp;rdquo; est un &lt;a href=&#34;http://dico.developpez.com/html/3161-Conception-Command-design-pattern-command.php&#34;&gt;pattern classique des IHM&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Appliqué à GWT il permet de&amp;nbsp;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Mettre en place plus facilement une solution de cache. Avant d&amp;rsquo;appeler un service, la commande execute vérifiera qu&amp;rsquo;elle n&amp;rsquo;a pas déjà la donnée.&lt;/li&gt;
-&lt;li&gt;Mettre en place plus facilement des traitements par lots (batch).&lt;/li&gt;
-&lt;li&gt;Centraliser les messages d&amp;rsquo;erreurs. Les onFailure() des réponses asynchrones pourront directement être implémenté dans la classe command.&lt;/li&gt;
-&lt;li&gt;Découper le code javascript avec la méthode runAsync() de gwt 2.0  Les classes command qui encapsulent les services pourront être chargé par l&amp;rsquo;application que lorsque c&amp;rsquo;est nécessaire.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Les exemples de code présentés:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;/** Le nom Command est déjà utilisé dans GWT et est donc remplacé par Action */
-interface Action&amp;lt;t extends response&amp;gt; { }
-
-        interface Response { }
-
-        interface ContactsService extends RemoteService {
-        &amp;lt;t extends response&amp;gt; T execute(Action&amp;lt;t&amp;gt; action);
-            }
-
-            interface ContactsServiceAsync {
-            void execute(Action&amp;lt;t&amp;gt; action, AsyncCallback&amp;lt;t&amp;gt; callback);
-                }
-
-                class GetDetails implements Action&amp;lt;getdetailsresponse&amp;gt; {
-                    private final ArrayList&amp;lt;contactdetailid&amp;gt; ids;
-
-                        public GetDetails(ArrayList&amp;lt;contactdetailid&amp;gt; ids) {
-                            this.ids = ids;
-                            }
-
-                            public ArrayList&amp;lt;contactdetailid&amp;gt; getIds() {
-                                return ids;
-                                }
-                                }
-
-                                class GetDetailsResponse implements Response {
-                                private final ArrayList&amp;lt;contactdetail&amp;gt; details;
-                                    public GetDetailsResponse(ArrayList&amp;lt;contactdetail&amp;gt; details) {
-                                        this.details = details;
-                                        }
-                                        public ArrayList&amp;lt;contactdetail&amp;gt; getDetails() {
-                                            return new ArrayList&amp;lt;contactdetail&amp;gt;(details);
-                                                }
-                                                }
-
-                                                abstract class GotDetails implements
-                                                AsyncCallback&amp;lt;getdetailsresponse&amp;gt; {
-                                                    public void onFailure(Throwable oops) {
-                                                    /* default appwide failure handling */
-                                                    }
-                                                    public void onSuccess(GetDetailsResponse result) {
-                                                    got(result.getDetails());
-                                                    }
-                                                    public abstract void got(ArrayList&amp;lt;contactdetail&amp;gt; details);
-                                                        }
-
-                                                        void showContact(final Contact contact) {
-                                                        service.execute(new GetDetails(contact.getDetailIds()),
-                                                        new GotDetails() {
-                                                        public void got(ArrayList&amp;lt;contactdetail&amp;gt; details) {
-                                                            renderContact(contact);
-                                                            renderDetails(details);
-                                                            }
-                                                            });
-                                                            }&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/getdetailsresponse&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetailid&amp;gt;&amp;lt;/contactdetailid&amp;gt;&amp;lt;/contactdetailid&amp;gt;&amp;lt;/getdetailsresponse&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Une librairie proposant une implémentation du command-pattern est disponible : &lt;a href=&#34;http://code.google.com/p/gwt-dispatch/&#34;&gt;gwt-dispatch&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;event-bus&#34;&gt;Event bus&lt;/h4&gt;
-
-&lt;p&gt;Plutôt que d&amp;rsquo;enregistrer les composants graphiques entre eux et d&amp;rsquo;utiliser le classique &lt;em&gt;MVC&lt;/em&gt;, Ray recommande d&amp;rsquo;utiliser un &amp;ldquo;Event bus&amp;rdquo;. Chaque composant s&amp;rsquo;enregistre sur le bus (en fait un handlerManager) et reste à l&amp;rsquo;écoute d&amp;rsquo;événements.&lt;/p&gt;
-
-&lt;h3 id=&#34;model-view-presenter-mvp&#34;&gt;Model-View-Presenter (MVP)&lt;/h3&gt;
-
-&lt;p&gt;Le &amp;ldquo;&lt;a href=&#34;http://martinfowler.com/eaaDev/SupervisingPresenter.html&#34;&gt;Model-View-Presenter&lt;/a&gt;&amp;rdquo; pattern vient en remplacement du classique &lt;em&gt;MVC&lt;/em&gt; dans les applications GWT.&lt;/p&gt;
-
-&lt;p&gt;L&amp;rsquo;utilisation de ce pattern facilite les Test Unitaires, seul la partie &amp;ldquo;Presenter&amp;rdquo; a besoin d&amp;rsquo;être testée. Les changements dans la partie &amp;ldquo;View&amp;rdquo; sont entièrement géré par la partie &amp;ldquo;Presenter&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Une librairie proposant une implémentation du MVP et de l&amp;rsquo;event-bus est disponible : &lt;a href=&#34;http://code.google.com/p/gwt-presenter/&#34;&gt;gwt-presenter&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;injection-de-dépendance&#34;&gt;Injection de dépendance&lt;/h4&gt;
-
-&lt;p&gt;L&amp;rsquo;injection de dépendance est réalisé du coté client avec le framework GIN et du coté serveur avec le framework GUICE. Je ne pense pas que ce soit nécessaire de rappeler les bénéfices de l&amp;rsquo;injection, Spring est là pour ça ;)&lt;/p&gt;
-
-&lt;h4 id=&#34;test-unitaires&#34;&gt;Test unitaires&lt;/h4&gt;
-
-&lt;p&gt;La partie &amp;ldquo;Presenter&amp;rdquo; du pattern MVP est facilement testable grace à l&amp;rsquo;utilisation de mock pour simuler la partie &amp;ldquo;View&amp;rdquo;. EasyMock ou d&amp;rsquo;autres frameworks simplifie la création de mock et des test unitaires.&lt;/p&gt;
 </description>
     </item>
     

@@ -7,7 +7,7 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>GWT and HTML under control</title>
+  <title>Tips</title>
 
   <meta name="author" content="" />
   <meta name="keywords" content="">
@@ -74,9 +74,9 @@
   <link rel="alternate" href="http://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
 
   
-  <meta property="og:title" content="GWT and HTML under control" />
+  <meta property="og:title" content="Tips" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/blog/gwt-and-html-under-control//" />
+  <meta property="og:url" content="/tags/tips//" />
   <meta property="og:image" content="" />
 
 </head>
@@ -168,7 +168,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>GWT and HTML under control</h1>
+                <h1>Tips</h1>
             </div>
         </div>
     </div>
@@ -177,64 +177,61 @@
 
         <div id="content">
             <div class="container">
-
                 <div class="row">
-
                     
 
-                    <div class="col-md-9" id="blog-post">
+                    <div class="col-md-9" id="blog-listing-medium">
 
-                        <p class="text-muted text-uppercase mb-small text-right">January 16, 2011</p>
-
-                        <div id="post-content">
-                          <p>In the past weeks I&rsquo;ve seen two articles about making clean design with GWT. That was really interesting, but something still stugling me a lot. Both authors agreed not to use  layout widgets provided by GWT to build UI neither UiBinder but use instead a big ugly static String to store an HTML code/</p>
-
-<p>Take a closer look at those two articles and come back later to find out a better way to improve your design based on GWT.</p>
-
-<p><a href="http://i-proving.ca/space/Technologies/GWT/Lightweight+GWT+layouts">Lightweight GWT layouts</a></p>
-
-<p><a href="http://www.zackgrossbart.com/hackito/tags-first-gwt/">Tags first GWT</a></p>
-
-<p>The purpose is to write a clean HTML with the least number of tags and have that HTML code under control with only CSS. I do agree that using the old GWT layout system is a really mess producing a lot of tables and ugly code.</p>
-
-<p>However, since GWT 2.0, Google brought us <a href="http://www.google.com/events/io/2010/sessions/gwt-ui-overhaul.html">a better layout system</a> with the widgets positionned using only div and css. With this system you can normally reach a clean design without generating table tags and a lof HTML mess.</p>
-
-<p>But since the web is all about simple html and css, I agree with Zack Grossbart that you need to have a perfect control of your UI with the least html tags and just css.</p>
-
-<p>But with the version 2.0 GWT also introduces a wonderful feature called UiBinder. With UiBinder you can describe in a declarative way your design separated from your logic. You can especially use the HtmlPanel panel to mix up classic HTML/CSS and GWT widgets. This is exactly what they wanted to do ! Use classic HTML and CSS to describe the UI and GWT only for the control. By using UiBinder they can take advantage of a powerfull tool having a built-in feature to bind GWT widgets from the xml to the Java and many mores.</p>
-
-<p>Putting your html within a static String is not really that clean and maintainable. So please, for God sake, do not do it ! <a href="http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideUiBinder.html">Learn the API</a> and <a href="http://www.google.com/events/io/2010/sessions.html#GWT">follow the best practices</a>.</p>
-
-<p>[update] I&rsquo;ve now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see <a href="/blog/wordpress-login-form-with-gwt-and-uibinder/">this post</a>.</p>
-
-                        </div>
-                        <div>
-                          <a class="twitter-share-button"
-                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=GWT,"
-                             data-size="large">
-                          </a>
-                        </div>
                         
                         
-                        <div id="comments">
-                            <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'raphaelbrugierblog';
-    var disqus_identifier = '366559782';
-    var disqus_title = 'GWT and HTML under control';
-    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/gwt-and-html-under-control\/';
+                        <section class="post">
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <div class="image">
+                                      <a href="http://www.raphael-brugier.com/blog/git-commit-fixup/">
+                                          
+                                          <img src="http://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                                          
+                                      </a>
+                                  </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h2><a href="http://www.raphael-brugier.com/blog/git-commit-fixup/">git commit fixup</a></h2>
+                                    <div class="clearfix">
+                                        <p class="author-category">
+                                          
+                                          
+                                          
+                                          in <a href="http://www.raphael-brugier.com/categories/programming">programming</a>
+                                          
+                                          
 
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-                        </div>
+                                        </p>
+                                        <p class="date-comments">
+                                            <a href="http://www.raphael-brugier.com/blog/git-commit-fixup/"><i class="fa fa-calendar-o"></i> November 23, 2016</a>
+                                        </p>
+                                    </div>
+                                    <p class="intro"><p>In this article, I will describe a git option to quickly fix a previous commit.
+This sometimes happens when I want to fix a typo in a previous commit after few new commits.
+The goal is to keep a &ldquo;clean&rdquo; git history with consistent commits adding features to facilitate the code reviews.</p>
+
+<p></p></p>
+                                    <p class="read-more"><a href="http://www.raphael-brugier.com/blog/git-commit-fixup/" class="btn btn-template-main">Continue reading</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
                         
 
+                        <ul class="pager">
+                            
+                            <li class="previous disabled"><a href="#">&larr; Newer</a></li>
+                            
+
+                            
+                            <li class="next disabled"><a href="#">Older &rarr;</a></li>
+                            
+                        </ul>
                     </div>
                     
 
@@ -286,7 +283,6 @@
 
                 </div>
                 
-
             </div>
             
         </div>

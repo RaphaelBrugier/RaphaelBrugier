@@ -7,7 +7,7 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>GTAC 2009 – Lessons learned from testing GWT applications</title>
+  <title>git commit fixup</title>
 
   <meta name="author" content="" />
   <meta name="keywords" content="">
@@ -74,9 +74,9 @@
   <link rel="alternate" href="http://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
 
   
-  <meta property="og:title" content="GTAC 2009 – Lessons learned from testing GWT applications" />
+  <meta property="og:title" content="git commit fixup" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/blog/gtac-2009-lessons-learned-from-testing-gwt-applications//" />
+  <meta property="og:url" content="/blog/git-commit-fixup//" />
   <meta property="og:image" content="" />
 
 </head>
@@ -168,7 +168,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>GTAC 2009 – Lessons learned from testing GWT applications</h1>
+                <h1>git commit fixup</h1>
             </div>
         </div>
     </div>
@@ -184,204 +184,83 @@
 
                     <div class="col-md-9" id="blog-post">
 
-                        <p class="text-muted text-uppercase mb-small text-right">May 30, 2010</p>
+                        <p class="text-muted text-uppercase mb-small text-right">November 23, 2016</p>
 
                         <div id="post-content">
-                          
+                          <p>In this article, I will describe a git option to quickly fix a previous commit.
+This sometimes happens when I want to fix a typo in a previous commit after few new commits.
+The goal is to keep a &ldquo;clean&rdquo; git history with consistent commits adding features to facilitate the code reviews.</p>
 
-<p>Les 21 et 22 octobre 2009 avait lieux à Zurich la conférence annuelle de Google sur les test automatisées.</p>
+<p></p>
 
-<p>Parmi toutes les conférences proposées, une m&rsquo;intéressait particulièrement puisqu&rsquo;elle concerne les test d&rsquo;applications réalisées en Gwt.</p>
+<p>(!) Of course, like any &ldquo;rewriting history&rdquo; command which modifies a previous command, it should be used with caution and never used to modify a commit already push.</p>
 
-<p>Voici donc la vidéo de la présentation ainsi que les slides et quelques notes que j&rsquo;ai pris en la visionnant.</p>
+<h2 id="the-options">The options</h2>
 
-<p><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="480" height="385" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.youtube.com/v/TFfEjo3oFfM&amp;hl=fr_FR&amp;fs=1&amp;" /><param name="allowfullscreen" value="true" /><embed type="application/x-shockwave-flash" width="480" height="385" src="http://www.youtube.com/v/TFfEjo3oFfM&amp;hl=fr_FR&amp;fs=1&amp;" allowscriptaccess="always" allowfullscreen="true"></embed></object></p>
+<p>The option is <code>--fixup</code> to create a commit fixing a previous one:</p>
 
-<h2 id="comment-tester-les-applications-gwt-slide-8">Comment tester les applications Gwt ? (slide 8 )</h2>
-
-<h3 id="avec-selenium">Avec selenium :</h3>
-
-<p>Selenium va simuler au plus près l&rsquo;interaction qu&rsquo;a un vrai utilisateur avec le navigateur puisqu&rsquo;il démarre un vrai navigateur et réalise directement les opérations de test sur celui-ci. Cependant cette approche est très coûteuse en temps d&rsquo;exécution et surtout plus difficile pour maintenir les tests et plus dure à débugguer.</p>
-
-<h3 id="avec-gwttestcase">Avec GwtTestCase :</h3>
-
-<p>Cet outil, fourni avec Gwt ,démarre lui aussi un navigateur embarqué pour exécuter les tests. Cependant ici, on parle de &ldquo;crossCompilation&rdquo; puisque le code java est compilée en JS à la volée pour être exécuté par le navigateur embarqué. De la même façon que le development mode. Cet outil est plus rapide que selenium et plus facile à maintenir puisque les tests sont écrits en Java et lancés de la même façons que des tests Junit. Cependant, le fait que le code final testé est du javascript (après compilation à la volée donc) rend plus difficile le débuggage.</p>
-
-<h3 id="avec-junit">Avec Junit :</h3>
-
-<p>Ici on utilise classiquement Junit pour simuler les interactions utilisateurs. C&rsquo;est le plus facile à maintenir et débugguer, puisque le mieux maîtriser et outillé. Cependant c&rsquo;est aussi évidemment le moins réaliste puisqu&rsquo;aucun navigateur n&rsquo;est démarré pour tester le comportement réel du code compilé.</p>
-
-<h2 id="les-problèmes-rencontrés-pendant-les-tests">Les problèmes rencontrés pendant les tests</h2>
-
-<h3 id="problème-1-tester-les-appels-asynchrones-slides-9-à-13">Problème 1 : tester les appels asynchrones (slides 9 à 13) :</h3>
-
-<p>Les appels aysnchrones sont la nature même des applications Ajax. C&rsquo;est le A de Ajax ! Avec ces appels, il n&rsquo;y a aucune garantie sur le temps nécessaire pour qu&rsquo;ils réussissent, ni même d&rsquo;ailleurs s&rsquo;ils réussiront un jour (les pauvres :s). Ce sont ces mêmes appels que vous utilisez avec le mécanisme RPC de Gwt :</p>
-
-<pre><code class="language-java">myservice.call(new AsyncCallBack() {
-    public void onSuccess(QueryResponse response) {
-        searchButton.setEnabled(true);
-
-        if(response.count() == 0 {
-            resultPanel.add(new Label(&quot;no team found&quot;);
-        } else {
-            //ajouter la réponse dans un panel, etc
-        }
-    }
-
-    public void onFailure(Throwable ex) {
-        //traiter l'échec de l'appel asynchrone
-    }
-}
+<pre><code>git commit --fixup &lt;commit to fix&gt;
 </code></pre>
 
-<p>Test :</p>
+<p>And to automatically apply the <code>fixup</code> commit when rebasing, add <code>--autosquash</code>:</p>
 
-<pre><code class="language-java">MyService myService = mock(MyService.class);
-QueryHandler client = new QueryHandler(mySerice);
-client.performQuery(&quot;test query&quot;);
-ArgumentCaptor&amp;lt;Asyncallback&amp;gt; captor = ArgumentCaptor.forClass(AsynCallback.class);
-verify(myService).call(&quot;test query&quot;, captor.capture);
-AsyncCallback&amp;lt;QueryResponse&amp;gt; callback = captor.getValue;
-
-//Réel appel à onSuccess
-
-QueryResponse fakeResponse = createFakeResponseForTesting();
-callback.onSuccess(fakeResponse);
-
-//Tester les résultats.
+<pre><code>git rebase -i origin/master --autosquash
 </code></pre>
 
-<p>Ce que l&rsquo;on veut tester ici, c&rsquo;est le résultat d&rsquo;un appel à la méthode onSuccess avec le résultat d&rsquo;une réponse de callBack.</p>
+<h2 id="example">Example:</h2>
 
-<p>Ce qu&rsquo;il faut bien voir c&rsquo;est que toute la première partie du test ( mocker le service, mocker le callback, récupérer le callback de réponse), tout ça n&rsquo;est fait que pour pouvoir appeler la méthode onSuccess du callBack ! ça fait donc beaucoup de plomberie pour tester une simple méthode !</p>
+<p>Starting with the following git history:</p>
 
-<p>L&rsquo;astuce consiste à toujours remplacer le traitement qu&rsquo;on ferait dans la méthode onSuccess par un appel à une autre méthode : doTraiterReponse(response);</p>
-
-<p>Cette méthode, fera tout le travail de traitement nécessaire. Ainsi il est plus simple de la tester :</p>
-
-<p>QueryHandler.java :</p>
-
-<pre><code class="language-java">myservice.call(new AsyncCallBack() {
-    public void  onSuccess(QueryResponse response) {
-        doTraiterReponse(response);
-    }
-
-    public  void onFailure(Throwable ex) {
-        //traiter l'échec de l'appel  asynchrone
-    }
-}
+<pre><code>$git log --oneline --decorate
+d36dc2f code code code
+7add401 add README
+fb5b59c initial commit
 </code></pre>
 
-<p>Test :</p>
+<p>If you realize you did a typo in the initial README file you can fix and want to modify the &lsquo;add README&rsquo; commit instead of creating a new commit for a typo:</p>
 
-<pre><code class="language-java">QueryHandler client = new QueryHandler(null) // Plus besoin de service !
-
-QueryResponse fakeResponse = createFakeResponseForTesting();
-client.doTraiterReponse(fakeresponse);
-
-//Tester les résultats
+<pre><code>${fix the typo}
+$git add .
+$git commit --fixup 7add401
 </code></pre>
 
-<h3 id="problème-2-opérations-directe-sur-le-dom-slides-14-à-16">Problème 2 : Opérations directe sur le DOM (slides 14 à 16)</h3>
+<p>Git has created a commit with a message prefixed with &lsquo;!fixup&rsquo; :</p>
 
-<p>Gwt permet de manipuler directement le DOM du document HTML :</p>
-
-<pre><code class="language-java">String selectedLanguage = DOM.getElementByID(&quot;languageSelection&quot;).getPropertyString(&quot;value&quot;);
+<pre><code>$git log --oneline --decorate
+7fd8071 (HEAD -&gt; master) fixup! add README
+d36dc2f code code code
+7add401 add README
+fb5b59c initial commit
 </code></pre>
 
-<p>Ici, la solution est simple :APPRENDRE L&rsquo;API !</p>
+<p>Now, you can rewrite the git history of the 3 previous commits with:</p>
 
-<p>En utilisant uniquement les widgets gwt qui encapsule tout la manipulation du DOM, il est plus facile de tester unitairement ces Widgets.</p>
-
-<p>Ici on aurait utilisé une ListBox dans une panel.</p>
-
-<h3 id="problème-3-mixer-java-et-javascript-slides-17-à-19">Problème 3 : mixer Java et Javascript (slides 17 à 19)</h3>
-
-<p>Gwt propose un mécanisme pour encapsuler du code javascript dans des méthodes Java :</p>
-
-<pre><code class="language-java">private native void showPlayer /*{
-    $wnd.showPlayer;
-}*/;
+<pre><code>git rebase --interactive --autosquash HEAD~3
 </code></pre>
 
-<p>Ici, le mélange javascript/java ne permet de tester unitairement avec Junit les méthodes natives.</p>
+<p>And the result:</p>
 
-<p>La solution la plus simple reste d&rsquo;isoler ces méthodes dans des classes dédiées et de les mocker quand elles sont utilisées.</p>
-
-<p>Pour tester ces méthodes, il faudra faire appels à GwtTestCase qui lui aura la capacité d&rsquo;exécuter du code mixant java (compilée à la volée en javascript) et appels natifs au code javascript.</p>
-
-<h3 id="problème-4-static-global-access-slides-20-à-27">Problème 4 : static/global access (slides 20 à 27)</h3>
-
-<p>Les accès statics ou aux variables globales sont difficiles à suivre, et donc à débugguer.</p>
-
-<p>Pour isoler les dépendances de la classe à tester, on mettra en oeuvre l&rsquo;injection de dépendance pour mocker les classes utilisées dans les tests.</p>
-
-<p>Pour rappel, il existe un framework d&rsquo;injection de dépendances développé par Google pour Gwt : <a href="http://code.google.com/p/google-gin/">Gin</a>.</p>
-
-<p>Il est basé sur Guice, le framework d&rsquo;injection de Google.</p>
-
-<h3 id="problème-5-séparation-des-responsabilités-slides-28-à-32">Problème 5 : Séparation des responsabilités (slides 28 à 32)</h3>
-
-<p>Ici le pattern MVP (Model View Presenter) est mis en avant par rapport au classique MVC.</p>
-
-<p>Dans MVC, la vue est écouteur du modèle. Le contrôleur modifie le modèle et la vue écoute ces changements. La vue se met à jour en écoutant tout changement du modèle.</p>
-
-<p>Cette mise à jour entraine forcément qu&rsquo;une partie de la logique du traitement du modèle se retrouve dans la vue, et donc une mauvaise séparation des responsabilité.</p>
-
-<p>Pour parer à cela, le pattern MVP à été introduit. L&rsquo;article fondateur du pattern MVP est celui de <a href="http://martinfowler.com/eaaDev/ModelViewPresenter.html">M. Fowler</a>.</p>
-
-<p>Dans MVP, toute la logique est concentrée dans le Presenter. Le Modèle et la Vue informe le Presenter des changements par un système d&rsquo;évènements. Le Presenter réagit aux évènements et reflète les changements sur le modèle et la vue. Le plus souvent la vue sera d&rsquo;ailleurs une vue passive.</p>
-
-<p>Le slide 32 est particulièrement intéressant, puisque c&rsquo;est lui qui ma donné le déclic pour comprendre toute la logique de MVP.</p>
-
-<p>Avec un Presenter isolé de cette façons, il est facile de le tester unitairement (en pseudo code &ldquo;java&rdquo; pour plus de clarté) :</p>
-
-<pre><code class="language-java">public class Presenter {
-    Vue vue;
-    Model model;
-
-    public Presenter(Vue vue, Model model) {
-        this.model = model;
-        this.vue = vue;
-        attachHandler();
-    }
-
-    private void attachHandler() {
-        vue.getButton.addClickHandler(new ClickHandler() {
-            public void onClick(Event e) {
-                model.save(vue.getData());
-            }
-        });
-    }
-}
+<pre><code>$git log --oneline --decorate
+3ec6daa (HEAD -&gt; master) code code code
+d6c4c24 add README
+fb5b59c initial commit
 </code></pre>
 
-<p>Test :</p>
+<p>The <code>--autosquash</code> option has automatically reordered and applied the fixup commit.
+Note that this option only works with an interactive rebase.</p>
 
-<pre><code class="language-java">//With
-Model mockModel = mock(Model.class);
-Vue mockVue = mock(Vue.class);
-Presenter presenter = new Presenter(mockVue, mockModel);
+<p>Since the <code>--autosquash</code> option only applies to fixup commit, it is safe to  enable it by default in the git config:</p>
 
-//Given
-Data testData = createFakeData();
-vue.setData(testData);
-
-// Assert
-verify(mockModel).save(testData);
-vue.getButton.click();
+<pre><code>git config --global rebase.autosquash true
 </code></pre>
 
-<h3 id="conclusion">Conclusion</h3>
+<p>And voilà! No more almost empty commits to fix typos.</p>
 
-<p>Voilà pour les quelques notes sur cette conférence, il y&rsquo;en a encore beaucoup d&rsquo;autres à regarder qui ne porte pas que sur  GWT mais sur les Test et les bonnes pratiques en général.</p>
-
-<p>Bon visionnage et surtout bon TDD à tous !</p>
-
+<p><a href="https://robots.thoughtbot.com/autosquashing-git-commits">source</a></p>
                         </div>
                         <div>
                           <a class="twitter-share-button"
-                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=GWT,"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=git,tips,"
                              data-size="large">
                           </a>
                         </div>
@@ -391,9 +270,9 @@ vue.getButton.click();
                             <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'raphaelbrugierblog';
-    var disqus_identifier = '398993694';
-    var disqus_title = 'GTAC 2009 – Lessons learned from testing GWT applications';
-    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/gtac-2009-lessons-learned-from-testing-gwt-applications\/';
+    var disqus_identifier = 'http:\/\/www.raphael-brugier.com\/blog\/git-commit-fixup\/';
+    var disqus_title = 'git commit fixup';
+    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/git-commit-fixup\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
