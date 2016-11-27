@@ -6,8 +6,128 @@
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Nov 2016 18:37:21 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 27 Nov 2016 18:02:03 -0500</lastBuildDate>
     <atom:link href="http://www.raphael-brugier.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>My development environment</title>
+      <link>http://www.raphael-brugier.com/blog/my-development-environment/</link>
+      <pubDate>Sun, 27 Nov 2016 18:02:03 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/my-development-environment/</guid>
+      <description>&lt;p&gt;A customized development environment could be a huge productivity boost in the day to day work.
+In this post, I will share the tools and configurations I currently use.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;terminal-iterm-2&#34;&gt;Terminal: iTerm 2&lt;/h1&gt;
+
+&lt;p&gt;I use &lt;a href=&#34;https://iterm2.com/documentation-shell-integration.html&#34;&gt;iTerm 2&lt;/a&gt; 2 instead of the default terminal on mac.
+On linux, I used terminator.&lt;/p&gt;
+
+&lt;p&gt;iTerm 2 adds several features, the most important for me is the ability to have multiple panes and tabs.&lt;/p&gt;
+
+&lt;h1 id=&#34;shell-zsh&#34;&gt;Shell: Zsh&lt;/h1&gt;
+
+&lt;p&gt;Zsh is a shell very similar to bash, but it adds a lot of cooler features:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a programmable autocompletion. You can navigate with the arrows keys the completion for example when browsing a directory&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;a super history substring search&lt;/p&gt;
+
+&lt;p&gt;brew install zsh&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;oh-my-zsh-and-zgen-to-customize-zsh&#34;&gt;oh-my-zsh and Zgen to customize Zsh&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/robbyrussell/oh-my-zsh&#34;&gt;Oh-my-zsh&lt;/a&gt; is probably the most well known set of plugins to enhance Zsh.
+It&amp;rsquo;s a super git repository of plugins, which you can enable to add aliases and parameters completion to your favorites tools.
+I have used it for 3 years and have now switched to &lt;a href=&#34;https://github.com/tarjoilija/zgen&#34;&gt;Zgen&lt;/a&gt; to manage my plugins.
+Zgen loads the plugins faster than oh-my-zsh and more importantly can load plugins from various github repositories.&lt;/p&gt;
+
+&lt;p&gt;Here is my current list of plugins:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  #from zsh
+  zgen oh-my-zsh
+  zgen oh-my-zsh plugins/autojump
+  zgen oh-my-zsh plugins/colored-man-pages
+  zgen oh-my-zsh plugins/docker
+  zgen oh-my-zsh plugins/docker-compose
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/golang
+  zgen oh-my-zsh plugins/sudo
+
+  #theme
+  zgen load bhilburn/powerlevel9k powerlevel9k
+
+  #extra plugins
+  zgen load djui/alias-tips
+  zgen load zsh-users/zsh-syntax-highlighting
+  zgen load zsh-users/zsh-history-substring-search
+  zgen load zsh-users/zsh-autosuggestions
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;autojump&#34;&gt;autojump&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/wting/autojump&#34;&gt;autojump&lt;/a&gt; is a faster way to navigate the directories, to jump to a directory that contains &amp;ldquo;Foo&amp;rdquo; in its name:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  j foo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install it with homebrew and then just add the corresponding oh-my-zsh plugin to load it in your $PATH:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;brew install autojump
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;djui-alias-tips&#34;&gt;djui/alias-tips&lt;/h2&gt;
+
+&lt;p&gt;This Zsh plugin will suggest the corresponding shorter alias after you type a command. Very useful when used in combination with one of the the oh-my-zsh plugins which could add a lot of aliases.&lt;/p&gt;
+
+&lt;h1 id=&#34;dotfiles&#34;&gt;dotfiles&lt;/h1&gt;
+
+&lt;p&gt;I&amp;rsquo;ve started versioning my &amp;ldquo;dotfiles&amp;rdquo; configuration a few years ago.
+For this I use a git repository in my home: ~/dotfiles
+The repository structure follows the hierarchy to install in my home directory.
+For each file, a symbolic link is created in my home directory to point to the real file in my dotfile repository.&lt;/p&gt;
+
+&lt;p&gt;The install script replace the &amp;ldquo;_&amp;rdquo; character with a dot:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;!/bin/bash
+
+# adapted from https://github.com/skeeto/dotfiles/blob/master/install.sh
+
+## Install each _-prefixed file or dir
+find . -regex &amp;quot;./_.*&amp;quot; -type f -print0 | sort -z | while read -d $&#39;\0&#39; file
+do
+    dotfile=${file/.\/_/.}
+
+    ## Install directory first
+    if [ ! -e $(dirname ~/$dotfile) ]; then
+    	echo &amp;quot;create directory: &amp;quot;
+    	echo $(dirname ~/$dotfile)
+        mkdir -p -m 700  $(dirname ~/$dotfile)
+    fi
+
+    ## Create a link to the repository version
+    echo Installing $dotfile
+    ln -fs $(pwd)/$file ~/$dotfile
+    chmod go-rwx $file
+done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;dev-tools&#34;&gt;Dev tools:&lt;/h1&gt;
+
+&lt;p&gt;The other tools I use every day, which would require a post on their own for each&lt;/p&gt;
+
+&lt;h3 id=&#34;intellij&#34;&gt;IntelliJ&lt;/h3&gt;
+
+&lt;p&gt;The best IDE! The refactoring tools are still impressive, and too often unknown.&lt;/p&gt;
+
+&lt;h3 id=&#34;docker&#34;&gt;Docker&lt;/h3&gt;
+
+&lt;p&gt;I use Docker to test technologies, start and throw away tools for my projects, etc&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>git commit fixup</title>
@@ -1704,94 +1824,6 @@ vue.getButton.click();
 &lt;p&gt;Un avis très positif donc pour ce livre. Le premier livre sur GWT 2 est en français et il est bon !&lt;/p&gt;
 
 &lt;p&gt;Nb : à noter qu&amp;rsquo;un &lt;a href=&#34;http://www.programmationgwt2.com&#34;&gt;WIKI&lt;/a&gt; est disponible pour corriger les coquilles du livre ou discuter avec l&amp;rsquo;auteur.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GWT Sortie de la version 2.0</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</link>
-      <pubDate>Thu, 10 Dec 2009 21:51:00 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</guid>
-      <description>
-
-&lt;p&gt;Il y a quelques jours, Google a annoncé la sortie de la version 2 de son framework GWT.&lt;/p&gt;
-
-&lt;p&gt;Cette nouvelle version majeur marque un tournant en apportant de nombreuses fonctionnalités destinées à faciliter la vie du développeur.&lt;/p&gt;
-
-&lt;p&gt;L&amp;rsquo;accent à clairement été mis sur la rapidité dans cette nouvelle version, rapidité pour le développement et rapidité pour l&amp;rsquo;utilisateur final&lt;/p&gt;
-
-&lt;h3 id=&#34;ui-binder&#34;&gt;UI Binder&lt;/h3&gt;
-
-&lt;p&gt;L&amp;rsquo;UI Binder tout d&amp;rsquo;abord est une nouvelle façon de décrire les interfaces GWT de façons déclarative avec une syntaxe XML. L&amp;rsquo;utilisation d&amp;rsquo;UI Binder permet de séparer clairement l&amp;rsquo;interface de la logique l&amp;rsquo;application. Par la suite il sera donc facile de modifier l&amp;rsquo;interface de l&amp;rsquo;application. UI Binder à été complètement intégré au plugin google pour Eclipse, avec par exemple un wizard de création, la complétion du code, le refactoring, &amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;Un petit exemple pour comparer une interface écrite &amp;ldquo;à la&amp;rdquo; swing et avec UI Binder :&lt;/p&gt;
-
-&lt;p&gt;En java :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;final Label label = new Label(&amp;quot;Enter your name&amp;quot;);
-final Button sendButton = new Button(&amp;quot;Send&amp;quot;);
-HorizontalPanel hPanel = new HorizontalPanel();
-hPanel.add(label);
-VerticalPanel vPanel = new VerticalPanel();
-vPanel.add(hPanel);
-vPanel.add(button);&amp;lt;/pre&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Avec Ui binder :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;g:verticalpanel&amp;gt;
-	&amp;lt;g:horizontalpanel&amp;gt;
-		&amp;lt;g:label&amp;gt;Enter your name&amp;lt;/g:label&amp;gt;
-	&amp;lt;/g:horizontalpanel&amp;gt;
-	&amp;lt;g:button text=&amp;quot;Send&amp;quot; stylename=&amp;quot;{style.pretty}&amp;quot; ui:field=&amp;quot;button&amp;quot; /&amp;gt;
-&amp;lt;/g:verticalpanel&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;development-mode&#34;&gt;Development mode&lt;/h3&gt;
-
-&lt;p&gt;Sûrement la fonctionnalité qui va faire gagner le plus de temps aux développeurs. Exit le hosted mode, bonjour le development mode ! :)
-Désormais, un simple plugin installé dans le browser remplace le navigateur de test qui était fournit. Le principe est toujours le même, une simple sauvegarde du fichier modifié et un refresh dans le navigateur permettent de voir les changements. Inutile de compiler en javascript pendant de longues minutes, le byte code java est utilisé à la place. Ceci permet donc par ailleurs de pouvoir tester en même temps le rendu dans plusieurs navigateurs.&lt;/p&gt;
-
-&lt;h3 id=&#34;amélioration-du-code-compilé&#34;&gt;Amélioration du code compilé.&lt;/h3&gt;
-
-&lt;p&gt;Comme à chaque nouvelle version, la qualité du code javascript produit par le compilateur est encore optimisée. Le simple fait donc de recompiler un projet avec cette nouvelle version devrait donc sensiblement améliorer les performances de votre applications web.&lt;/p&gt;
-
-&lt;h3 id=&#34;code-splitting&#34;&gt;Code Splitting&lt;/h3&gt;
-
-&lt;p&gt;Le code splitting part d&amp;rsquo;un constat simple : pourquoi télécharger la totalité du code javascript de l&amp;rsquo;application quand on pourrait télécharger à la demande à la manière du streaming ? Les ingénieurs GWT ont donc ajouté cette fonctionnalité et le premier bénéficiaire en est Wave qui a vu son temps de téléchargement initial considérablement diminué.
-Le principe : différer le téléchargement des blocs indépendants de l&amp;rsquo;application. Quelques lignes de codes suffisent pour cela :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;GWT.runAsync(new RunAsyncCallback() {
-	public void onFailure(Throwable caught) {
-		Window.alert(&amp;quot;Code download failed&amp;quot;);
-	}             
-
-	public void onSuccess() {
-             Window.alert(&amp;quot;Hello, AJAX&amp;quot;);           
-	}         
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;speed-tracer&#34;&gt;Speed Tracer&lt;/h3&gt;
-
-&lt;p&gt;Un outil de profiling a été annoncé en même temps que cette nouvelle version de GWT. Speed tracer est en fait une extension pour Google Chrome qui permet de profiler les requêtes, les temps de parsing et les temps de rendus du navigateur. Speed tracer identifie automatiquement les problèmes de performances de votre application.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.raphael-brugier.com/posts/speedTracer.png&#34;&gt;&lt;img src=&#34;http://www.raphael-brugier.com/posts/speedTracer.png&#34; alt=&#34;speedTracer.png&#34; title=&#34;speedTracer.png, déc. 2009&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;Avec cette nouvelle version de GWT, Google continue la guerre des RIA. L&amp;rsquo;ensemble des fonctionnalités permettra de diminuer le temps de développement et d&amp;rsquo;améliorer l&amp;rsquo;expérience utilisateur.&lt;/p&gt;
-
-&lt;p&gt;Et bien sur, tout cela repose toujours sur les standards HTML 5 + CSS + Ajax donc inutile d&amp;rsquo;installer un plugin propriétaire dans le navigateur comme le demandent flash et silverlight.&lt;/p&gt;
-
-&lt;p&gt;Le premier livre sur  GWT 2 devrait sortir très prochainement et la bonne nouvelle c&amp;rsquo;est qu&amp;rsquo;il est en français !&lt;/p&gt;
-
-&lt;p&gt;C&amp;rsquo;est écrit par &lt;a href=&#34;http://www.dng-consulting.com/blogs/&#34;&gt;Sami Jabber&lt;/a&gt; et vous pouvez déjà &lt;a href=&#34;http://www.eyrolles.com/Accueil/Livre/programmation-gwt-2-9782212125696&#34;&gt;lire le sommaire et un chapitre entier&lt;/a&gt; ou &lt;a href=&#34;http://www.amazon.fr/Programmation-Concevoir-D%C3%A9velopper-Applications-Toolkit/dp/2212125690/ref=pd_sxp_grid_pt_0_0&#34;&gt;le commander ici&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&#34;sources&#34;&gt;Sources :&lt;/h4&gt;
-
-&lt;p&gt;Google camp fire on GWT and Speed Tracer : &lt;a href=&#34;http://www.youtube.com/watch?v=D2ibM4oufdM&#34;&gt;part 1&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=JQpuDB2Jxfg&amp;amp;amp;feature=channel&#34;&gt;part 2&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=QrnbKZ3hxls&amp;amp;amp;feature=channel&#34;&gt;part 3&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=WM6KPW8ZyjU&amp;amp;amp;feature=channel&#34;&gt;part 4&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=mnSNVfxK19Y&amp;amp;amp;feature=channel&#34;&gt;part 5&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=Kfh6IX-yhsc&amp;amp;amp;feature=channel&#34;&gt;part 6&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/git/index.xml</link>
+    <link>http://www.raphael-brugier.com/tags/terminal/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://www.raphael-brugier.com/tags/terminal/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>My development environment</title>
@@ -126,84 +126,6 @@ done
 &lt;h3 id=&#34;docker&#34;&gt;Docker&lt;/h3&gt;
 
 &lt;p&gt;I use Docker to test technologies, start and throw away tools for my projects, etc&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>git commit fixup</title>
-      <link>http://www.raphael-brugier.com/blog/git-commit-fixup/</link>
-      <pubDate>Wed, 23 Nov 2016 18:37:21 -0500</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
-      <description>&lt;p&gt;In this article, I will describe a git option to quickly fix a previous commit.
-This sometimes happens when I want to fix a typo in a previous commit after few new commits.
-The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent commits adding features to facilitate the code reviews.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;(!) Of course, like any &amp;ldquo;rewriting history&amp;rdquo; command which modifies a previous command, it should be used with caution and never used to modify a commit already push.&lt;/p&gt;
-
-&lt;h2 id=&#34;the-options&#34;&gt;The options&lt;/h2&gt;
-
-&lt;p&gt;The option is &lt;code&gt;--fixup&lt;/code&gt; to create a commit fixing a previous one:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git commit --fixup &amp;lt;commit to fix&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And to automatically apply the &lt;code&gt;fixup&lt;/code&gt; commit when rebasing, add &lt;code&gt;--autosquash&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git rebase -i origin/master --autosquash
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;example&#34;&gt;Example:&lt;/h2&gt;
-
-&lt;p&gt;Starting with the following git history:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$git log --oneline --decorate
-d36dc2f code code code
-7add401 add README
-fb5b59c initial commit
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you realize you did a typo in the initial README file you can fix and want to modify the &amp;lsquo;add README&amp;rsquo; commit instead of creating a new commit for a typo:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;${fix the typo}
-$git add .
-$git commit --fixup 7add401
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Git has created a commit with a message prefixed with &amp;lsquo;!fixup&amp;rsquo; :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$git log --oneline --decorate
-7fd8071 (HEAD -&amp;gt; master) fixup! add README
-d36dc2f code code code
-7add401 add README
-fb5b59c initial commit
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now, you can rewrite the git history of the 3 previous commits with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git rebase --interactive --autosquash HEAD~3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And the result:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$git log --oneline --decorate
-3ec6daa (HEAD -&amp;gt; master) code code code
-d6c4c24 add README
-fb5b59c initial commit
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;--autosquash&lt;/code&gt; option has automatically reordered and applied the fixup commit.
-Note that this option only works with an interactive rebase.&lt;/p&gt;
-
-&lt;p&gt;Since the &lt;code&gt;--autosquash&lt;/code&gt; option only applies to fixup commit, it is safe to  enable it by default in the git config:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git config --global rebase.autosquash true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And voilà! No more almost empty commits to fix typos.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://robots.thoughtbot.com/autosquashing-git-commits&#34;&gt;source&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
