@@ -6,8 +6,128 @@
     <description>Recent content in Blog-rsses on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Nov 2016 18:37:21 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 27 Nov 2016 18:02:03 -0500</lastBuildDate>
     <atom:link href="http://www.raphael-brugier.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>My development environment</title>
+      <link>http://www.raphael-brugier.com/blog/my-development-environment/</link>
+      <pubDate>Sun, 27 Nov 2016 18:02:03 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/my-development-environment/</guid>
+      <description>&lt;p&gt;A customized development environment could be a huge productivity boost in the day to day work.
+In this post, I will share the tools and configurations I currently use.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;terminal-iterm-2&#34;&gt;Terminal: iTerm 2&lt;/h1&gt;
+
+&lt;p&gt;I use &lt;a href=&#34;https://iterm2.com/documentation-shell-integration.html&#34;&gt;iTerm 2&lt;/a&gt; 2 instead of the default terminal on mac.
+On linux, I used terminator.&lt;/p&gt;
+
+&lt;p&gt;iTerm 2 adds several features, the most important for me is the ability to have multiple panes and tabs.&lt;/p&gt;
+
+&lt;h1 id=&#34;shell-zsh&#34;&gt;Shell: Zsh&lt;/h1&gt;
+
+&lt;p&gt;Zsh is a shell very similar to bash, but it adds a lot of cooler features:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a programmable autocompletion. You can navigate with the arrows keys the completion for example when browsing a directory&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;a super history substring search&lt;/p&gt;
+
+&lt;p&gt;brew install zsh&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;oh-my-zsh-and-zgen-to-customize-zsh&#34;&gt;oh-my-zsh and Zgen to customize Zsh&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/robbyrussell/oh-my-zsh&#34;&gt;Oh-my-zsh&lt;/a&gt; is probably the most well known set of plugins to enhance Zsh.
+It&amp;rsquo;s a super git repository of plugins, which you can enable to add aliases and parameters completion to your favorites tools.
+I have used it for 3 years and have now switched to &lt;a href=&#34;https://github.com/tarjoilija/zgen&#34;&gt;Zgen&lt;/a&gt; to manage my plugins.
+Zgen loads the plugins faster than oh-my-zsh and more importantly can load plugins from various github repositories.&lt;/p&gt;
+
+&lt;p&gt;Here is my current list of plugins:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  #from zsh
+  zgen oh-my-zsh
+  zgen oh-my-zsh plugins/autojump
+  zgen oh-my-zsh plugins/colored-man-pages
+  zgen oh-my-zsh plugins/docker
+  zgen oh-my-zsh plugins/docker-compose
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/golang
+  zgen oh-my-zsh plugins/sudo
+
+  #theme
+  zgen load bhilburn/powerlevel9k powerlevel9k
+
+  #extra plugins
+  zgen load djui/alias-tips
+  zgen load zsh-users/zsh-syntax-highlighting
+  zgen load zsh-users/zsh-history-substring-search
+  zgen load zsh-users/zsh-autosuggestions
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;autojump&#34;&gt;autojump&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/wting/autojump&#34;&gt;autojump&lt;/a&gt; is a faster way to navigate the directories, to jump to a directory that contains &amp;ldquo;Foo&amp;rdquo; in its name:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  j foo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install it with homebrew and then just add the corresponding oh-my-zsh plugin to load it in your $PATH:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;brew install autojump
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;djui-alias-tips&#34;&gt;djui/alias-tips&lt;/h2&gt;
+
+&lt;p&gt;This Zsh plugin will suggest the corresponding shorter alias after you type a command. Very useful when used in combination with one of the the oh-my-zsh plugins which could add a lot of aliases.&lt;/p&gt;
+
+&lt;h1 id=&#34;dotfiles&#34;&gt;dotfiles&lt;/h1&gt;
+
+&lt;p&gt;I&amp;rsquo;ve started versioning my &amp;ldquo;dotfiles&amp;rdquo; configuration a few years ago.
+For this I use a git repository in my home: ~/dotfiles
+The repository structure follows the hierarchy to install in my home directory.
+For each file, a symbolic link is created in my home directory to point to the real file in my dotfile repository.&lt;/p&gt;
+
+&lt;p&gt;The install script replace the &amp;ldquo;_&amp;rdquo; character with a dot:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;!/bin/bash
+
+# adapted from https://github.com/skeeto/dotfiles/blob/master/install.sh
+
+## Install each _-prefixed file or dir
+find . -regex &amp;quot;./_.*&amp;quot; -type f -print0 | sort -z | while read -d $&#39;\0&#39; file
+do
+    dotfile=${file/.\/_/.}
+
+    ## Install directory first
+    if [ ! -e $(dirname ~/$dotfile) ]; then
+    	echo &amp;quot;create directory: &amp;quot;
+    	echo $(dirname ~/$dotfile)
+        mkdir -p -m 700  $(dirname ~/$dotfile)
+    fi
+
+    ## Create a link to the repository version
+    echo Installing $dotfile
+    ln -fs $(pwd)/$file ~/$dotfile
+    chmod go-rwx $file
+done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;dev-tools&#34;&gt;Dev tools:&lt;/h1&gt;
+
+&lt;p&gt;The other tools I use every day, which would require a post on their own for each&lt;/p&gt;
+
+&lt;h3 id=&#34;intellij&#34;&gt;IntelliJ&lt;/h3&gt;
+
+&lt;p&gt;The best IDE! The refactoring tools are still impressive, and too often unknown.&lt;/p&gt;
+
+&lt;h3 id=&#34;docker&#34;&gt;Docker&lt;/h3&gt;
+
+&lt;p&gt;I use Docker to test technologies, start and throw away tools for my projects, etc&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>git commit fixup</title>
@@ -1772,130 +1892,6 @@ Le principe : différer le téléchargement des blocs indépendants de l&amp;rs
 &lt;h4 id=&#34;sources&#34;&gt;Sources :&lt;/h4&gt;
 
 &lt;p&gt;Google camp fire on GWT and Speed Tracer : &lt;a href=&#34;http://www.youtube.com/watch?v=D2ibM4oufdM&#34;&gt;part 1&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=JQpuDB2Jxfg&amp;amp;amp;feature=channel&#34;&gt;part 2&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=QrnbKZ3hxls&amp;amp;amp;feature=channel&#34;&gt;part 3&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=WM6KPW8ZyjU&amp;amp;amp;feature=channel&#34;&gt;part 4&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=mnSNVfxK19Y&amp;amp;amp;feature=channel&#34;&gt;part 5&lt;/a&gt;, &lt;a href=&#34;http://www.youtube.com/watch?v=Kfh6IX-yhsc&amp;amp;amp;feature=channel&#34;&gt;part 6&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Google IO mai 2009 : Best Practices For Architecting Your GWT App</title>
-      <link>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</link>
-      <pubDate>Sun, 06 Sep 2009 14:34:00 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</guid>
-      <description>
-
-&lt;p&gt;Lors de la conférence annuelle de Google, en mai dernier, Ray Ryan à fait une présentation très intéressante sur les meilleures pratiques pour concevoir une application avec GWT. Cette présentation, a eu beaucoup d&amp;rsquo;écho dans la communauté GWT et plusieurs frameworks sont apparus pour faciliter l&amp;rsquo;implémentation de ces &amp;ldquo;bonne pratiques&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;&lt;object width=&#34;425&#34; height=&#34;344&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/PDuhR18-EdM&amp;hl=fr&amp;fs=1&amp;&#34; /&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34; /&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34; /&gt;&lt;embed src=&#34;http://www.youtube.com/v/PDuhR18-EdM&amp;hl=fr&amp;fs=1&amp;&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;425&#34; height=&#34;344&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-
-&lt;p&gt;Voici un résumé sous forme de note de quelques points importants abordés dans cette présentation.&lt;/p&gt;
-
-&lt;h4 id=&#34;ajax&#34;&gt;AJAX&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Il faut minimiser la taille des objets retournés au client. Par exemple en ayant une liste d&amp;rsquo;identifiants d&amp;rsquo;objets en attribut plutôt qu&amp;rsquo;une liste d&amp;rsquo;objets.&lt;/li&gt;
-&lt;li&gt;Il faut spécifier le type d&amp;rsquo;une liste lorsque cela est possible:
-&lt;code&gt;ArrayList&amp;lt;Object&amp;gt; maListe;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;plutôt que&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;List&amp;lt;Object&amp;gt; maListe;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;En effet, le compilateur GWT produira moins de code javascript s&amp;rsquo;il connaît plus précisément le type de liste.&lt;/p&gt;
-
-&lt;h4 id=&#34;command-pattern&#34;&gt;Command Pattern&lt;/h4&gt;
-
-&lt;p&gt;Le &amp;ldquo;Command Pattern&amp;rdquo; est un &lt;a href=&#34;http://dico.developpez.com/html/3161-Conception-Command-design-pattern-command.php&#34;&gt;pattern classique des IHM&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Appliqué à GWT il permet de&amp;nbsp;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Mettre en place plus facilement une solution de cache. Avant d&amp;rsquo;appeler un service, la commande execute vérifiera qu&amp;rsquo;elle n&amp;rsquo;a pas déjà la donnée.&lt;/li&gt;
-&lt;li&gt;Mettre en place plus facilement des traitements par lots (batch).&lt;/li&gt;
-&lt;li&gt;Centraliser les messages d&amp;rsquo;erreurs. Les onFailure() des réponses asynchrones pourront directement être implémenté dans la classe command.&lt;/li&gt;
-&lt;li&gt;Découper le code javascript avec la méthode runAsync() de gwt 2.0  Les classes command qui encapsulent les services pourront être chargé par l&amp;rsquo;application que lorsque c&amp;rsquo;est nécessaire.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Les exemples de code présentés:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;/** Le nom Command est déjà utilisé dans GWT et est donc remplacé par Action */
-interface Action&amp;lt;t extends response&amp;gt; { }
-
-        interface Response { }
-
-        interface ContactsService extends RemoteService {
-        &amp;lt;t extends response&amp;gt; T execute(Action&amp;lt;t&amp;gt; action);
-            }
-
-            interface ContactsServiceAsync {
-            void execute(Action&amp;lt;t&amp;gt; action, AsyncCallback&amp;lt;t&amp;gt; callback);
-                }
-
-                class GetDetails implements Action&amp;lt;getdetailsresponse&amp;gt; {
-                    private final ArrayList&amp;lt;contactdetailid&amp;gt; ids;
-
-                        public GetDetails(ArrayList&amp;lt;contactdetailid&amp;gt; ids) {
-                            this.ids = ids;
-                            }
-
-                            public ArrayList&amp;lt;contactdetailid&amp;gt; getIds() {
-                                return ids;
-                                }
-                                }
-
-                                class GetDetailsResponse implements Response {
-                                private final ArrayList&amp;lt;contactdetail&amp;gt; details;
-                                    public GetDetailsResponse(ArrayList&amp;lt;contactdetail&amp;gt; details) {
-                                        this.details = details;
-                                        }
-                                        public ArrayList&amp;lt;contactdetail&amp;gt; getDetails() {
-                                            return new ArrayList&amp;lt;contactdetail&amp;gt;(details);
-                                                }
-                                                }
-
-                                                abstract class GotDetails implements
-                                                AsyncCallback&amp;lt;getdetailsresponse&amp;gt; {
-                                                    public void onFailure(Throwable oops) {
-                                                    /* default appwide failure handling */
-                                                    }
-                                                    public void onSuccess(GetDetailsResponse result) {
-                                                    got(result.getDetails());
-                                                    }
-                                                    public abstract void got(ArrayList&amp;lt;contactdetail&amp;gt; details);
-                                                        }
-
-                                                        void showContact(final Contact contact) {
-                                                        service.execute(new GetDetails(contact.getDetailIds()),
-                                                        new GotDetails() {
-                                                        public void got(ArrayList&amp;lt;contactdetail&amp;gt; details) {
-                                                            renderContact(contact);
-                                                            renderDetails(details);
-                                                            }
-                                                            });
-                                                            }&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/getdetailsresponse&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetail&amp;gt;&amp;lt;/contactdetailid&amp;gt;&amp;lt;/contactdetailid&amp;gt;&amp;lt;/contactdetailid&amp;gt;&amp;lt;/getdetailsresponse&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;&amp;lt;/t&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Une librairie proposant une implémentation du command-pattern est disponible : &lt;a href=&#34;http://code.google.com/p/gwt-dispatch/&#34;&gt;gwt-dispatch&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;event-bus&#34;&gt;Event bus&lt;/h4&gt;
-
-&lt;p&gt;Plutôt que d&amp;rsquo;enregistrer les composants graphiques entre eux et d&amp;rsquo;utiliser le classique &lt;em&gt;MVC&lt;/em&gt;, Ray recommande d&amp;rsquo;utiliser un &amp;ldquo;Event bus&amp;rdquo;. Chaque composant s&amp;rsquo;enregistre sur le bus (en fait un handlerManager) et reste à l&amp;rsquo;écoute d&amp;rsquo;événements.&lt;/p&gt;
-
-&lt;h3 id=&#34;model-view-presenter-mvp&#34;&gt;Model-View-Presenter (MVP)&lt;/h3&gt;
-
-&lt;p&gt;Le &amp;ldquo;&lt;a href=&#34;http://martinfowler.com/eaaDev/SupervisingPresenter.html&#34;&gt;Model-View-Presenter&lt;/a&gt;&amp;rdquo; pattern vient en remplacement du classique &lt;em&gt;MVC&lt;/em&gt; dans les applications GWT.&lt;/p&gt;
-
-&lt;p&gt;L&amp;rsquo;utilisation de ce pattern facilite les Test Unitaires, seul la partie &amp;ldquo;Presenter&amp;rdquo; a besoin d&amp;rsquo;être testée. Les changements dans la partie &amp;ldquo;View&amp;rdquo; sont entièrement géré par la partie &amp;ldquo;Presenter&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Une librairie proposant une implémentation du MVP et de l&amp;rsquo;event-bus est disponible : &lt;a href=&#34;http://code.google.com/p/gwt-presenter/&#34;&gt;gwt-presenter&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;injection-de-dépendance&#34;&gt;Injection de dépendance&lt;/h4&gt;
-
-&lt;p&gt;L&amp;rsquo;injection de dépendance est réalisé du coté client avec le framework GIN et du coté serveur avec le framework GUICE. Je ne pense pas que ce soit nécessaire de rappeler les bénéfices de l&amp;rsquo;injection, Spring est là pour ça ;)&lt;/p&gt;
-
-&lt;h4 id=&#34;test-unitaires&#34;&gt;Test unitaires&lt;/h4&gt;
-
-&lt;p&gt;La partie &amp;ldquo;Presenter&amp;rdquo; du pattern MVP est facilement testable grace à l&amp;rsquo;utilisation de mock pour simuler la partie &amp;ldquo;View&amp;rdquo;. EasyMock ou d&amp;rsquo;autres frameworks simplifie la création de mock et des test unitaires.&lt;/p&gt;
 </description>
     </item>
     
