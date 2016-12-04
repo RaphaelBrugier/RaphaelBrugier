@@ -227,9 +227,9 @@ To create a custom hook, create a new file without the suffix for the hook you w
 
 <h1 id="global-git-hooks">Global Git hooks</h1>
 
-<p>Since Git 2.9, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.</p>
+<p>Since <a href="https://github.com/blog/2188-git-2-9-has-been-released">its version 2.9</a>, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.</p>
 
-<p>Create a hooks folder, for example in your dotfiles, and configure Git globally to use this folder as the hooks folder for every repository:</p>
+<p>Create a hooks folder, for example in your <a href="/blog/my-development-environment/">dotfiles</a>, and configure Git globally to use this folder as the hooks folder for every repository:</p>
 
 <pre><code class="language-bash">$ mkdir -p ~/dotfiles/_git/hooks/
 $ git config --global core.hooksPath ~/dotfiles/_git/hooks/
@@ -285,7 +285,7 @@ fi;
 
 <h1 id="result">Result</h1>
 
-<p>Test the hook in a new repository:</p>
+<p>Test the hook is working in a new repository:</p>
 
 <pre><code class="language-bash">$ mkdir -p ~/devs/ippon/testhook/
 $ cd ~/devs/ippon/testhook
