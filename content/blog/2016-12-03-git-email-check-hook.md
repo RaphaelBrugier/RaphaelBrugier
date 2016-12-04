@@ -48,9 +48,9 @@ $ vim .git/hooks/pre-commit
 
 # Global Git hooks
 
-Since Git 2.9, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.
+Since [its version 2.9](https://github.com/blog/2188-git-2-9-has-been-released), Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.
 
-Create a hooks folder, for example in your dotfiles, and configure Git globally to use this folder as the hooks folder for every repository:
+Create a hooks folder, for example in your [dotfiles]({{< relref "blog/2016-11-27-my-development-environment.md" >}}), and configure Git globally to use this folder as the hooks folder for every repository:
 
 ~~~bash
 $ mkdir -p ~/dotfiles/_git/hooks/
@@ -108,7 +108,7 @@ fi;
 
 
 # Result
-Test the hook in a new repository:
+Test the hook is working in a new repository:
 
 ~~~bash
 $ mkdir -p ~/devs/ippon/testhook/
