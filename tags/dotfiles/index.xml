@@ -54,9 +54,9 @@ To create a custom hook, create a new file without the suffix for the hook you w
 
 &lt;h1 id=&#34;global-git-hooks&#34;&gt;Global Git hooks&lt;/h1&gt;
 
-&lt;p&gt;Since Git 2.9, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.&lt;/p&gt;
+&lt;p&gt;Since &lt;a href=&#34;https://github.com/blog/2188-git-2-9-has-been-released&#34;&gt;its version 2.9&lt;/a&gt;, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.&lt;/p&gt;
 
-&lt;p&gt;Create a hooks folder, for example in your dotfiles, and configure Git globally to use this folder as the hooks folder for every repository:&lt;/p&gt;
+&lt;p&gt;Create a hooks folder, for example in your &lt;a href=&#34;http://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;dotfiles&lt;/a&gt;, and configure Git globally to use this folder as the hooks folder for every repository:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir -p ~/dotfiles/_git/hooks/
 $ git config --global core.hooksPath ~/dotfiles/_git/hooks/
@@ -112,7 +112,7 @@ fi;
 
 &lt;h1 id=&#34;result&#34;&gt;Result&lt;/h1&gt;
 
-&lt;p&gt;Test the hook in a new repository:&lt;/p&gt;
+&lt;p&gt;Test the hook is working in a new repository:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir -p ~/devs/ippon/testhook/
 $ cd ~/devs/ippon/testhook
