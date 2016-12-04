@@ -7,7 +7,7 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Retour sur QCon London 2012</title>
+  <title>Add a Git hook to automatically verify a repository&#39;s email</title>
 
   <meta name="author" content="" />
   <meta name="keywords" content="">
@@ -74,9 +74,9 @@
   <link rel="alternate" href="http://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
 
   
-  <meta property="og:title" content="Retour sur QCon London 2012" />
+  <meta property="og:title" content="Add a Git hook to automatically verify a repository&#39;s email" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/blog/retour-sur-qcon-london-2012//" />
+  <meta property="og:url" content="/blog/git-verify-email-hook//" />
   <meta property="og:image" content="" />
 
 </head>
@@ -168,7 +168,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Retour sur QCon London 2012</h1>
+                <h1>Add a Git hook to automatically verify a repository&#39;s email</h1>
             </div>
         </div>
     </div>
@@ -184,26 +184,125 @@
 
                     <div class="col-md-9" id="blog-post">
 
-                        <p class="text-muted text-uppercase mb-small text-right">April 1, 2012</p>
+                        <p class="text-muted text-uppercase mb-small text-right">December 3, 2016</p>
 
                         <div id="post-content">
-                          <p>J&rsquo;ai eu l&rsquo;occasion cet année d&rsquo;être envoyé par ma société, Objet Direct, assister aux 3 jours de la conférence QCon à Londres. Une excellente expérience, qui m&rsquo;a permise de voir des présentations très variées aussi bien techniques que méthodologiques. Ça fait du bien de sortir de la mission pour aller voir ce qui se fait ailleurs et ça permet de revenir avec pleins d&rsquo;idées de nouvelles et de motivation.</p>
+                          <p>I use Git a lot and I often have to switch between my personal repositories (ie: Github) and my professional (Ippon) repositories on the same laptop.
+My default Git email is configured to my personal email and I have often forgotten to configure it to my professional email when creating/cloning a repository for my company.
+Like everything in Git, this can be automated to avoid mistakes.</p>
 
-<p>J&rsquo;espère pouvoir appliquer toutes les bonnes pratiques que j&rsquo;ai appris là bas prochainement.</p>
+<p>In this post, I will show how I use a Git hook to check the email configured in any repository before every commit.</p>
 
-<p>J&rsquo;ai écrit deux articles pour le blog d&rsquo;Objet Direct :</p>
+<p></p>
 
-<ul>
-<li>Une synthèse succincte des 3 jours : <a href="http://blog.objetdirect.com/divers/qcon-london-2012">QCon London 2012</a></li>
-<li>Un retour plus détaillé sur une présentation que j&rsquo;ai particulièrement aimé sur GitHub : &ldquo;<a href="http://blog.objetdirect.com/divers/qcon-2012-how-github-works">How GitHub Works</a>&ldquo;</li>
-</ul>
+<h1 id="email-configuration-per-repositories">Email configuration per repositories:</h1>
 
-<p>Bonne lecture !</p>
+<p>When you first installed Git you probably have set your username and email globally with these commands:</p>
 
+<pre><code class="language-bash">$ git config --global user.name &quot;Raphael Brugier&quot;
+$ git config --global user.email &quot;raphael.b_____r@gmail.com&quot;
+</code></pre>
+
+<p>You can override this values per repository:</p>
+
+<pre><code class="language-bash">$ cd some-ippon-project
+$ git config user.email &quot;rbrugier@ipponusa.com&quot;
+## print the configuration
+$ git config user.email
+&gt; rbrugier@ipponusa.com
+</code></pre>
+
+<h1 id="git-hooks">Git hooks</h1>
+
+<p>Git hooks are scripts that Git executes before or after Git commands.
+For example: commit, push, rebase, &hellip;</p>
+
+<p>They are located in every Git repository in the .git/hooks/ folder.
+By default, Git creates hooks suffixed with &ldquo;.sample&rdquo;
+To create a custom hook, create a new file without the suffix for the hook you want to create  and add the Bash code for your needs:</p>
+
+<pre><code class="language-bash">$ vim .git/hooks/pre-commit
+## add the hook code as any bash script
+</code></pre>
+
+<h1 id="global-git-hooks">Global Git hooks</h1>
+
+<p>Since Git 2.9, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.</p>
+
+<p>Create a hooks folder, for example in your dotfiles, and configure Git globally to use this folder as the hooks folder for every repository:</p>
+
+<pre><code class="language-bash">$ mkdir -p ~/dotfiles/_git/hooks/
+$ git config --global core.hooksPath ~/dotfiles/_git/hooks/
+</code></pre>
+
+<p>Git has added the option in your global Git config:</p>
+
+<pre><code class="language-bash">$ cat ~/.gitconfig
+...
+[user]
+    name = Raphael Brugier
+    email = raphael.b_____r@gmail.com
+[core]
+    hooksPath = ~/dotfiles/_git/templates/hooks/
+...
+</code></pre>
+
+<h1 id="check-email-hook">Check email hook</h1>
+
+<p>The goal is now to use a hook to validate the email set in the repository before committing.</p>
+
+<p>I follow a simple convention to differentiate my personal and professional repositories.
+My professional repositories are located on <code>~/devs/ippon</code> and my personal on <code>~/devs/github/</code> or <code>~/devs/projects/</code></p>
+
+<p>Write a bash script to check the email configured based on the repository&rsquo;s path as a pre-commit hook :</p>
+
+<pre><code class="language-bash">$ vim ~/dotfiles/_git/hooks/pre-commit
+</code></pre>
+
+<pre><code class="language-bash">#!/bin/sh
+PWD=`pwd`
+if [[ $PWD == *&quot;ippon&quot;* ]] # 1)
+then
+  EMAIL=$(git config user.email)
+  if [[ $EMAIL == *&quot;ippon&quot;* ]] # 2)
+  then
+    echo &quot;&quot;;
+  else
+    echo &quot;email not configured to Ippon in Ippon directory&quot;;
+    echo &quot;run:&quot;
+    echo '   git config user.email &quot;rbrugier@ipponusa.com&quot;'
+    echo ''
+    exit 1; # 3)
+  fi;
+fi;
+</code></pre>
+
+<ol>
+<li>check if the current path contains &ldquo;ippon&rdquo;</li>
+<li>check if the configured email also contains &ldquo;ippon&rdquo;</li>
+<li>if not, exit the script with an error. This will cancel the commit.</li>
+</ol>
+
+<h1 id="result">Result</h1>
+
+<p>Test the hook in a new repository:</p>
+
+<pre><code class="language-bash">$ mkdir -p ~/devs/ippon/testhook/
+$ cd ~/devs/ippon/testhook
+$ git init
+$ git commit -m &quot;test&quot;
+&gt; email not configured to Ippon in Ippon directory
+&gt; run:
+&gt;   git config user.email &quot;rbrugier@ipponusa.com&quot;
+</code></pre>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Git hooks are powerful to automate tests and avoid mistakes. Other common usages of hooks are to trigger tests before a commit or a deployment after a push.</p>
                         </div>
                         <div>
                           <a class="twitter-share-button"
-                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=QCon,"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=git,dotfiles,"
                              data-size="large">
                           </a>
                         </div>
@@ -213,9 +312,9 @@
                             <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'raphaelbrugierblog';
-    var disqus_identifier = '632782556';
-    var disqus_title = 'Retour sur QCon London 2012';
-    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/retour-sur-qcon-london-2012\/';
+    var disqus_identifier = 'http:\/\/www.raphael-brugier.com\/blog\/git-verify-email-hook\/';
+    var disqus_title = 'Add a Git hook to automatically verify a repository\x27s email';
+    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/git-verify-email-hook\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
