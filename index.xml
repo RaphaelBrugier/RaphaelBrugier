@@ -6,8 +6,128 @@
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Nov 2016 18:02:03 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 03 Dec 2016 13:40:15 -0500</lastBuildDate>
     <atom:link href="http://www.raphael-brugier.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Add a Git hook to automatically verify a repository&#39;s email</title>
+      <link>http://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
+      <pubDate>Sat, 03 Dec 2016 13:40:15 -0500</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
+      <description>&lt;p&gt;I use Git a lot and I often have to switch between my personal repositories (ie: Github) and my professional (Ippon) repositories on the same laptop.
+My default Git email is configured to my personal email and I have often forgotten to configure it to my professional email when creating/cloning a repository for my company.
+Like everything in Git, this can be automated to avoid mistakes.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will show how I use a Git hook to check the email configured in any repository before every commit.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;email-configuration-per-repositories&#34;&gt;Email configuration per repositories:&lt;/h1&gt;
+
+&lt;p&gt;When you first installed Git you probably have set your username and email globally with these commands:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ git config --global user.name &amp;quot;Raphael Brugier&amp;quot;
+$ git config --global user.email &amp;quot;raphael.b_____r@gmail.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can override this values per repository:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cd some-ippon-project
+$ git config user.email &amp;quot;rbrugier@ipponusa.com&amp;quot;
+## print the configuration
+$ git config user.email
+&amp;gt; rbrugier@ipponusa.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;git-hooks&#34;&gt;Git hooks&lt;/h1&gt;
+
+&lt;p&gt;Git hooks are scripts that Git executes before or after Git commands.
+For example: commit, push, rebase, &amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;They are located in every Git repository in the .git/hooks/ folder.
+By default, Git creates hooks suffixed with &amp;ldquo;.sample&amp;rdquo;
+To create a custom hook, create a new file without the suffix for the hook you want to create  and add the Bash code for your needs:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ vim .git/hooks/pre-commit
+## add the hook code as any bash script
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;global-git-hooks&#34;&gt;Global Git hooks&lt;/h1&gt;
+
+&lt;p&gt;Since Git 2.9, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.&lt;/p&gt;
+
+&lt;p&gt;Create a hooks folder, for example in your dotfiles, and configure Git globally to use this folder as the hooks folder for every repository:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir -p ~/dotfiles/_git/hooks/
+$ git config --global core.hooksPath ~/dotfiles/_git/hooks/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Git has added the option in your global Git config:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cat ~/.gitconfig
+...
+[user]
+    name = Raphael Brugier
+    email = raphael.b_____r@gmail.com
+[core]
+    hooksPath = ~/dotfiles/_git/templates/hooks/
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;check-email-hook&#34;&gt;Check email hook&lt;/h1&gt;
+
+&lt;p&gt;The goal is now to use a hook to validate the email set in the repository before committing.&lt;/p&gt;
+
+&lt;p&gt;I follow a simple convention to differentiate my personal and professional repositories.
+My professional repositories are located on &lt;code&gt;~/devs/ippon&lt;/code&gt; and my personal on &lt;code&gt;~/devs/github/&lt;/code&gt; or &lt;code&gt;~/devs/projects/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Write a bash script to check the email configured based on the repository&amp;rsquo;s path as a pre-commit hook :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ vim ~/dotfiles/_git/hooks/pre-commit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/sh
+PWD=`pwd`
+if [[ $PWD == *&amp;quot;ippon&amp;quot;* ]] # 1)
+then
+  EMAIL=$(git config user.email)
+  if [[ $EMAIL == *&amp;quot;ippon&amp;quot;* ]] # 2)
+  then
+    echo &amp;quot;&amp;quot;;
+  else
+    echo &amp;quot;email not configured to Ippon in Ippon directory&amp;quot;;
+    echo &amp;quot;run:&amp;quot;
+    echo &#39;   git config user.email &amp;quot;rbrugier@ipponusa.com&amp;quot;&#39;
+    echo &#39;&#39;
+    exit 1; # 3)
+  fi;
+fi;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;check if the current path contains &amp;ldquo;ippon&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;check if the configured email also contains &amp;ldquo;ippon&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;if not, exit the script with an error. This will cancel the commit.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;result&#34;&gt;Result&lt;/h1&gt;
+
+&lt;p&gt;Test the hook in a new repository:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir -p ~/devs/ippon/testhook/
+$ cd ~/devs/ippon/testhook
+$ git init
+$ git commit -m &amp;quot;test&amp;quot;
+&amp;gt; email not configured to Ippon in Ippon directory
+&amp;gt; run:
+&amp;gt;   git config user.email &amp;quot;rbrugier@ipponusa.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Git hooks are powerful to automate tests and avoid mistakes. Other common usages of hooks are to trigger tests before a commit or a deployment after a push.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>My development environment</title>
@@ -1798,32 +1918,6 @@ vue.getButton.click();
 &lt;p&gt;Voilà pour les quelques notes sur cette conférence, il y&amp;rsquo;en a encore beaucoup d&amp;rsquo;autres à regarder qui ne porte pas que sur  GWT mais sur les Test et les bonnes pratiques en général.&lt;/p&gt;
 
 &lt;p&gt;Bon visionnage et surtout bon TDD à tous !&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Critique du Livre &#39;Programmation GWT 2&#39;</title>
-      <link>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</link>
-      <pubDate>Thu, 28 Jan 2010 23:04:00 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</guid>
-      <description>&lt;p&gt;Je viens de terminer la lecture de &amp;ldquo;Programmation GWT 2&amp;rdquo; de Sami Jabber. Sorti quelques jours après la release finale de cette nouvelle version majeure du framework, il constitue un excellent point d&amp;rsquo;entrée à cette technologie autant qu&amp;rsquo;un approfondissement pour les connaisseurs.&lt;/p&gt;
-
-&lt;p&gt;Bien que je connaisse déjà (un peu) GWT et que j&amp;rsquo;expérimente la version 2 depuis quelques mois, j&amp;rsquo;ai appris énormément avec ce livre. Et surtout j&amp;rsquo;ai pris beaucoup de plaisir à le lire! Les premiers chapitres constituent de bon rappel sur le fonctionnement général.&lt;/p&gt;
-
-&lt;p&gt;Le chapitre sur RPC est assez surprenant puisque l&amp;rsquo;auteur invite à utiliser la version 2 de ce service, &lt;a href=&#34;http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideServerCommunication.html#DevGuideDeRPC&#34;&gt;DeRPC (Direct-Eval RPC)&lt;/a&gt; &amp;hellip; alors qu&amp;rsquo;il n&amp;rsquo;a pas été publiés en version finale et que toutes les classes sont marqués &amp;ldquo;WARNING EXPERIMENTAL DO NOT USE !&amp;rdquo;. Personnellement je ne tenterais pas pour une production pro, mais c&amp;rsquo;est toujours intéressant de testé. Dans les tout cas, l&amp;rsquo;auteur propose &lt;a href=&#34;http://www.programmationgwt2.com/web/guest/chapitres/-/wiki/Main/Chapitre+7+-+Les+services+RPC&#34;&gt;une justification&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Le chapitre sur J2EE propose un pattern vraiment très intéressant pour simplifier l&amp;rsquo;appel de services existant (spring, ejb) en évitant d&amp;rsquo;avoir à écrire des classes asynchrones.&lt;/p&gt;
-
-&lt;p&gt;Pour moi, le gros plus de ce livre réside dans le chapitre &amp;ldquo;Sous le capot&amp;rdquo;. Il propose de plonger dans le coeur de GWT et décrit tout la mécanique de compilation JAVA vers JavaScript. C&amp;rsquo;est vraiment passionnant, et là on se rend bien compte de la prouesse technique qu&amp;rsquo;a nécessité la création de ce framework.&lt;/p&gt;
-
-&lt;p&gt;Les derniers chapitres exposent les nouveautés de la version 2 avec plus de pédagogie que les tutoriels du site officiel, un bon point.&lt;/p&gt;
-
-&lt;p&gt;Par contre, le chapitre sur les patterns est trop rapide à mon goût. Avec en plus la fin du chapitre dédié à la sécurité, je suis resté sur ma faim. Mais bon, ce n&amp;rsquo;est pas un livre sur les patterns et le lecteur pourra approfondir les patterns les plus intéressant par expérimentation par lui-même.&lt;/p&gt;
-
-&lt;p&gt;Un avis très positif donc pour ce livre. Le premier livre sur GWT 2 est en français et il est bon !&lt;/p&gt;
-
-&lt;p&gt;Nb : à noter qu&amp;rsquo;un &lt;a href=&#34;http://www.programmationgwt2.com&#34;&gt;WIKI&lt;/a&gt; est disponible pour corriger les coquilles du livre ou discuter avec l&amp;rsquo;auteur.&lt;/p&gt;
 </description>
     </item>
     
