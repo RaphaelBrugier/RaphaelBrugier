@@ -46,10 +46,11 @@ For example: commit, push, rebase, &amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;They are located in every Git repository in the .git/hooks/ folder.
 By default, Git creates hooks suffixed with &amp;ldquo;.sample&amp;rdquo;
-To create a custom hook, create a new file without the suffix for the hook you want to create  and add the Bash code for your needs:&lt;/p&gt;
+To create a custom hook, create a new executable script without the suffix for the hook you want to create and add the Bash code for your needs:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ vim .git/hooks/pre-commit
 ## add the hook code as any bash script
+$ chmod +x .git/hooks/pre-commit
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h1 id=&#34;global-git-hooks&#34;&gt;Global Git hooks&lt;/h1&gt;
