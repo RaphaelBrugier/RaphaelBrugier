@@ -34,16 +34,17 @@ $ git config user.email
 ~~~
 
 # Git hooks
-Git hooks are scripts that Git executes before or after Git commands. 
+Git hooks are scripts that Git executes before or after Git commands.
 For example: commit, push, rebase, ...
 
 They are located in every Git repository in the .git/hooks/ folder.
 By default, Git creates hooks suffixed with ".sample"
-To create a custom hook, create a new file without the suffix for the hook you want to create  and add the Bash code for your needs:
+To create a custom hook, create a new executable script without the suffix for the hook you want to create and add the Bash code for your needs:
 
 ~~~bash
 $ vim .git/hooks/pre-commit
 ## add the hook code as any bash script
+$ chmod +x .git/hooks/pre-commit
 ~~~
 
 # Global Git hooks
@@ -100,7 +101,7 @@ then
     exit 1; # 3)
   fi;
 fi;
-~~~ 
+~~~
 
 1. check if the current path contains "ippon"
 2. check if the configured email also contains "ippon"
@@ -122,4 +123,3 @@ $ git commit -m "test"
 
 # Conclusion
 Git hooks are powerful to automate tests and avoid mistakes. Other common usages of hooks are to trigger tests before a commit or a deployment after a push.
- 
