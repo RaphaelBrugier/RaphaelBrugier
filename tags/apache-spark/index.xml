@@ -9,6 +9,425 @@
     <atom:link href="http://www.raphael-brugier.com/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>MongoDB and Apache Spark - Getting started tutorial</title>
+      <link>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
+      <pubDate>Wed, 03 May 2017 23:01:48 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
+      <description>&lt;p&gt;MongoDB and Apache Spark are two popular Big Data technologies.&lt;/p&gt;
+
+&lt;p&gt;In my &lt;a href=&#34;http://blog.ippon.tech/introduction-to-the-mongodb-connector-for-apache-spark/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
+
+&lt;p&gt;To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on &lt;a href=&#34;https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/&#34;&gt;the aggregation pipeline documentation using a zip code data set&lt;/a&gt;. I have prepared a Maven project and a Docker Compose file to get you started quickly.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://docs.docker.com/engine/installation/&#34;&gt;Docker and Docker Compose&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install Maven&lt;/li&gt;
+&lt;li&gt;Download the project &lt;a href=&#34;https://github.com/raphaelbrugier/spark-mongo-example&#34;&gt;from Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;From the project root, launch the MongoDB server with docker-compose:
+&lt;code&gt;docker-compose -f docker/docker-compose.yml up -d&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Import the data in the MongoDB database running in the container:
+&lt;code&gt;docker exec -it mongo_container sh /scripts/import-data.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Check that the data has been loaded in MongoDB by connecting to the container and running a count:
+&lt;code&gt;docker exec mongo_container mongo --eval &amp;quot;db.zips.count()&amp;quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This should return:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;MongoDB shell version: 3.2.11
+connecting to: test
+29353
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The zips collection is a collection of &lt;em&gt;Document&lt;/em&gt; with the following model:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;_id&amp;quot;: &amp;quot;10280&amp;quot;,
+  &amp;quot;city&amp;quot;: &amp;quot;NEW YORK&amp;quot;,
+  &amp;quot;state&amp;quot;: &amp;quot;NY&amp;quot;,
+  &amp;quot;pop&amp;quot;: 5574,
+  &amp;quot;loc&amp;quot;: [
+    -74.016323,
+    40.710537
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Import the Maven project in your favorite IDE. Create a new file &lt;em&gt;Main.scala&lt;/em&gt; to copy the examples or run the &lt;code&gt;MongoSparkMain&lt;/code&gt; for the solution.&lt;/p&gt;
+
+&lt;h2 id=&#34;read-data-from-mongodb-to-spark&#34;&gt;Read data from MongoDB to Spark&lt;/h2&gt;
+
+&lt;p&gt;In this example, we will see how to configure the connector and read from a MongoDB collection to a DataFrame.&lt;/p&gt;
+
+&lt;p&gt;First, you need to create a minimal SparkContext, and then to configure the &lt;code&gt;ReadConfig&lt;/code&gt; instance used by the connector with the MongoDB URL, the name of the database and the collection to load:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;import com.mongodb.spark._
+import com.mongodb.spark.config.ReadConfig
+import com.mongodb.spark.sql._
+import com.typesafe.scalalogging.slf4j.LazyLogging
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.{max, min}
+import org.bson.Document
+
+object Main extends App with LazyLogging {
+    val spark = SparkSession.builder()
+    .appName(&amp;quot;mongozips&amp;quot;)
+    .master(&amp;quot;local[*]&amp;quot;)
+    .getOrCreate()
+
+  // Read the data from MongoDB to a DataFrame
+  val readConfig = ReadConfig(Map(&amp;quot;uri&amp;quot; -&amp;gt; &amp;quot;mongodb://127.0.0.1/&amp;quot;, &amp;quot;database&amp;quot; -&amp;gt; &amp;quot;test&amp;quot;, &amp;quot;collection&amp;quot; -&amp;gt; &amp;quot;zips&amp;quot;)) // 1)
+  val zipDf = spark.read.mongo(readConfig) // 2)
+  zipDf.printSchema() // 3)
+  zipDf.show()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Set the MongoDB URL, database, and collection to read.&lt;/li&gt;
+&lt;li&gt;The connector provides a method to convert a MongoRDD to a DataFrame. The DataFrame’s schema is automatically inferred by the connector by &lt;a href=&#34;https://docs.mongodb.com/v3.2/reference/operator/aggregation/sample/&#34;&gt;sampling&lt;/a&gt; the collection. Alternatively, you can explicitly pass a schema definition.&lt;/li&gt;
+&lt;li&gt;Print the schema inferred by the connector.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Results:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;root
+ |-- _id: string (nullable = true)
+ |-- city: string (nullable = true)
+ |-- loc: array (nullable = true)
+ |    |-- element: double (containsNull = true)
+ |-- pop: integer (nullable = true)
+ |-- state: string (nullable = true)
+
++-----+-----------+--------------------+-----+-----+
+|  _id|       city|                 loc|  pop|state|
++-----+-----------+--------------------+-----+-----+
+|01001|     AGAWAM|[-72.622739, 42.0...|15338|   MA|
+|01002|    CUSHMAN|[-72.51565, 42.37...|36963|   MA|
+|01005|      BARRE|[-72.108354, 42.4...| 4546|   MA|
+|01007|BELCHERTOWN|[-72.410953, 42.2...|10579|   MA|
+|01008|  BLANDFORD|[-72.936114, 42.1...| 1240|   MA|
++-----+-----------+--------------------+-----+-----+
+only showing top 5 rows
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The connector has correctly inferred the schema based on the documents sampling. Both the column names and types have been identified accurately.&lt;/p&gt;
+
+&lt;h3 id=&#34;inferring-inner-documents&#34;&gt;Inferring inner-documents&lt;/h3&gt;
+
+&lt;p&gt;Interestingly, the &lt;code&gt;loc&lt;/code&gt; array from the MongoDB document has been translated to a Spark’s Array type.&lt;/p&gt;
+
+&lt;p&gt;But what if the document contains inner documents? The connector does not flatten the inner document but translates them as a Spark’s StructType, a key-value type.&lt;/p&gt;
+
+&lt;p&gt;Take for example this MongoDB document:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  name: &amp;quot;Joe Bookreader&amp;quot;,
+  country: {
+    isocode: &amp;quot;USA&amp;quot;,
+    name: &amp;quot;United States&amp;quot;
+  },
+  addresses: [
+    {
+      street: &amp;quot;123 Fake Street&amp;quot;,
+      city: &amp;quot;Faketon&amp;quot;,
+      state: &amp;quot;MA&amp;quot;,
+      zip: &amp;quot;12345&amp;quot;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The document has two inner documents. The first one is the country and the second one is an address contained in a list.&lt;/p&gt;
+
+&lt;p&gt;After loading the collections, the schema inferred by the connector shows a StructType for both the &lt;code&gt;country&lt;/code&gt; and the &lt;code&gt;address&lt;/code&gt; in the array of addresses.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;val personDf = spark.read.mongo(ReadConfig(Map(&amp;quot;uri&amp;quot; -&amp;gt; &amp;quot;mongodb://127.0.0.1/&amp;quot;, &amp;quot;database&amp;quot; -&amp;gt; &amp;quot;test&amp;quot;, &amp;quot;collection&amp;quot; -&amp;gt; &amp;quot;person&amp;quot;)))
+personDf.printSchema()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Results:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;root
+ |-- _id: struct (nullable = true)
+ |    |-- oid: string (nullable = true)
+ |-- addresses: array (nullable = true)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- street: string (nullable = true)
+ |    |    |-- city: string (nullable = true)
+ |    |    |-- state: string (nullable = true)
+ |    |    |-- zip: string (nullable = true)
+ |-- country: struct (nullable = true)
+ |    |-- isocode: string (nullable = true)
+ |    |-- name: string (nullable = true)
+ |-- name: string (nullable = true)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The values in the StructType types can be accessed by their column names:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;personDf.select($&amp;quot;_id&amp;quot;, $&amp;quot;addresses&amp;quot;(0)(&amp;quot;street&amp;quot;), $&amp;quot;country&amp;quot;(&amp;quot;name&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can find the list of the mappings between the MongoDB types and the DataFrame’s types in the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/scala/datasets-and-sql/#datatypes&#34;&gt;connector&amp;rsquo;s documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;use-the-spark-api-to-query-the-data&#34;&gt;Use the Spark API to query the data&lt;/h2&gt;
+
+&lt;p&gt;After loading the collection in a DataFrame, we can now use the Spark API to query and transform the data.&lt;/p&gt;
+
+&lt;p&gt;As an example, we write a query to find the states with a population greater or equal to 10 million. The example also shows how the Spark API can easily map to the original MongoDB query.&lt;/p&gt;
+
+&lt;p&gt;The MongoDB query is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;db.zipcodes.aggregate( [
+   { $group: { _id: &amp;quot;$state&amp;quot;, totalPop: { $sum: &amp;quot;$pop&amp;quot; } } },
+   { $match: { totalPop: { $gte: 10*1000*1000 } } }
+] )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And now the Spark query:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;println( &amp;quot;States with Populations above 10 Million&amp;quot; )
+import zipDf.sqlContext.implicits._ // 1)
+zipDf.groupBy(&amp;quot;state&amp;quot;)
+    .sum(&amp;quot;pop&amp;quot;)
+    .withColumnRenamed(&amp;quot;sum(pop)&amp;quot;, &amp;quot;count&amp;quot;) // 2)
+    .filter($&amp;quot;count&amp;quot; &amp;gt; 10000000)
+    .show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Result:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;States with Populations above 10 Millions:
++-----+--------+
+|state|   count|
++-----+--------+
+|   TX|16984601|
+|   NY|17990402|
+|   OH|10846517|
+|   IL|11427576|
+|   CA|29754890|
+|   PA|11881643|
+|   FL|12686644|
++-----+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The DataFrame API is pretty straight forward for this simple query.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Use the import to have implicit conversions from &lt;code&gt;String&lt;/code&gt; to &lt;code&gt;Column&lt;/code&gt; with the &lt;code&gt;$&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Rename the result of the sum column for readability.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;spark-sql&#34;&gt;Spark SQL&lt;/h2&gt;
+
+&lt;p&gt;Spark and the DataFrame abstraction also enables to write plain Spark SQL queries with a familiar SQL syntax.&lt;/p&gt;
+
+&lt;p&gt;For example, let’s rewrite the previous query with SQL:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;// SparkSQL:
+  zipDf.createOrReplaceTempView(&amp;quot;zips&amp;quot;) // 1)
+  zipDf.sqlContext.sql( // 2)
+    &amp;quot;&amp;quot;&amp;quot;SELECT state, sum(pop) AS count
+      FROM zips
+      GROUP BY state
+      HAVING sum(pop) &amp;gt; 10000000&amp;quot;&amp;quot;&amp;quot;
+  )
+  .show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Register the DataFrame as a Spark SQL table.&lt;/li&gt;
+&lt;li&gt;Execute the Spark SQL query.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;predicates-pushdown&#34;&gt;Predicates pushdown&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;“Predicates pushdown”&lt;/em&gt; is an optimization from the connector and the Catalyst optimizer to automatically “push down” predicates to the data nodes. The goal is to maximize the amount of data filtered out on the data storage side before loading it into Spark’s node memory.&lt;/p&gt;
+
+&lt;p&gt;There are two kinds of predicates automatically pushed down by the connector to MongoDB:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;select&lt;/code&gt; clause (projections) as a &lt;a href=&#34;https://docs.mongodb.com/manual/reference/operator/aggregation/project/&#34;&gt;&lt;code&gt;$project&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;filter&lt;/code&gt; clause content (&lt;code&gt;where&lt;/code&gt;) as one or more &lt;a href=&#34;https://docs.mongodb.com/manual/reference/operator/aggregation/match/&#34;&gt;&lt;code&gt;$match&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Both are sent by the connector as an &lt;a href=&#34;https://github.com/mongodb/mongo-spark/blob/master/src/main/scala/com/mongodb/spark/sql/MongoRelationHelper.scala#L30&#34;&gt;aggregation pipeline&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To verify if the predicates are sent, we use the Spark’s &lt;em&gt;explain&lt;/em&gt; method to examine the query plan produced by Spark for a simple query with a filter:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;zipDf
+    .filter($&amp;quot;pop&amp;quot; &amp;gt; 0)
+    .select(&amp;quot;state&amp;quot;)
+    .explain(true)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;== Parsed Logical Plan ==
+[...]
+
+== Analyzed Logical Plan ==
+[...]
+
+== Optimized Logical Plan ==
+[...]
+
+== Physical Plan ==
+*Project [state#4]
++- *Filter (isnotnull(pop#3) &amp;amp;&amp;amp; (pop#3 &amp;gt; 0))
+   +- *Scan MongoRelation(MongoRDD[0] at RDD at MongoRDD.scala:52,Some(StructType(StructField(_id,StringType,true), StructField(city,StringType,true), StructField(loc,ArrayType(DoubleType,true),true), StructField(pop,IntegerType,true), StructField(state,StringType,true)))) [state#4,pop#3] PushedFilters: [IsNotNull(pop), GreaterThan(pop,0)], ReadSchema: struct&amp;lt;state:string&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see in the physical plan generated by the Catalyst optimizer, the name of the fields to project (&lt;code&gt;state&lt;/code&gt; and &lt;code&gt;pop&lt;/code&gt;), and the filters to push (pop not null and pop greater than 0).&lt;/p&gt;
+
+&lt;p&gt;To confirm what is actually executed on the MongoDB nodes, we need to increase MongoDB’s log level and examine the &lt;code&gt;system.profile&lt;/code&gt; collection.&lt;/p&gt;
+
+&lt;p&gt;Enable the logging on MongoDB, run the Spark query again, and find the trace of the query in the &lt;code&gt;system.profile&lt;/code&gt; collection:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$mongo
+MongoDB shell version: 3.2.11
+connecting to: test
+
+&amp;gt; db.setProfilingLevel(2)
+&amp;gt; db.system.profile.find().pretty()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The result is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+	&amp;quot;op&amp;quot; : &amp;quot;command&amp;quot;,
+	&amp;quot;ns&amp;quot; : &amp;quot;test.zips&amp;quot;,
+	&amp;quot;command&amp;quot; : {
+		&amp;quot;aggregate&amp;quot; : &amp;quot;zips&amp;quot;,
+		&amp;quot;pipeline&amp;quot; : [
+			{
+				&amp;quot;$match&amp;quot; : {
+					&amp;quot;_id&amp;quot; : {
+						&amp;quot;$gte&amp;quot; : { &amp;quot;$minKey&amp;quot; : 1 },
+						&amp;quot;$lt&amp;quot; : { &amp;quot;$maxKey&amp;quot; : 1 }
+					}
+				}
+			},
+			{
+				&amp;quot;$match&amp;quot; : {
+					&amp;quot;pop&amp;quot; : {
+						&amp;quot;$exists&amp;quot; : true,
+						&amp;quot;$ne&amp;quot; : null,
+						&amp;quot;$gt&amp;quot; : 0
+					}
+				}
+			},
+			{
+				&amp;quot;$project&amp;quot; : {
+					&amp;quot;state&amp;quot; : 1,
+					&amp;quot;pop&amp;quot; : 1,
+					&amp;quot;_id&amp;quot; : 0
+				}
+			}
+		],
+		&amp;quot;cursor&amp;quot; : {
+
+		},
+		&amp;quot;allowDiskUse&amp;quot; : true
+	},
+	[...]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The result shows the &lt;code&gt;$project&lt;/code&gt; and &lt;code&gt;$match&lt;/code&gt; clauses executed by MongoDB and, as expected, they match the Spark’s physical plan.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this article, I have shown how to connect to a MongoDB database with Apache Spark to load and query the data. The connector provides a set of utility methods to easily load data from MongoDB to a DataFrame.&lt;/p&gt;
+
+&lt;p&gt;I have also presented how a MongoDB &lt;em&gt;Document&lt;/em&gt; is mapped to a Spark’s DataFrame. Because of the hierarchical nature of a &lt;em&gt;Document&lt;/em&gt;, only the first level of attributes is mapped to columns. Inner documents become nested columns.&lt;/p&gt;
+
+&lt;p&gt;Finally, I have described how the connector minimizes the data loaded in Spark by taking advantage of the predicates pushdown optimization, an essential feature of every connector. The connector does a good job of sending the predicates automatically, but it is helpful to know how to confirm if and how the predicates are applied on the MongoDB side.&lt;/p&gt;
+
+&lt;p&gt;In conclusion, the connector is fully functional to take benefit from using Spark on top of MongoDB.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Introduction to the MongoDB connector for Apache Spark</title>
+      <link>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
+      <pubDate>Fri, 31 Mar 2017 23:08:27 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
+      <description>&lt;p&gt;MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.&lt;/p&gt;
+
+&lt;p&gt;Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the &lt;a href=&#34;https://github.com/datastax/spark-cassandra-connector&#34;&gt;Datastax’s spark-cassandra-connector&lt;/a&gt; and now the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB&amp;rsquo;s connector&lt;/a&gt; presented in this article.&lt;/p&gt;
+
+&lt;p&gt;By using Apache Spark as a data processing platform on top of a MongoDB database, you can benefit from all of the major Spark API features: the RDD model, the SQL (HiveQL) abstraction and the Machine Learning libraries.&lt;/p&gt;
+
+&lt;p&gt;In this article, I present the features of the connector and some use cases. An upcoming article will be a tutorial to demonstrate how to load data from MongoDB and run queries with Spark.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;mongodb-connector-for-spark-features&#34;&gt;“MongoDB connector for Spark” features&lt;/h2&gt;
+
+&lt;p&gt;The MongoDB connector for Spark is an open source project, written in Scala, to read and write data from MongoDB using Apache Spark.&lt;/p&gt;
+
+&lt;p&gt;The latest version - 2.0 - supports MongoDB &amp;gt;=2.6 and Apache Spark &amp;gt;= 2.0. The previous version - 1.1 - supports MongoDB &amp;gt;= 2.6 and Apache Spark &amp;gt;= 1.6 this is the version used in &lt;a href=&#34;https://university.mongodb.com/courses/M233/about&#34;&gt;the MongoDB online course&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The connector offers various features, most importantly:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The ability to read/write BSON documents directly from/to MongoDB.&lt;/li&gt;
+&lt;li&gt;Converting a MongoDB collection into a Spark RDD.&lt;/li&gt;
+&lt;li&gt;Utility methods to load collections directly into a Spark DataFrame or DataSet.&lt;/li&gt;
+&lt;li&gt;Predicates pushdown:
+
+&lt;ul&gt;
+&lt;li&gt;Predicates pushdown is an optimization from the Spark SQL&amp;rsquo;s Catalyst optimizer to push the &lt;code&gt;where&lt;/code&gt; filters and the &lt;code&gt;select&lt;/code&gt; projections down to the datasource.
+With MongoDB as the datasource, the connector will convert the Spark&amp;rsquo;s filters to a MongoDB aggregation pipeline &lt;code&gt;match&lt;/code&gt;.
+As a result, the actual filtering and projections are done on the MongoDB node before returning the data to the Spark node.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Integration with the MongoDB aggregation pipeline:
+
+&lt;ul&gt;
+&lt;li&gt;The connector accepts MongoDB&amp;rsquo;s pipeline definitions on a MongoRDD to execute aggregations on the MongoDB nodes instead of the Spark nodes.
+In reality, with most of the work to optimize the data load in the workers done automatically by the connector it should be used in rare cases.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Data locality:
+
+&lt;ul&gt;
+&lt;li&gt;If the Spark nodes are deployed on the same nodes as the MongoDB nodes, and correctly configured with a &lt;code&gt;MongoShardedPartitioner&lt;/code&gt;, then the Spark nodes will load the data according to their locality in the cluster. This will avoid costly network transfers when first loading the data in the Spark nodes.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/2017/03/mongodbsparkconnector.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Spark nodes deployed next to the MongoDB nodes&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;use-cases&#34;&gt;Use cases&lt;/h2&gt;
+
+&lt;p&gt;Different use cases can apply to run Spark on top of a MongoDB database, but they all take advantage of MongoDB’s built-in replication and sharding mechanisms to run Spark on the same large MongoDB cluster used by the business applications to store their data.&lt;/p&gt;
+
+&lt;p&gt;Typically, applications read/write on the primary replica set while the Spark nodes read data from a secondary replica set.&lt;/p&gt;
+
+&lt;p&gt;To provide analytics, Spark can be used to extract data from MongoDB, run complex queries and then write the data back to another MongoDB collection. This has the benefit to not introduce a new data storage while using the processing power of Spark.&lt;/p&gt;
+
+&lt;p&gt;If there is already a centralized storage - a Data Lake, for instance, built with HDFS - Spark can extract and transform data from MongoDB before writing it to HDFS. The advantage is to use Spark as a simple and effective ETL tool to move the data from MongoDB to the data lake.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this article, I have listed the MongoDB connector features and use cases.&lt;/p&gt;
+
+&lt;p&gt;The connector is fully functional and provides a set of utility methods to simplify the interactions between Spark and MongoDB.&lt;/p&gt;
+
+&lt;p&gt;Data locality - the ability to load the data on Spark nodes based on their MongoDB shard location - is another optimization from the MongoDB connector but requires extra configuration and is beyond the scope of this article.&lt;/p&gt;
+
+&lt;p&gt;In the next post, I will give a practical tour with code examples on how to connect Spark to MongoDB and write queries.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>A tour of Databricks Community Edition: a hosted Spark service</title>
       <link>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
       <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>

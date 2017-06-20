@@ -7,7 +7,7 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>GWT Sortie de la version 2.0</title>
+  <title>Introduction to the MongoDB connector for Apache Spark</title>
 
   <meta name="author" content="" />
   <meta name="keywords" content="">
@@ -74,9 +74,9 @@
   <link rel="alternate" href="http://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
 
   
-  <meta property="og:title" content="GWT Sortie de la version 2.0" />
+  <meta property="og:title" content="Introduction to the MongoDB connector for Apache Spark" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="/blog/gwt-sortie-de-la-version-2-0//" />
+  <meta property="og:url" content="/blog/introduction-mongodb-spark-connector//" />
   <meta property="og:image" content="" />
 
 </head>
@@ -168,7 +168,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>GWT Sortie de la version 2.0</h1>
+                <h1>Introduction to the MongoDB connector for Apache Spark</h1>
             </div>
         </div>
     </div>
@@ -184,93 +184,78 @@
 
                     <div class="col-md-9" id="blog-post">
 
-                        <p class="text-muted text-uppercase mb-small text-right">December 10, 2009</p>
+                        <p class="text-muted text-uppercase mb-small text-right">March 31, 2017</p>
 
                         <div id="post-content">
-                          
+                          <p>MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.</p>
 
-<p>Il y a quelques jours, Google a annoncé la sortie de la version 2 de son framework GWT.</p>
+<p>Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the <a href="https://github.com/datastax/spark-cassandra-connector">Datastax’s spark-cassandra-connector</a> and now the <a href="https://docs.mongodb.com/spark-connector/v2.0/">MongoDB&rsquo;s connector</a> presented in this article.</p>
 
-<p>Cette nouvelle version majeur marque un tournant en apportant de nombreuses fonctionnalités destinées à faciliter la vie du développeur.</p>
+<p>By using Apache Spark as a data processing platform on top of a MongoDB database, you can benefit from all of the major Spark API features: the RDD model, the SQL (HiveQL) abstraction and the Machine Learning libraries.</p>
 
-<p>L&rsquo;accent à clairement été mis sur la rapidité dans cette nouvelle version, rapidité pour le développement et rapidité pour l&rsquo;utilisateur final</p>
+<p>In this article, I present the features of the connector and some use cases. An upcoming article will be a tutorial to demonstrate how to load data from MongoDB and run queries with Spark.</p>
 
-<h3 id="ui-binder">UI Binder</h3>
+<p></p>
 
-<p>L&rsquo;UI Binder tout d&rsquo;abord est une nouvelle façon de décrire les interfaces GWT de façons déclarative avec une syntaxe XML. L&rsquo;utilisation d&rsquo;UI Binder permet de séparer clairement l&rsquo;interface de la logique l&rsquo;application. Par la suite il sera donc facile de modifier l&rsquo;interface de l&rsquo;application. UI Binder à été complètement intégré au plugin google pour Eclipse, avec par exemple un wizard de création, la complétion du code, le refactoring, &hellip;</p>
+<h2 id="mongodb-connector-for-spark-features">“MongoDB connector for Spark” features</h2>
 
-<p>Un petit exemple pour comparer une interface écrite &ldquo;à la&rdquo; swing et avec UI Binder :</p>
+<p>The MongoDB connector for Spark is an open source project, written in Scala, to read and write data from MongoDB using Apache Spark.</p>
 
-<p>En java :</p>
+<p>The latest version - 2.0 - supports MongoDB &gt;=2.6 and Apache Spark &gt;= 2.0. The previous version - 1.1 - supports MongoDB &gt;= 2.6 and Apache Spark &gt;= 1.6 this is the version used in <a href="https://university.mongodb.com/courses/M233/about">the MongoDB online course</a>.</p>
 
-<pre><code class="language-java">final Label label = new Label(&quot;Enter your name&quot;);
-final Button sendButton = new Button(&quot;Send&quot;);
-HorizontalPanel hPanel = new HorizontalPanel();
-hPanel.add(label);
-VerticalPanel vPanel = new VerticalPanel();
-vPanel.add(hPanel);
-vPanel.add(button);&lt;/pre&gt;
-</code></pre>
+<p>The connector offers various features, most importantly:</p>
 
-<p>Avec Ui binder :</p>
+<ul>
+<li>The ability to read/write BSON documents directly from/to MongoDB.</li>
+<li>Converting a MongoDB collection into a Spark RDD.</li>
+<li>Utility methods to load collections directly into a Spark DataFrame or DataSet.</li>
+<li>Predicates pushdown:
 
-<pre><code class="language-xml">&lt;g:verticalpanel&gt;
-	&lt;g:horizontalpanel&gt;
-		&lt;g:label&gt;Enter your name&lt;/g:label&gt;
-	&lt;/g:horizontalpanel&gt;
-	&lt;g:button text=&quot;Send&quot; stylename=&quot;{style.pretty}&quot; ui:field=&quot;button&quot; /&gt;
-&lt;/g:verticalpanel&gt;
-</code></pre>
+<ul>
+<li>Predicates pushdown is an optimization from the Spark SQL&rsquo;s Catalyst optimizer to push the <code>where</code> filters and the <code>select</code> projections down to the datasource.
+With MongoDB as the datasource, the connector will convert the Spark&rsquo;s filters to a MongoDB aggregation pipeline <code>match</code>.
+As a result, the actual filtering and projections are done on the MongoDB node before returning the data to the Spark node.</li>
+</ul></li>
+<li>Integration with the MongoDB aggregation pipeline:
 
-<h3 id="development-mode">Development mode</h3>
+<ul>
+<li>The connector accepts MongoDB&rsquo;s pipeline definitions on a MongoRDD to execute aggregations on the MongoDB nodes instead of the Spark nodes.
+In reality, with most of the work to optimize the data load in the workers done automatically by the connector it should be used in rare cases.</li>
+</ul></li>
+<li>Data locality:
 
-<p>Sûrement la fonctionnalité qui va faire gagner le plus de temps aux développeurs. Exit le hosted mode, bonjour le development mode ! :)
-Désormais, un simple plugin installé dans le browser remplace le navigateur de test qui était fournit. Le principe est toujours le même, une simple sauvegarde du fichier modifié et un refresh dans le navigateur permettent de voir les changements. Inutile de compiler en javascript pendant de longues minutes, le byte code java est utilisé à la place. Ceci permet donc par ailleurs de pouvoir tester en même temps le rendu dans plusieurs navigateurs.</p>
+<ul>
+<li>If the Spark nodes are deployed on the same nodes as the MongoDB nodes, and correctly configured with a <code>MongoShardedPartitioner</code>, then the Spark nodes will load the data according to their locality in the cluster. This will avoid costly network transfers when first loading the data in the Spark nodes.</li>
+</ul></li>
+</ul>
 
-<h3 id="amélioration-du-code-compilé">Amélioration du code compilé.</h3>
+<p><img src="/img/2017/03/mongodbsparkconnector.png" alt="" /></p>
 
-<p>Comme à chaque nouvelle version, la qualité du code javascript produit par le compilateur est encore optimisée. Le simple fait donc de recompiler un projet avec cette nouvelle version devrait donc sensiblement améliorer les performances de votre applications web.</p>
+<p><em>Spark nodes deployed next to the MongoDB nodes</em></p>
 
-<h3 id="code-splitting">Code Splitting</h3>
+<h2 id="use-cases">Use cases</h2>
 
-<p>Le code splitting part d&rsquo;un constat simple : pourquoi télécharger la totalité du code javascript de l&rsquo;application quand on pourrait télécharger à la demande à la manière du streaming ? Les ingénieurs GWT ont donc ajouté cette fonctionnalité et le premier bénéficiaire en est Wave qui a vu son temps de téléchargement initial considérablement diminué.
-Le principe : différer le téléchargement des blocs indépendants de l&rsquo;application. Quelques lignes de codes suffisent pour cela :</p>
+<p>Different use cases can apply to run Spark on top of a MongoDB database, but they all take advantage of MongoDB’s built-in replication and sharding mechanisms to run Spark on the same large MongoDB cluster used by the business applications to store their data.</p>
 
-<pre><code class="language-java">GWT.runAsync(new RunAsyncCallback() {
-	public void onFailure(Throwable caught) {
-		Window.alert(&quot;Code download failed&quot;);
-	}             
+<p>Typically, applications read/write on the primary replica set while the Spark nodes read data from a secondary replica set.</p>
 
-	public void onSuccess() {
-             Window.alert(&quot;Hello, AJAX&quot;);           
-	}         
-});
-</code></pre>
+<p>To provide analytics, Spark can be used to extract data from MongoDB, run complex queries and then write the data back to another MongoDB collection. This has the benefit to not introduce a new data storage while using the processing power of Spark.</p>
 
-<h3 id="speed-tracer">Speed Tracer</h3>
+<p>If there is already a centralized storage - a Data Lake, for instance, built with HDFS - Spark can extract and transform data from MongoDB before writing it to HDFS. The advantage is to use Spark as a simple and effective ETL tool to move the data from MongoDB to the data lake.</p>
 
-<p>Un outil de profiling a été annoncé en même temps que cette nouvelle version de GWT. Speed tracer est en fait une extension pour Google Chrome qui permet de profiler les requêtes, les temps de parsing et les temps de rendus du navigateur. Speed tracer identifie automatiquement les problèmes de performances de votre application.</p>
+<h2 id="conclusion">Conclusion</h2>
 
-<p><a href="/posts/speedTracer.png"><img src="/posts/speedTracer.png" alt="speedTracer.png" title="speedTracer.png, déc. 2009" /></a></p>
+<p>In this article, I have listed the MongoDB connector features and use cases.</p>
 
-<h3 id="conclusion">Conclusion</h3>
+<p>The connector is fully functional and provides a set of utility methods to simplify the interactions between Spark and MongoDB.</p>
 
-<p>Avec cette nouvelle version de GWT, Google continue la guerre des RIA. L&rsquo;ensemble des fonctionnalités permettra de diminuer le temps de développement et d&rsquo;améliorer l&rsquo;expérience utilisateur.</p>
+<p>Data locality - the ability to load the data on Spark nodes based on their MongoDB shard location - is another optimization from the MongoDB connector but requires extra configuration and is beyond the scope of this article.</p>
 
-<p>Et bien sur, tout cela repose toujours sur les standards HTML 5 + CSS + Ajax donc inutile d&rsquo;installer un plugin propriétaire dans le navigateur comme le demandent flash et silverlight.</p>
-
-<p>Le premier livre sur  GWT 2 devrait sortir très prochainement et la bonne nouvelle c&rsquo;est qu&rsquo;il est en français !</p>
-
-<p>C&rsquo;est écrit par <a href="http://www.dng-consulting.com/blogs/">Sami Jabber</a> et vous pouvez déjà <a href="http://www.eyrolles.com/Accueil/Livre/programmation-gwt-2-9782212125696">lire le sommaire et un chapitre entier</a> ou <a href="http://www.amazon.fr/Programmation-Concevoir-D%C3%A9velopper-Applications-Toolkit/dp/2212125690/ref=pd_sxp_grid_pt_0_0">le commander ici</a>.</p>
-
-<h4 id="sources">Sources :</h4>
-
-<p>Google camp fire on GWT and Speed Tracer : <a href="http://www.youtube.com/watch?v=D2ibM4oufdM">part 1</a>, <a href="http://www.youtube.com/watch?v=JQpuDB2Jxfg&amp;amp;feature=channel">part 2</a>, <a href="http://www.youtube.com/watch?v=QrnbKZ3hxls&amp;amp;feature=channel">part 3</a>, <a href="http://www.youtube.com/watch?v=WM6KPW8ZyjU&amp;amp;feature=channel">part 4</a>, <a href="http://www.youtube.com/watch?v=mnSNVfxK19Y&amp;amp;feature=channel">part 5</a>, <a href="http://www.youtube.com/watch?v=Kfh6IX-yhsc&amp;amp;feature=channel">part 6</a></p>
-
+<p>In the next post, I will give a practical tour with code examples on how to connect Spark to MongoDB and write queries.</p>
                         </div>
                         <div>
                           <a class="twitter-share-button"
-                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=gwt,"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=Apache%20Spark,MongoDB,"
                              data-size="large">
                           </a>
                         </div>
@@ -280,9 +265,9 @@ Le principe : différer le téléchargement des blocs indépendants de l&rsquo;
                             <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'raphaelbrugierblog';
-    var disqus_identifier = '408829762';
-    var disqus_title = 'GWT Sortie de la version 2.0';
-    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/gwt-sortie-de-la-version-2-0\/';
+    var disqus_identifier = 'http:\/\/www.raphael-brugier.com\/blog\/introduction-mongodb-spark-connector\/';
+    var disqus_title = 'Introduction to the MongoDB connector for Apache Spark';
+    var disqus_url = 'http:\/\/www.raphael-brugier.com\/blog\/introduction-mongodb-spark-connector\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

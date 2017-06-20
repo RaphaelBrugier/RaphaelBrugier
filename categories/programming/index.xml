@@ -9,6 +9,425 @@
     <atom:link href="http://www.raphael-brugier.com/categories/programming/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>MongoDB and Apache Spark - Getting started tutorial</title>
+      <link>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
+      <pubDate>Wed, 03 May 2017 23:01:48 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
+      <description>&lt;p&gt;MongoDB and Apache Spark are two popular Big Data technologies.&lt;/p&gt;
+
+&lt;p&gt;In my &lt;a href=&#34;http://blog.ippon.tech/introduction-to-the-mongodb-connector-for-apache-spark/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
+
+&lt;p&gt;To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on &lt;a href=&#34;https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/&#34;&gt;the aggregation pipeline documentation using a zip code data set&lt;/a&gt;. I have prepared a Maven project and a Docker Compose file to get you started quickly.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://docs.docker.com/engine/installation/&#34;&gt;Docker and Docker Compose&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install Maven&lt;/li&gt;
+&lt;li&gt;Download the project &lt;a href=&#34;https://github.com/raphaelbrugier/spark-mongo-example&#34;&gt;from Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;From the project root, launch the MongoDB server with docker-compose:
+&lt;code&gt;docker-compose -f docker/docker-compose.yml up -d&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Import the data in the MongoDB database running in the container:
+&lt;code&gt;docker exec -it mongo_container sh /scripts/import-data.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Check that the data has been loaded in MongoDB by connecting to the container and running a count:
+&lt;code&gt;docker exec mongo_container mongo --eval &amp;quot;db.zips.count()&amp;quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This should return:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;MongoDB shell version: 3.2.11
+connecting to: test
+29353
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The zips collection is a collection of &lt;em&gt;Document&lt;/em&gt; with the following model:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  &amp;quot;_id&amp;quot;: &amp;quot;10280&amp;quot;,
+  &amp;quot;city&amp;quot;: &amp;quot;NEW YORK&amp;quot;,
+  &amp;quot;state&amp;quot;: &amp;quot;NY&amp;quot;,
+  &amp;quot;pop&amp;quot;: 5574,
+  &amp;quot;loc&amp;quot;: [
+    -74.016323,
+    40.710537
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Import the Maven project in your favorite IDE. Create a new file &lt;em&gt;Main.scala&lt;/em&gt; to copy the examples or run the &lt;code&gt;MongoSparkMain&lt;/code&gt; for the solution.&lt;/p&gt;
+
+&lt;h2 id=&#34;read-data-from-mongodb-to-spark&#34;&gt;Read data from MongoDB to Spark&lt;/h2&gt;
+
+&lt;p&gt;In this example, we will see how to configure the connector and read from a MongoDB collection to a DataFrame.&lt;/p&gt;
+
+&lt;p&gt;First, you need to create a minimal SparkContext, and then to configure the &lt;code&gt;ReadConfig&lt;/code&gt; instance used by the connector with the MongoDB URL, the name of the database and the collection to load:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;import com.mongodb.spark._
+import com.mongodb.spark.config.ReadConfig
+import com.mongodb.spark.sql._
+import com.typesafe.scalalogging.slf4j.LazyLogging
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.{max, min}
+import org.bson.Document
+
+object Main extends App with LazyLogging {
+    val spark = SparkSession.builder()
+    .appName(&amp;quot;mongozips&amp;quot;)
+    .master(&amp;quot;local[*]&amp;quot;)
+    .getOrCreate()
+
+  // Read the data from MongoDB to a DataFrame
+  val readConfig = ReadConfig(Map(&amp;quot;uri&amp;quot; -&amp;gt; &amp;quot;mongodb://127.0.0.1/&amp;quot;, &amp;quot;database&amp;quot; -&amp;gt; &amp;quot;test&amp;quot;, &amp;quot;collection&amp;quot; -&amp;gt; &amp;quot;zips&amp;quot;)) // 1)
+  val zipDf = spark.read.mongo(readConfig) // 2)
+  zipDf.printSchema() // 3)
+  zipDf.show()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Set the MongoDB URL, database, and collection to read.&lt;/li&gt;
+&lt;li&gt;The connector provides a method to convert a MongoRDD to a DataFrame. The DataFrame’s schema is automatically inferred by the connector by &lt;a href=&#34;https://docs.mongodb.com/v3.2/reference/operator/aggregation/sample/&#34;&gt;sampling&lt;/a&gt; the collection. Alternatively, you can explicitly pass a schema definition.&lt;/li&gt;
+&lt;li&gt;Print the schema inferred by the connector.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Results:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;root
+ |-- _id: string (nullable = true)
+ |-- city: string (nullable = true)
+ |-- loc: array (nullable = true)
+ |    |-- element: double (containsNull = true)
+ |-- pop: integer (nullable = true)
+ |-- state: string (nullable = true)
+
++-----+-----------+--------------------+-----+-----+
+|  _id|       city|                 loc|  pop|state|
++-----+-----------+--------------------+-----+-----+
+|01001|     AGAWAM|[-72.622739, 42.0...|15338|   MA|
+|01002|    CUSHMAN|[-72.51565, 42.37...|36963|   MA|
+|01005|      BARRE|[-72.108354, 42.4...| 4546|   MA|
+|01007|BELCHERTOWN|[-72.410953, 42.2...|10579|   MA|
+|01008|  BLANDFORD|[-72.936114, 42.1...| 1240|   MA|
++-----+-----------+--------------------+-----+-----+
+only showing top 5 rows
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The connector has correctly inferred the schema based on the documents sampling. Both the column names and types have been identified accurately.&lt;/p&gt;
+
+&lt;h3 id=&#34;inferring-inner-documents&#34;&gt;Inferring inner-documents&lt;/h3&gt;
+
+&lt;p&gt;Interestingly, the &lt;code&gt;loc&lt;/code&gt; array from the MongoDB document has been translated to a Spark’s Array type.&lt;/p&gt;
+
+&lt;p&gt;But what if the document contains inner documents? The connector does not flatten the inner document but translates them as a Spark’s StructType, a key-value type.&lt;/p&gt;
+
+&lt;p&gt;Take for example this MongoDB document:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+  name: &amp;quot;Joe Bookreader&amp;quot;,
+  country: {
+    isocode: &amp;quot;USA&amp;quot;,
+    name: &amp;quot;United States&amp;quot;
+  },
+  addresses: [
+    {
+      street: &amp;quot;123 Fake Street&amp;quot;,
+      city: &amp;quot;Faketon&amp;quot;,
+      state: &amp;quot;MA&amp;quot;,
+      zip: &amp;quot;12345&amp;quot;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The document has two inner documents. The first one is the country and the second one is an address contained in a list.&lt;/p&gt;
+
+&lt;p&gt;After loading the collections, the schema inferred by the connector shows a StructType for both the &lt;code&gt;country&lt;/code&gt; and the &lt;code&gt;address&lt;/code&gt; in the array of addresses.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;val personDf = spark.read.mongo(ReadConfig(Map(&amp;quot;uri&amp;quot; -&amp;gt; &amp;quot;mongodb://127.0.0.1/&amp;quot;, &amp;quot;database&amp;quot; -&amp;gt; &amp;quot;test&amp;quot;, &amp;quot;collection&amp;quot; -&amp;gt; &amp;quot;person&amp;quot;)))
+personDf.printSchema()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Results:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;root
+ |-- _id: struct (nullable = true)
+ |    |-- oid: string (nullable = true)
+ |-- addresses: array (nullable = true)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- street: string (nullable = true)
+ |    |    |-- city: string (nullable = true)
+ |    |    |-- state: string (nullable = true)
+ |    |    |-- zip: string (nullable = true)
+ |-- country: struct (nullable = true)
+ |    |-- isocode: string (nullable = true)
+ |    |-- name: string (nullable = true)
+ |-- name: string (nullable = true)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The values in the StructType types can be accessed by their column names:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;personDf.select($&amp;quot;_id&amp;quot;, $&amp;quot;addresses&amp;quot;(0)(&amp;quot;street&amp;quot;), $&amp;quot;country&amp;quot;(&amp;quot;name&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can find the list of the mappings between the MongoDB types and the DataFrame’s types in the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/scala/datasets-and-sql/#datatypes&#34;&gt;connector&amp;rsquo;s documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;use-the-spark-api-to-query-the-data&#34;&gt;Use the Spark API to query the data&lt;/h2&gt;
+
+&lt;p&gt;After loading the collection in a DataFrame, we can now use the Spark API to query and transform the data.&lt;/p&gt;
+
+&lt;p&gt;As an example, we write a query to find the states with a population greater or equal to 10 million. The example also shows how the Spark API can easily map to the original MongoDB query.&lt;/p&gt;
+
+&lt;p&gt;The MongoDB query is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;db.zipcodes.aggregate( [
+   { $group: { _id: &amp;quot;$state&amp;quot;, totalPop: { $sum: &amp;quot;$pop&amp;quot; } } },
+   { $match: { totalPop: { $gte: 10*1000*1000 } } }
+] )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And now the Spark query:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;println( &amp;quot;States with Populations above 10 Million&amp;quot; )
+import zipDf.sqlContext.implicits._ // 1)
+zipDf.groupBy(&amp;quot;state&amp;quot;)
+    .sum(&amp;quot;pop&amp;quot;)
+    .withColumnRenamed(&amp;quot;sum(pop)&amp;quot;, &amp;quot;count&amp;quot;) // 2)
+    .filter($&amp;quot;count&amp;quot; &amp;gt; 10000000)
+    .show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Result:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;States with Populations above 10 Millions:
++-----+--------+
+|state|   count|
++-----+--------+
+|   TX|16984601|
+|   NY|17990402|
+|   OH|10846517|
+|   IL|11427576|
+|   CA|29754890|
+|   PA|11881643|
+|   FL|12686644|
++-----+--------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The DataFrame API is pretty straight forward for this simple query.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Use the import to have implicit conversions from &lt;code&gt;String&lt;/code&gt; to &lt;code&gt;Column&lt;/code&gt; with the &lt;code&gt;$&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Rename the result of the sum column for readability.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;spark-sql&#34;&gt;Spark SQL&lt;/h2&gt;
+
+&lt;p&gt;Spark and the DataFrame abstraction also enables to write plain Spark SQL queries with a familiar SQL syntax.&lt;/p&gt;
+
+&lt;p&gt;For example, let’s rewrite the previous query with SQL:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;// SparkSQL:
+  zipDf.createOrReplaceTempView(&amp;quot;zips&amp;quot;) // 1)
+  zipDf.sqlContext.sql( // 2)
+    &amp;quot;&amp;quot;&amp;quot;SELECT state, sum(pop) AS count
+      FROM zips
+      GROUP BY state
+      HAVING sum(pop) &amp;gt; 10000000&amp;quot;&amp;quot;&amp;quot;
+  )
+  .show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Register the DataFrame as a Spark SQL table.&lt;/li&gt;
+&lt;li&gt;Execute the Spark SQL query.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;predicates-pushdown&#34;&gt;Predicates pushdown&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;“Predicates pushdown”&lt;/em&gt; is an optimization from the connector and the Catalyst optimizer to automatically “push down” predicates to the data nodes. The goal is to maximize the amount of data filtered out on the data storage side before loading it into Spark’s node memory.&lt;/p&gt;
+
+&lt;p&gt;There are two kinds of predicates automatically pushed down by the connector to MongoDB:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;select&lt;/code&gt; clause (projections) as a &lt;a href=&#34;https://docs.mongodb.com/manual/reference/operator/aggregation/project/&#34;&gt;&lt;code&gt;$project&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;filter&lt;/code&gt; clause content (&lt;code&gt;where&lt;/code&gt;) as one or more &lt;a href=&#34;https://docs.mongodb.com/manual/reference/operator/aggregation/match/&#34;&gt;&lt;code&gt;$match&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Both are sent by the connector as an &lt;a href=&#34;https://github.com/mongodb/mongo-spark/blob/master/src/main/scala/com/mongodb/spark/sql/MongoRelationHelper.scala#L30&#34;&gt;aggregation pipeline&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To verify if the predicates are sent, we use the Spark’s &lt;em&gt;explain&lt;/em&gt; method to examine the query plan produced by Spark for a simple query with a filter:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;zipDf
+    .filter($&amp;quot;pop&amp;quot; &amp;gt; 0)
+    .select(&amp;quot;state&amp;quot;)
+    .explain(true)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;== Parsed Logical Plan ==
+[...]
+
+== Analyzed Logical Plan ==
+[...]
+
+== Optimized Logical Plan ==
+[...]
+
+== Physical Plan ==
+*Project [state#4]
++- *Filter (isnotnull(pop#3) &amp;amp;&amp;amp; (pop#3 &amp;gt; 0))
+   +- *Scan MongoRelation(MongoRDD[0] at RDD at MongoRDD.scala:52,Some(StructType(StructField(_id,StringType,true), StructField(city,StringType,true), StructField(loc,ArrayType(DoubleType,true),true), StructField(pop,IntegerType,true), StructField(state,StringType,true)))) [state#4,pop#3] PushedFilters: [IsNotNull(pop), GreaterThan(pop,0)], ReadSchema: struct&amp;lt;state:string&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see in the physical plan generated by the Catalyst optimizer, the name of the fields to project (&lt;code&gt;state&lt;/code&gt; and &lt;code&gt;pop&lt;/code&gt;), and the filters to push (pop not null and pop greater than 0).&lt;/p&gt;
+
+&lt;p&gt;To confirm what is actually executed on the MongoDB nodes, we need to increase MongoDB’s log level and examine the &lt;code&gt;system.profile&lt;/code&gt; collection.&lt;/p&gt;
+
+&lt;p&gt;Enable the logging on MongoDB, run the Spark query again, and find the trace of the query in the &lt;code&gt;system.profile&lt;/code&gt; collection:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$mongo
+MongoDB shell version: 3.2.11
+connecting to: test
+
+&amp;gt; db.setProfilingLevel(2)
+&amp;gt; db.system.profile.find().pretty()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The result is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+	&amp;quot;op&amp;quot; : &amp;quot;command&amp;quot;,
+	&amp;quot;ns&amp;quot; : &amp;quot;test.zips&amp;quot;,
+	&amp;quot;command&amp;quot; : {
+		&amp;quot;aggregate&amp;quot; : &amp;quot;zips&amp;quot;,
+		&amp;quot;pipeline&amp;quot; : [
+			{
+				&amp;quot;$match&amp;quot; : {
+					&amp;quot;_id&amp;quot; : {
+						&amp;quot;$gte&amp;quot; : { &amp;quot;$minKey&amp;quot; : 1 },
+						&amp;quot;$lt&amp;quot; : { &amp;quot;$maxKey&amp;quot; : 1 }
+					}
+				}
+			},
+			{
+				&amp;quot;$match&amp;quot; : {
+					&amp;quot;pop&amp;quot; : {
+						&amp;quot;$exists&amp;quot; : true,
+						&amp;quot;$ne&amp;quot; : null,
+						&amp;quot;$gt&amp;quot; : 0
+					}
+				}
+			},
+			{
+				&amp;quot;$project&amp;quot; : {
+					&amp;quot;state&amp;quot; : 1,
+					&amp;quot;pop&amp;quot; : 1,
+					&amp;quot;_id&amp;quot; : 0
+				}
+			}
+		],
+		&amp;quot;cursor&amp;quot; : {
+
+		},
+		&amp;quot;allowDiskUse&amp;quot; : true
+	},
+	[...]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The result shows the &lt;code&gt;$project&lt;/code&gt; and &lt;code&gt;$match&lt;/code&gt; clauses executed by MongoDB and, as expected, they match the Spark’s physical plan.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this article, I have shown how to connect to a MongoDB database with Apache Spark to load and query the data. The connector provides a set of utility methods to easily load data from MongoDB to a DataFrame.&lt;/p&gt;
+
+&lt;p&gt;I have also presented how a MongoDB &lt;em&gt;Document&lt;/em&gt; is mapped to a Spark’s DataFrame. Because of the hierarchical nature of a &lt;em&gt;Document&lt;/em&gt;, only the first level of attributes is mapped to columns. Inner documents become nested columns.&lt;/p&gt;
+
+&lt;p&gt;Finally, I have described how the connector minimizes the data loaded in Spark by taking advantage of the predicates pushdown optimization, an essential feature of every connector. The connector does a good job of sending the predicates automatically, but it is helpful to know how to confirm if and how the predicates are applied on the MongoDB side.&lt;/p&gt;
+
+&lt;p&gt;In conclusion, the connector is fully functional to take benefit from using Spark on top of MongoDB.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Introduction to the MongoDB connector for Apache Spark</title>
+      <link>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
+      <pubDate>Fri, 31 Mar 2017 23:08:27 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
+      <description>&lt;p&gt;MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.&lt;/p&gt;
+
+&lt;p&gt;Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the &lt;a href=&#34;https://github.com/datastax/spark-cassandra-connector&#34;&gt;Datastax’s spark-cassandra-connector&lt;/a&gt; and now the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB&amp;rsquo;s connector&lt;/a&gt; presented in this article.&lt;/p&gt;
+
+&lt;p&gt;By using Apache Spark as a data processing platform on top of a MongoDB database, you can benefit from all of the major Spark API features: the RDD model, the SQL (HiveQL) abstraction and the Machine Learning libraries.&lt;/p&gt;
+
+&lt;p&gt;In this article, I present the features of the connector and some use cases. An upcoming article will be a tutorial to demonstrate how to load data from MongoDB and run queries with Spark.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;mongodb-connector-for-spark-features&#34;&gt;“MongoDB connector for Spark” features&lt;/h2&gt;
+
+&lt;p&gt;The MongoDB connector for Spark is an open source project, written in Scala, to read and write data from MongoDB using Apache Spark.&lt;/p&gt;
+
+&lt;p&gt;The latest version - 2.0 - supports MongoDB &amp;gt;=2.6 and Apache Spark &amp;gt;= 2.0. The previous version - 1.1 - supports MongoDB &amp;gt;= 2.6 and Apache Spark &amp;gt;= 1.6 this is the version used in &lt;a href=&#34;https://university.mongodb.com/courses/M233/about&#34;&gt;the MongoDB online course&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The connector offers various features, most importantly:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The ability to read/write BSON documents directly from/to MongoDB.&lt;/li&gt;
+&lt;li&gt;Converting a MongoDB collection into a Spark RDD.&lt;/li&gt;
+&lt;li&gt;Utility methods to load collections directly into a Spark DataFrame or DataSet.&lt;/li&gt;
+&lt;li&gt;Predicates pushdown:
+
+&lt;ul&gt;
+&lt;li&gt;Predicates pushdown is an optimization from the Spark SQL&amp;rsquo;s Catalyst optimizer to push the &lt;code&gt;where&lt;/code&gt; filters and the &lt;code&gt;select&lt;/code&gt; projections down to the datasource.
+With MongoDB as the datasource, the connector will convert the Spark&amp;rsquo;s filters to a MongoDB aggregation pipeline &lt;code&gt;match&lt;/code&gt;.
+As a result, the actual filtering and projections are done on the MongoDB node before returning the data to the Spark node.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Integration with the MongoDB aggregation pipeline:
+
+&lt;ul&gt;
+&lt;li&gt;The connector accepts MongoDB&amp;rsquo;s pipeline definitions on a MongoRDD to execute aggregations on the MongoDB nodes instead of the Spark nodes.
+In reality, with most of the work to optimize the data load in the workers done automatically by the connector it should be used in rare cases.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Data locality:
+
+&lt;ul&gt;
+&lt;li&gt;If the Spark nodes are deployed on the same nodes as the MongoDB nodes, and correctly configured with a &lt;code&gt;MongoShardedPartitioner&lt;/code&gt;, then the Spark nodes will load the data according to their locality in the cluster. This will avoid costly network transfers when first loading the data in the Spark nodes.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/2017/03/mongodbsparkconnector.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Spark nodes deployed next to the MongoDB nodes&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;use-cases&#34;&gt;Use cases&lt;/h2&gt;
+
+&lt;p&gt;Different use cases can apply to run Spark on top of a MongoDB database, but they all take advantage of MongoDB’s built-in replication and sharding mechanisms to run Spark on the same large MongoDB cluster used by the business applications to store their data.&lt;/p&gt;
+
+&lt;p&gt;Typically, applications read/write on the primary replica set while the Spark nodes read data from a secondary replica set.&lt;/p&gt;
+
+&lt;p&gt;To provide analytics, Spark can be used to extract data from MongoDB, run complex queries and then write the data back to another MongoDB collection. This has the benefit to not introduce a new data storage while using the processing power of Spark.&lt;/p&gt;
+
+&lt;p&gt;If there is already a centralized storage - a Data Lake, for instance, built with HDFS - Spark can extract and transform data from MongoDB before writing it to HDFS. The advantage is to use Spark as a simple and effective ETL tool to move the data from MongoDB to the data lake.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this article, I have listed the MongoDB connector features and use cases.&lt;/p&gt;
+
+&lt;p&gt;The connector is fully functional and provides a set of utility methods to simplify the interactions between Spark and MongoDB.&lt;/p&gt;
+
+&lt;p&gt;Data locality - the ability to load the data on Spark nodes based on their MongoDB shard location - is another optimization from the MongoDB connector but requires extra configuration and is beyond the scope of this article.&lt;/p&gt;
+
+&lt;p&gt;In the next post, I will give a practical tour with code examples on how to connect Spark to MongoDB and write queries.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Add a Git hook to automatically verify a repository&#39;s email</title>
       <link>http://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
       <pubDate>Sat, 03 Dec 2016 13:40:15 -0500</pubDate>
@@ -1699,231 +2118,6 @@ private WidgetResources css() {
 &lt;p&gt;&lt;a href=&#34;http://code.google.com/intl/fr/events/io/2010/sessions/gwt-ui-overhaul.html&#34;&gt;Wave de discussion sur la conférence&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://wave.google.com/wave/waveref/googlewave.com/w+zqS7G7ZkBwa&#34;&gt;Live Wave (notes prises par un Googler pendant la conférence)&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GTAC 2009 – Lessons learned from testing GWT applications</title>
-      <link>http://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</link>
-      <pubDate>Sun, 30 May 2010 16:00:20 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</guid>
-      <description>
-
-&lt;p&gt;Les 21 et 22 octobre 2009 avait lieux à Zurich la conférence annuelle de Google sur les test automatisées.&lt;/p&gt;
-
-&lt;p&gt;Parmi toutes les conférences proposées, une m&amp;rsquo;intéressait particulièrement puisqu&amp;rsquo;elle concerne les test d&amp;rsquo;applications réalisées en Gwt.&lt;/p&gt;
-
-&lt;p&gt;Voici donc la vidéo de la présentation ainsi que les slides et quelques notes que j&amp;rsquo;ai pris en la visionnant.&lt;/p&gt;
-
-&lt;p&gt;&lt;object classid=&#34;clsid:d27cdb6e-ae6d-11cf-96b8-444553540000&#34; width=&#34;480&#34; height=&#34;385&#34; codebase=&#34;http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0&#34;&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34; /&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34; /&gt;&lt;param name=&#34;src&#34; value=&#34;http://www.youtube.com/v/TFfEjo3oFfM&amp;amp;hl=fr_FR&amp;amp;fs=1&amp;amp;&#34; /&gt;&lt;param name=&#34;allowfullscreen&#34; value=&#34;true&#34; /&gt;&lt;embed type=&#34;application/x-shockwave-flash&#34; width=&#34;480&#34; height=&#34;385&#34; src=&#34;http://www.youtube.com/v/TFfEjo3oFfM&amp;amp;hl=fr_FR&amp;amp;fs=1&amp;amp;&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;comment-tester-les-applications-gwt-slide-8&#34;&gt;Comment tester les applications Gwt ? (slide 8 )&lt;/h2&gt;
-
-&lt;h3 id=&#34;avec-selenium&#34;&gt;Avec selenium :&lt;/h3&gt;
-
-&lt;p&gt;Selenium va simuler au plus près l&amp;rsquo;interaction qu&amp;rsquo;a un vrai utilisateur avec le navigateur puisqu&amp;rsquo;il démarre un vrai navigateur et réalise directement les opérations de test sur celui-ci. Cependant cette approche est très coûteuse en temps d&amp;rsquo;exécution et surtout plus difficile pour maintenir les tests et plus dure à débugguer.&lt;/p&gt;
-
-&lt;h3 id=&#34;avec-gwttestcase&#34;&gt;Avec GwtTestCase :&lt;/h3&gt;
-
-&lt;p&gt;Cet outil, fourni avec Gwt ,démarre lui aussi un navigateur embarqué pour exécuter les tests. Cependant ici, on parle de &amp;ldquo;crossCompilation&amp;rdquo; puisque le code java est compilée en JS à la volée pour être exécuté par le navigateur embarqué. De la même façon que le development mode. Cet outil est plus rapide que selenium et plus facile à maintenir puisque les tests sont écrits en Java et lancés de la même façons que des tests Junit. Cependant, le fait que le code final testé est du javascript (après compilation à la volée donc) rend plus difficile le débuggage.&lt;/p&gt;
-
-&lt;h3 id=&#34;avec-junit&#34;&gt;Avec Junit :&lt;/h3&gt;
-
-&lt;p&gt;Ici on utilise classiquement Junit pour simuler les interactions utilisateurs. C&amp;rsquo;est le plus facile à maintenir et débugguer, puisque le mieux maîtriser et outillé. Cependant c&amp;rsquo;est aussi évidemment le moins réaliste puisqu&amp;rsquo;aucun navigateur n&amp;rsquo;est démarré pour tester le comportement réel du code compilé.&lt;/p&gt;
-
-&lt;h2 id=&#34;les-problèmes-rencontrés-pendant-les-tests&#34;&gt;Les problèmes rencontrés pendant les tests&lt;/h2&gt;
-
-&lt;h3 id=&#34;problème-1-tester-les-appels-asynchrones-slides-9-à-13&#34;&gt;Problème 1 : tester les appels asynchrones (slides 9 à 13) :&lt;/h3&gt;
-
-&lt;p&gt;Les appels aysnchrones sont la nature même des applications Ajax. C&amp;rsquo;est le A de Ajax ! Avec ces appels, il n&amp;rsquo;y a aucune garantie sur le temps nécessaire pour qu&amp;rsquo;ils réussissent, ni même d&amp;rsquo;ailleurs s&amp;rsquo;ils réussiront un jour (les pauvres :s). Ce sont ces mêmes appels que vous utilisez avec le mécanisme RPC de Gwt :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;myservice.call(new AsyncCallBack() {
-    public void onSuccess(QueryResponse response) {
-        searchButton.setEnabled(true);
-
-        if(response.count() == 0 {
-            resultPanel.add(new Label(&amp;quot;no team found&amp;quot;);
-        } else {
-            //ajouter la réponse dans un panel, etc
-        }
-    }
-
-    public void onFailure(Throwable ex) {
-        //traiter l&#39;échec de l&#39;appel asynchrone
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Test :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;MyService myService = mock(MyService.class);
-QueryHandler client = new QueryHandler(mySerice);
-client.performQuery(&amp;quot;test query&amp;quot;);
-ArgumentCaptor&amp;amp;lt;Asyncallback&amp;amp;gt; captor = ArgumentCaptor.forClass(AsynCallback.class);
-verify(myService).call(&amp;quot;test query&amp;quot;, captor.capture);
-AsyncCallback&amp;amp;lt;QueryResponse&amp;amp;gt; callback = captor.getValue;
-
-//Réel appel à onSuccess
-
-QueryResponse fakeResponse = createFakeResponseForTesting();
-callback.onSuccess(fakeResponse);
-
-//Tester les résultats.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ce que l&amp;rsquo;on veut tester ici, c&amp;rsquo;est le résultat d&amp;rsquo;un appel à la méthode onSuccess avec le résultat d&amp;rsquo;une réponse de callBack.&lt;/p&gt;
-
-&lt;p&gt;Ce qu&amp;rsquo;il faut bien voir c&amp;rsquo;est que toute la première partie du test ( mocker le service, mocker le callback, récupérer le callback de réponse), tout ça n&amp;rsquo;est fait que pour pouvoir appeler la méthode onSuccess du callBack ! ça fait donc beaucoup de plomberie pour tester une simple méthode !&lt;/p&gt;
-
-&lt;p&gt;L&amp;rsquo;astuce consiste à toujours remplacer le traitement qu&amp;rsquo;on ferait dans la méthode onSuccess par un appel à une autre méthode : doTraiterReponse(response);&lt;/p&gt;
-
-&lt;p&gt;Cette méthode, fera tout le travail de traitement nécessaire. Ainsi il est plus simple de la tester :&lt;/p&gt;
-
-&lt;p&gt;QueryHandler.java :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;myservice.call(new AsyncCallBack() {
-    public void  onSuccess(QueryResponse response) {
-        doTraiterReponse(response);
-    }
-
-    public  void onFailure(Throwable ex) {
-        //traiter l&#39;échec de l&#39;appel  asynchrone
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Test :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;QueryHandler client = new QueryHandler(null) // Plus besoin de service !
-
-QueryResponse fakeResponse = createFakeResponseForTesting();
-client.doTraiterReponse(fakeresponse);
-
-//Tester les résultats
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;problème-2-opérations-directe-sur-le-dom-slides-14-à-16&#34;&gt;Problème 2 : Opérations directe sur le DOM (slides 14 à 16)&lt;/h3&gt;
-
-&lt;p&gt;Gwt permet de manipuler directement le DOM du document HTML :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;String selectedLanguage = DOM.getElementByID(&amp;quot;languageSelection&amp;quot;).getPropertyString(&amp;quot;value&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ici, la solution est simple :APPRENDRE L&amp;rsquo;API !&lt;/p&gt;
-
-&lt;p&gt;En utilisant uniquement les widgets gwt qui encapsule tout la manipulation du DOM, il est plus facile de tester unitairement ces Widgets.&lt;/p&gt;
-
-&lt;p&gt;Ici on aurait utilisé une ListBox dans une panel.&lt;/p&gt;
-
-&lt;h3 id=&#34;problème-3-mixer-java-et-javascript-slides-17-à-19&#34;&gt;Problème 3 : mixer Java et Javascript (slides 17 à 19)&lt;/h3&gt;
-
-&lt;p&gt;Gwt propose un mécanisme pour encapsuler du code javascript dans des méthodes Java :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;private native void showPlayer /*{
-    $wnd.showPlayer;
-}*/;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Ici, le mélange javascript/java ne permet de tester unitairement avec Junit les méthodes natives.&lt;/p&gt;
-
-&lt;p&gt;La solution la plus simple reste d&amp;rsquo;isoler ces méthodes dans des classes dédiées et de les mocker quand elles sont utilisées.&lt;/p&gt;
-
-&lt;p&gt;Pour tester ces méthodes, il faudra faire appels à GwtTestCase qui lui aura la capacité d&amp;rsquo;exécuter du code mixant java (compilée à la volée en javascript) et appels natifs au code javascript.&lt;/p&gt;
-
-&lt;h3 id=&#34;problème-4-static-global-access-slides-20-à-27&#34;&gt;Problème 4 : static/global access (slides 20 à 27)&lt;/h3&gt;
-
-&lt;p&gt;Les accès statics ou aux variables globales sont difficiles à suivre, et donc à débugguer.&lt;/p&gt;
-
-&lt;p&gt;Pour isoler les dépendances de la classe à tester, on mettra en oeuvre l&amp;rsquo;injection de dépendance pour mocker les classes utilisées dans les tests.&lt;/p&gt;
-
-&lt;p&gt;Pour rappel, il existe un framework d&amp;rsquo;injection de dépendances développé par Google pour Gwt : &lt;a href=&#34;http://code.google.com/p/google-gin/&#34;&gt;Gin&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Il est basé sur Guice, le framework d&amp;rsquo;injection de Google.&lt;/p&gt;
-
-&lt;h3 id=&#34;problème-5-séparation-des-responsabilités-slides-28-à-32&#34;&gt;Problème 5 : Séparation des responsabilités (slides 28 à 32)&lt;/h3&gt;
-
-&lt;p&gt;Ici le pattern MVP (Model View Presenter) est mis en avant par rapport au classique MVC.&lt;/p&gt;
-
-&lt;p&gt;Dans MVC, la vue est écouteur du modèle. Le contrôleur modifie le modèle et la vue écoute ces changements. La vue se met à jour en écoutant tout changement du modèle.&lt;/p&gt;
-
-&lt;p&gt;Cette mise à jour entraine forcément qu&amp;rsquo;une partie de la logique du traitement du modèle se retrouve dans la vue, et donc une mauvaise séparation des responsabilité.&lt;/p&gt;
-
-&lt;p&gt;Pour parer à cela, le pattern MVP à été introduit. L&amp;rsquo;article fondateur du pattern MVP est celui de &lt;a href=&#34;http://martinfowler.com/eaaDev/ModelViewPresenter.html&#34;&gt;M. Fowler&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Dans MVP, toute la logique est concentrée dans le Presenter. Le Modèle et la Vue informe le Presenter des changements par un système d&amp;rsquo;évènements. Le Presenter réagit aux évènements et reflète les changements sur le modèle et la vue. Le plus souvent la vue sera d&amp;rsquo;ailleurs une vue passive.&lt;/p&gt;
-
-&lt;p&gt;Le slide 32 est particulièrement intéressant, puisque c&amp;rsquo;est lui qui ma donné le déclic pour comprendre toute la logique de MVP.&lt;/p&gt;
-
-&lt;p&gt;Avec un Presenter isolé de cette façons, il est facile de le tester unitairement (en pseudo code &amp;ldquo;java&amp;rdquo; pour plus de clarté) :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Presenter {
-    Vue vue;
-    Model model;
-
-    public Presenter(Vue vue, Model model) {
-        this.model = model;
-        this.vue = vue;
-        attachHandler();
-    }
-
-    private void attachHandler() {
-        vue.getButton.addClickHandler(new ClickHandler() {
-            public void onClick(Event e) {
-                model.save(vue.getData());
-            }
-        });
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Test :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;//With
-Model mockModel = mock(Model.class);
-Vue mockVue = mock(Vue.class);
-Presenter presenter = new Presenter(mockVue, mockModel);
-
-//Given
-Data testData = createFakeData();
-vue.setData(testData);
-
-// Assert
-verify(mockModel).save(testData);
-vue.getButton.click();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;Voilà pour les quelques notes sur cette conférence, il y&amp;rsquo;en a encore beaucoup d&amp;rsquo;autres à regarder qui ne porte pas que sur  GWT mais sur les Test et les bonnes pratiques en général.&lt;/p&gt;
-
-&lt;p&gt;Bon visionnage et surtout bon TDD à tous !&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Critique du Livre &#39;Programmation GWT 2&#39;</title>
-      <link>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</link>
-      <pubDate>Thu, 28 Jan 2010 23:04:00 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</guid>
-      <description>&lt;p&gt;Je viens de terminer la lecture de &amp;ldquo;Programmation GWT 2&amp;rdquo; de Sami Jabber. Sorti quelques jours après la release finale de cette nouvelle version majeure du framework, il constitue un excellent point d&amp;rsquo;entrée à cette technologie autant qu&amp;rsquo;un approfondissement pour les connaisseurs.&lt;/p&gt;
-
-&lt;p&gt;Bien que je connaisse déjà (un peu) GWT et que j&amp;rsquo;expérimente la version 2 depuis quelques mois, j&amp;rsquo;ai appris énormément avec ce livre. Et surtout j&amp;rsquo;ai pris beaucoup de plaisir à le lire! Les premiers chapitres constituent de bon rappel sur le fonctionnement général.&lt;/p&gt;
-
-&lt;p&gt;Le chapitre sur RPC est assez surprenant puisque l&amp;rsquo;auteur invite à utiliser la version 2 de ce service, &lt;a href=&#34;http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideServerCommunication.html#DevGuideDeRPC&#34;&gt;DeRPC (Direct-Eval RPC)&lt;/a&gt; &amp;hellip; alors qu&amp;rsquo;il n&amp;rsquo;a pas été publiés en version finale et que toutes les classes sont marqués &amp;ldquo;WARNING EXPERIMENTAL DO NOT USE !&amp;rdquo;. Personnellement je ne tenterais pas pour une production pro, mais c&amp;rsquo;est toujours intéressant de testé. Dans les tout cas, l&amp;rsquo;auteur propose &lt;a href=&#34;http://www.programmationgwt2.com/web/guest/chapitres/-/wiki/Main/Chapitre+7+-+Les+services+RPC&#34;&gt;une justification&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Le chapitre sur J2EE propose un pattern vraiment très intéressant pour simplifier l&amp;rsquo;appel de services existant (spring, ejb) en évitant d&amp;rsquo;avoir à écrire des classes asynchrones.&lt;/p&gt;
-
-&lt;p&gt;Pour moi, le gros plus de ce livre réside dans le chapitre &amp;ldquo;Sous le capot&amp;rdquo;. Il propose de plonger dans le coeur de GWT et décrit tout la mécanique de compilation JAVA vers JavaScript. C&amp;rsquo;est vraiment passionnant, et là on se rend bien compte de la prouesse technique qu&amp;rsquo;a nécessité la création de ce framework.&lt;/p&gt;
-
-&lt;p&gt;Les derniers chapitres exposent les nouveautés de la version 2 avec plus de pédagogie que les tutoriels du site officiel, un bon point.&lt;/p&gt;
-
-&lt;p&gt;Par contre, le chapitre sur les patterns est trop rapide à mon goût. Avec en plus la fin du chapitre dédié à la sécurité, je suis resté sur ma faim. Mais bon, ce n&amp;rsquo;est pas un livre sur les patterns et le lecteur pourra approfondir les patterns les plus intéressant par expérimentation par lui-même.&lt;/p&gt;
-
-&lt;p&gt;Un avis très positif donc pour ce livre. Le premier livre sur GWT 2 est en français et il est bon !&lt;/p&gt;
-
-&lt;p&gt;Nb : à noter qu&amp;rsquo;un &lt;a href=&#34;http://www.programmationgwt2.com&#34;&gt;WIKI&lt;/a&gt; est disponible pour corriger les coquilles du livre ou discuter avec l&amp;rsquo;auteur.&lt;/p&gt;
 </description>
     </item>
     
