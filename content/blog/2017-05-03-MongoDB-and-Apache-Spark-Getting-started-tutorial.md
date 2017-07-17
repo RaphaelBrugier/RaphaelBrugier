@@ -9,7 +9,7 @@ banner = "img/spark-logo.png"
 
 MongoDB and Apache Spark are two popular Big Data technologies.
 
-In my [previous post](http://blog.ippon.tech/introduction-to-the-mongodb-connector-for-apache-spark/), I listed the capabilities of the [MongoDB connector for Spark](https://docs.mongodb.com/spark-connector/v2.0/). In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.
+In my [previous post]({{< relref "blog/2017-03-31-Introduction-MongoDB-connector-for-Apache-Spark.md">}}), I listed the capabilities of the [MongoDB connector for Spark](https://docs.mongodb.com/spark-connector/v2.0/). In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.
 
 To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on [the aggregation pipeline documentation using a zip code data set](https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/). I have prepared a Maven project and a Docker Compose file to get you started quickly.
 
