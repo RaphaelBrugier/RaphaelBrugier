@@ -6,8 +6,144 @@
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 May 2017 23:01:48 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 16 Jul 2017 22:34:32 -0400</lastBuildDate>
     <atom:link href="http://www.raphael-brugier.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Fix the Git completion with Oh-my-Zsh on Mac</title>
+      <link>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
+      <pubDate>Sun, 16 Jul 2017 22:34:32 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
+I am also using homebrew to manage the packages installed on my Mac.
+After upgrading Git recently, I have noticed the Git completion was not as powerful anymore.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;To explain how the Zsh completion is cool and supposed to be, here is an example of a correct completion:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git commit --&amp;lt;tab&amp;gt;
+--all                           -- stage all modified and deleted paths
+--allow-empty                   -- allow recording an empty commit
+--allow-empty-message           -- allow recording a commit with an empty message
+--amend                         -- amend the tip of the current branch
+--author                        -- override the author name used in the commit
+--cleanup                       -- specify how the commit message should be cleaned up
+--date                          -- override the author date used in the commit
+--dry-run                       -- only show list of paths that are to be commited or not, and any untracked
+--edit                          -- edit the commit message before committing
+--file                          -- read commit message from given file
+--gpg-sign                      -- GPG-sign the commit
+--include                       -- update the given files and commit the whole index
+--interactive                   -- interactively update paths in the index file
+--message                       -- use the given message as the commit message
+--no-edit                       -- do not edit the commit message before committing
+--no-gpg-sign                   -- do not GPG-sign the commit
+--no-post-rewrite               -- bypass the post-rewrite hook
+--no-status                     -- do not include the output of git status in the commit message template
+--no-verify                     -- do not look for suspicious lines the commit introduces
+--null                          -- separate dry run entry output with NUL
+--only                          -- commit only the given files
+--patch                         -- use the interactive patch selection interface to chose which changes to commit
+--porcelain                     -- output dry run in porcelain-ready format
+--quiet                         -- suppress commit summary message
+--reedit-message                -- use existing commit object and edit log message
+--reuse-message                 -- use existing commit object with same log message
+--short                         -- output dry run in short format
+--signoff                       -- add Signed-off-by line at the end of the commit message
+--squash               --fixup  -- construct a commit message for use with rebase --autosquash
+--status                        -- include the output of git status in the commit message template
+--template                      -- use file as a template commit message
+--untracked-files               -- show files in untracked directories
+--verbose                       -- show unified diff of all file changes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The completion displays all the parameters for a Git command with a short documentation.&lt;/p&gt;
+
+&lt;p&gt;After updating Git with the &lt;code&gt;brew update&lt;/code&gt; command here is what it looked like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$git commit --&amp;lt;tab&amp;gt;
+--all               --author=           --dry-run           --fixup=            --message=
+--only              --reedit-message=   --short             --template=         --verbose
+--allow-empty       --cleanup=          --edit              --include           --no-edit
+--patch             --reset-author      --signoff           --untracked-files   --verify
+--amend             --date              --file=             --interactive       --no-verify
+--quiet             --reuse-message=    --squash=           --untracked-files=
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Yep, all the integrated documentation was gone :(
+I was preparing for a Git training at Ippon and I was disappointed not to be able to show this very useful feature to my colleagues new to Git.&lt;/p&gt;
+
+&lt;p&gt;It turned that the culprit is homebrew installing a completion for Git which overrides the Zsh completion.
+You can verify this with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ls -l /usr/local/etc/bash_completion.d
+total 64
+lrwxr-xr-x  1 raphael  admin  64 Oct 21  2016 tig-completion.bash -&amp;gt; ../../Cellar/tig/2.2_1/etc/bash_completion.d/tig-completion.bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The solution is to reinstall git with homebrew and specify not to install the bash completion.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ brew uninstall git
+$ brew install git --without-completions
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And voilà!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2017 07 13 how to find your ip with command line</title>
+      <link>http://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/</link>
+      <pubDate>Thu, 13 Jul 2017 20:10:09 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/</guid>
+      <description>&lt;p&gt;When you need to determine your public IP - eg for a script - you can use some public websites as an API with Curl:&lt;/p&gt;
+
+&lt;p&gt;For example, I have used &lt;a href=&#34;http://ifconfig.me/&#34;&gt;ifconfig.me&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ curl ifconfig.me
+57.22.56.xxx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alternatively, the &lt;code&gt;dig&lt;/code&gt; command is faster:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ dig +short myip.opendns.com @resolver1.opendns.com
+57.22.56.xxx
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How to debug zsh startup time</title>
+      <link>http://www.raphael-brugier.com/til/debug-zsh-startup-time/</link>
+      <pubDate>Mon, 10 Jul 2017 19:43:21 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/til/debug-zsh-startup-time/</guid>
+      <description>&lt;p&gt;Use the zprof module to profile the zsh functions.&lt;/p&gt;
+
+&lt;p&gt;Add &lt;code&gt;zmodload zsh/zprof&lt;/code&gt; at the beginning of the &lt;code&gt;.zshrc&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Add &lt;code&gt;zprof&lt;/code&gt; at the end to print the result of the profling.&lt;/p&gt;
+
+&lt;p&gt;In my case the problem was nvm due to &lt;a href=&#34;https://github.com/creationix/nvm/issues/539&#34;&gt;this issue.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://jb-blog.readthedocs.io/en/latest/posts/0032-debugging-zsh-startup-time.html&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>remove known_hosts entry with ssh keygen</title>
+      <link>http://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</link>
+      <pubDate>Mon, 03 Jul 2017 09:26:07 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</guid>
+      <description>&lt;p&gt;The easiest way to remove an entry from the &lt;code&gt;.ssh/known_hosts&lt;/code&gt; file is to use &lt;code&gt;ssh-keygen&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh-keygen -R hostname
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>MongoDB and Apache Spark - Getting started tutorial</title>
@@ -1607,358 +1743,6 @@ You can find the code for these examples &lt;a href=&#34;https://github.com/raph
 &lt;/ul&gt;
 
 &lt;p&gt;Bonne lecture !&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Wordpress login form with GWT and UiBinder</title>
-      <link>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
-      <pubDate>Sun, 16 Jan 2011 16:40:14 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
-      <description>&lt;p&gt;Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.&lt;/p&gt;
-
-&lt;p&gt;You can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;see the result there.&lt;/a&gt; Or you can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;download and run the eclipse project from there&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To start I&amp;rsquo;ve just copied the html from my wordpress login page into the htmlPanel. Then I&amp;rsquo;ve renamed all the &amp;ldquo;id&amp;rdquo; on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I&amp;rsquo;ve replaced the &amp;lt;form&amp;gt; by a &amp;lt;div&amp;gt;. I&amp;rsquo;ve added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I&amp;rsquo;ve just added two styles for the body.&lt;/p&gt;
-
-&lt;p&gt;The main file that you want to see is WpForm.ui.xml :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;!DOCTYPE ui:UiBinder SYSTEM &amp;quot;http://dl.google.com/gwt/DTD/xhtml.ent&amp;quot;&amp;gt;
-&amp;lt;ui:UiBinder xmlns:ui=&#39;urn:ui:com.google.gwt.uibinder&#39;
-	xmlns:g=&#39;urn:import:com.google.gwt.user.client.ui&#39;&amp;gt;
-
-	&amp;lt;ui:image field=&#39;logo&#39; src=&#39;logo-login.gif&#39; /&amp;gt;
-
-	&amp;lt;ui:style&amp;gt;
-		.form {
-			margin-left: 8px;
-			padding: 16px 16px 40px 16px;
-			font-weight: normal;
-			-moz-border-radius: 11px;
-			-khtml-border-radius: 11px;
-			-webkit-border-radius: 11px;
-			border-radius: 5px;
-			background: #fff;
-			border: 1px solid #e5e5e5;
-			-moz-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
-			-webkit-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
-			-khtml-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
-			box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
-			font: 11px &amp;quot;Lucida Grande&amp;quot;, Verdana, Arial, &amp;quot;Bitstream Vera Sans&amp;quot;,
-				sans-serif;
-		}
-		
-		.form .forgetmenot {
-			font-weight: normal;
-			float: left;
-			margin-bottom: 0;
-		}
-		
-		.button-primary {
-			background: #2379a1;
-			color: #ffffff;
-			font-family: &amp;quot;Lucida Grande&amp;quot;, Verdana, Arial, &amp;quot;Bitstream Vera Sans&amp;quot;,
-				sans-serif;
-			font-weight: bold;
-			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-			padding: 3px 10px;
-			border: none;
-			font-size: 12px;
-			border-width: 1px;
-			border-style: solid;
-			-moz-border-radius: 11px;
-			-khtml-border-radius: 11px;
-			-webkit-border-radius: 11px;
-			border-radius: 11px;
-			cursor: pointer;
-			text-decoration: none;
-			margin-top: -3px;
-		}
-		
-		.login .form p {
-			margin-bottom: 0px;
-		}
-		
-		@external gwt-Label;
-		.login .gwt-Label {
-			color: #777;
-			font-size: 13px;
-		}
-		
-		.form .forgetmenot .gwt-Label {
-			font-size: 11px;
-			line-height: 19px;
-			color: #777;
-			float: right;
-			margin-left: 5px;
-		}
-		
-		.form .submit {
-			float: right;
-		}
-		
-		.form p {
-			margin-bottom: 24px;
-		}
-		
-		@sprite .login h1 a {
-			gwt-image: &#39;logo&#39;;
-			width: 326px;
-			height: 67px;
-			text-indent: -9999px;
-			overflow: hidden;
-			padding-bottom: 15px;
-			display: block;
-		}
-		
-		.nav {
-			text-shadow: rgba(255, 255, 255, 1) 0 1px 0;
-			margin: 0 0 0 8px;
-			padding: 16px;
-		}
-		
-		.nav a {
-			color: #21759B;
-		}
-		
-		.input {
-			font-size: 24px;
-			width: 97%;
-			padding: 3px;
-			margin-top: 2px;
-			margin-right: 6px;
-			margin-bottom: 16px;
-			border: 1px solid #e5e5e5;
-			background: #fbfbfb;
-			color: #555;
-		}
-		
-		.backtoblog {
-			position: absolute;
-			top: 0;
-			left: 0;
-			border-bottom: #c6c6c6 1px solid;
-			background: #d9d9d9;
-			background: -moz-linear-gradient(bottom, #d7d7d7, #e4e4e4);
-			background: -webkit-gradient(linear, left bottom, left top, from(#d7d7d7),
-				to(#e4e4e4) );
-			height: 30px;
-			width: 100%;
-		}
-		
-		.backtoblog a {
-			text-decoration: none;
-			display: block;
-			padding: 8px 0 0 15px;
-			color: #464646;
-		}
-		
-		.login {
-			width: 320px;
-			margin: 7em auto;
-			padding-top: 30px;
-		}
-	&amp;lt;/ui:style&amp;gt;
-
-	&amp;lt;g:HTMLPanel&amp;gt;
-		&amp;lt;div class=&amp;quot;{style.login}&amp;quot;&amp;gt;
-			&amp;lt;h1&amp;gt;
-				&amp;lt;a title=&amp;quot;Propulsé par WordPress&amp;quot; href=&amp;quot;http://wordpress.org/&amp;quot;&amp;gt;Le blog de Raph&amp;lt;/a&amp;gt;
-			&amp;lt;/h1&amp;gt;
-			&amp;lt;div class=&amp;quot;{style.form}&amp;quot;&amp;gt;
-				&amp;lt;p&amp;gt;
-					&amp;lt;g:Label&amp;gt;Login&amp;lt;/g:Label&amp;gt;
-					&amp;lt;br /&amp;gt;
-					&amp;lt;g:TextBox styleName=&amp;quot;{style.input}&amp;quot; /&amp;gt;
-				&amp;lt;/p&amp;gt;
-				&amp;lt;p&amp;gt;
-					&amp;lt;g:Label&amp;gt;Password&amp;lt;/g:Label&amp;gt;
-					&amp;lt;br /&amp;gt;
-					&amp;lt;g:TextBox styleName=&amp;quot;{style.input}&amp;quot; /&amp;gt;
-				&amp;lt;/p&amp;gt;
-				&amp;lt;p class=&amp;quot;{style.forgetmenot}&amp;quot;&amp;gt;
-					&amp;lt;g:CheckBox&amp;gt;&amp;lt;/g:CheckBox&amp;gt;
-					&amp;lt;g:Label&amp;gt; Se souvenir de moi&amp;lt;/g:Label&amp;gt;
-				&amp;lt;/p&amp;gt;
-				&amp;lt;p class=&amp;quot;{style.submit}&amp;quot;&amp;gt;
-					&amp;lt;g:Button styleName=&amp;quot;{style.button-primary}&amp;quot;&amp;gt;Connect&amp;lt;/g:Button&amp;gt;
-
-				&amp;lt;/p&amp;gt;
-			&amp;lt;/div&amp;gt;
-
-			&amp;lt;p class=&amp;quot;{style.nav}&amp;quot;&amp;gt;
-				&amp;lt;a title=&amp;quot;Récupération de mot de passe&amp;quot;
-					href=&amp;quot;http://{{ site.baseurl }}&amp;quot;&amp;gt;Mot de passe oublié ?&amp;lt;/a&amp;gt;
-			&amp;lt;/p&amp;gt;
-		&amp;lt;/div&amp;gt;
-		&amp;lt;p class=&amp;quot;{style.backtoblog}&amp;quot;&amp;gt;
-			&amp;lt;a title=&amp;quot;Êtes-vous perdu(e)?&amp;quot; href=&amp;quot;{{ site.baseurl }}&amp;quot;&amp;gt;← Retour sur Le blog de
-				Raph&amp;lt;/a&amp;gt;
-		&amp;lt;/p&amp;gt;
-	&amp;lt;/g:HTMLPanel&amp;gt;
-&amp;lt;/ui:UiBinder&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;WpLogin.css  :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;    * {
-        margin: 0;
-        padding: 0;
-    }
-    
-    body {
-        font: 11px &amp;quot;Lucida Grande&amp;quot;, Verdana, Arial, &amp;quot;Bitstream Vera Sans&amp;quot;,
-            sans-serif !important;
-            background-color: #f9f9f9 !important;
-    }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And that&amp;rsquo;s all !  So now, please don&amp;rsquo;t follow the advices of writing all your html in a big static String and learn how to use the tool !&lt;/p&gt;
-
-&lt;p&gt;Happy coding !&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;Result page&lt;/a&gt; Or you can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;Download the eclipse project&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GWT and HTML under control</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
-      <pubDate>Sun, 16 Jan 2011 16:34:48 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
-      <description>&lt;p&gt;In the past weeks I&amp;rsquo;ve seen two articles about making clean design with GWT. That was really interesting, but something still stugling me a lot. Both authors agreed not to use  layout widgets provided by GWT to build UI neither UiBinder but use instead a big ugly static String to store an HTML code/&lt;/p&gt;
-
-&lt;p&gt;Take a closer look at those two articles and come back later to find out a better way to improve your design based on GWT.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://i-proving.ca/space/Technologies/GWT/Lightweight+GWT+layouts&#34;&gt;Lightweight GWT layouts&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.zackgrossbart.com/hackito/tags-first-gwt/&#34;&gt;Tags first GWT&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The purpose is to write a clean HTML with the least number of tags and have that HTML code under control with only CSS. I do agree that using the old GWT layout system is a really mess producing a lot of tables and ugly code.&lt;/p&gt;
-
-&lt;p&gt;However, since GWT 2.0, Google brought us &lt;a href=&#34;http://www.google.com/events/io/2010/sessions/gwt-ui-overhaul.html&#34;&gt;a better layout system&lt;/a&gt; with the widgets positionned using only div and css. With this system you can normally reach a clean design without generating table tags and a lof HTML mess.&lt;/p&gt;
-
-&lt;p&gt;But since the web is all about simple html and css, I agree with Zack Grossbart that you need to have a perfect control of your UI with the least html tags and just css.&lt;/p&gt;
-
-&lt;p&gt;But with the version 2.0 GWT also introduces a wonderful feature called UiBinder. With UiBinder you can describe in a declarative way your design separated from your logic. You can especially use the HtmlPanel panel to mix up classic HTML/CSS and GWT widgets. This is exactly what they wanted to do ! Use classic HTML and CSS to describe the UI and GWT only for the control. By using UiBinder they can take advantage of a powerfull tool having a built-in feature to bind GWT widgets from the xml to the Java and many mores.&lt;/p&gt;
-
-&lt;p&gt;Putting your html within a static String is not really that clean and maintainable. So please, for God sake, do not do it ! &lt;a href=&#34;http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideUiBinder.html&#34;&gt;Learn the API&lt;/a&gt; and &lt;a href=&#34;http://www.google.com/events/io/2010/sessions.html#GWT&#34;&gt;follow the best practices&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;[update] I&amp;rsquo;ve now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see &lt;a href=&#34;http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How-To change the style of your GWT 2.1 ValuePicker ?</title>
-      <link>http://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</link>
-      <pubDate>Mon, 20 Dec 2010 21:59:06 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</guid>
-      <description>&lt;p&gt;This class demonstrate how-to change the style of the GWT 2.1 ValuePicker.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Main extends Composite {
-	
-	private static class DefaultCell&amp;lt;T&amp;gt; extends AbstractCell&amp;lt;T&amp;gt; {
-	    private final Renderer&amp;lt;T&amp;gt; renderer;
-
-	    DefaultCell(Renderer&amp;lt;T&amp;gt; renderer) {
-	      this.renderer = renderer;
-	    }
-
-	    @Override
-	    public void render(Context context, T value, SafeHtmlBuilder sb) {
-	      sb.appendEscaped(renderer.render(value));
-	    }
-	  }
-	
-	public interface MyResources extends CellList.Resources {
-	    @Source(&amp;quot;myStyle.css&amp;quot;)
-	    Style cellListStyle();
-	}
-	
-	Renderer&amp;lt;String&amp;gt; renderer = new AbstractRenderer&amp;lt;String&amp;gt;() {
-		@Override
-		public String render(String object) {
-			return object;
-		}
-	};
-	
-	private static MyResources RESOURCES = GWT.create(MyResources.class);
-
-	private static final Binder binder = GWT.create(Binder.class);
-	
-	@UiField FlowPanel panel;
-
-	interface Binder extends UiBinder&amp;lt;Widget, Main&amp;gt; {
-	}
-
-	public Main() {
-		initWidget(binder.createAndBindUi(this));
-
-		CellList&amp;lt;String&amp;gt; cellList = new CellList&amp;lt;String&amp;gt;(new DefaultCell&amp;lt;String&amp;gt;(renderer), RESOURCES);
-
-		ValuePicker&amp;lt;String&amp;gt; valueBox = new ValuePicker&amp;lt;String&amp;gt;(cellList);
-		valueBox.setAcceptableValues(Arrays.asList(&amp;quot;HELLO&amp;quot;, &amp;quot;WORLD&amp;quot;));
-		panel.add(valueBox);
-	}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Gwt – Surcharger les styles par défauts</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</link>
-      <pubDate>Sat, 11 Sep 2010 12:55:17 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</guid>
-      <description>&lt;p&gt;La version 2.0 de Gwt à introduit l&amp;rsquo;interface CssResource qui permet de lier des classes css à des widgets Gwt en java. Cette interface permet de bénéficier d&amp;rsquo;optimisation à la compilation et de brouiller les noms des classes pour éviter les collisions. Elle enrichi aussi la syntaxe Css, par exemple en permettant de déclarer des constantes. Il est ainsi très facile de déclarer des feuilles Css qui joueront le rôle de feuille parent de laquelle hériterons les feuilles spécifiques à chaque partie de l&amp;rsquo;interface. Cela permet par exemple de créer très facilement plusieurs thèmes.&lt;/p&gt;
-
-&lt;p&gt;Cependant, il n&amp;rsquo;est parfois pas aisé de surchargé les styles du thème par défaut. En effet, l&amp;rsquo;interface les styles déclarés avec CssResources sont injectés uniquement quand nécessaire, et parfois après ceux de la feuille de thème par défaut qui les surchargent donc. Pour pallier à ce problème, il existe une astuce c&amp;rsquo;est d&amp;rsquo;utiliser l&amp;rsquo;annotation @External&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public interface WidgetCss extends CssResource {
-        public void myButtonStyle();
-}
-
-public interface WidgetResources extends ClientBundle {
-        public WidgetResources INSTANCE = GWT.create(WidgetResources.class);
-
-        WidgetCss css();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Fichier css :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;@External .gwt-Button
-.myButtonStyle .gwt-Button{
-    color: #424242;
-    font-size: 13px;
-    cursor: pointer;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Utilisation :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public MyWidget() {
-    Button button = new Button(&amp;quot;click me !&amp;quot;);
-    button.addStyleName(css().myButtonStyle());
-}
-
-/**
-* @return Helper access to the css String;
-*/
-private WidgetResources css() {
-    return WidgetResources.INSTANCE.css();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Et voilà, la déclaration du thème par défaut gwt-button est maintenant surchargée par myButtonStyle.&lt;/p&gt;
-
-&lt;p&gt;Le style ne sera pas surchargé par le thème par défaut, et il n&amp;rsquo;est pas nécessaire un moche hack avec par exemple &amp;ldquo;!important&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Bon gwt à tous !&lt;/p&gt;
 </description>
     </item>
     
