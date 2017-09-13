@@ -6,8 +6,139 @@
     <description>Recent content in Blog-rsses on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Jul 2017 22:34:32 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 17 Aug 2017 17:18:44 -0400</lastBuildDate>
     <atom:link href="http://www.raphael-brugier.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>5 laws every developer should know</title>
+      <link>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
+      <pubDate>Thu, 17 Aug 2017 17:18:44 -0400</pubDate>
+      
+      <guid>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
+      <description>&lt;p&gt;Laws - or principles - can give us guidance and teach us lessons from our peers’ mistakes. In this article, I will introduce you to five laws I always have in the back of my mind when designing or implementing a software. Some of them relate to pure development, some are related to system organizations. All of them should be useful for your growth as a software engineer.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;murphy-s-law&#34;&gt;Murphy’s Law&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;If anything can go wrong, it will.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Murphy%27s_law&#34;&gt;This law&lt;/a&gt; was coined by Edward Murphy - an aerospace engineer - in response to a failed rocket test in the early 50’s.
+The idea captured in this law is to always create a defensive design for the critical parts of your system… because something will eventually go wrong at some point!&lt;/p&gt;
+
+&lt;p&gt;This law is easily translated to the software engineering field.
+When you expose the software to the end-users, they will find creative ways to input something you had not planned and break the system. So you need to make your software is robust enough to detect and alert for unexpected behavior.&lt;/p&gt;
+
+&lt;p&gt;When you run the software on a machine, anything can break - from the disks supporting the OS to the data center’s electrical supply. So you need to make sure you have designed for failures at all levels of your architecture.&lt;/p&gt;
+
+&lt;p&gt;I have had the chance to meet Murphy’s law several times already.
+For example, I did not think using the default value “null” to represent null Strings in the batch framework I was using was harmful until someone actually named “Null” passed a trade order and broke our report chain for several hours…
+Or, on another project, everything seemed ready to deploy the production environment until Azure had an infrastructure incident which took down the server we used to run the automation scripts.
+These real-world lessons reminded me the hard way that if anything can go wrong, it will.&lt;/p&gt;
+
+&lt;p&gt;So, always keep Murphy in mind and design robust software.&lt;/p&gt;
+
+&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/Murphys-law.jpg&#34;&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&#34;knuth-s-law&#34;&gt;Knuth’s Law&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“Premature optimization is the root of all evil (or at least most of it) in programming.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikiquote.org/wiki/Donald_Knuth#Quotes&#34;&gt;This law&lt;/a&gt; - or I should say one of the most famous quotes from Donald Knuth - reminds us that you should never try to optimize the code of an application too early, or until it is actually necessary.&lt;/p&gt;
+
+&lt;p&gt;Indeed, a source code produced with simplicity and readability in mind will suffice for 99% of the performance needs and will greatly improve the maintainability of an application. Starting with a simpler solution will also make easier to iterate and improve when a performance problem arises.&lt;/p&gt;
+
+&lt;p&gt;Strings concatenation is often an example of a premature optimization for garbage collected languages. In Java or C#, Strings are immutable and we are taught to use other structures to build Strings dynamically, like a &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html&#34;&gt;StringBuilder&lt;/a&gt;. But in reality, until you have profiled the application, you don’t really know how many times a String is going to be created and what is the performance impact. So it often makes more sense to write it first with the clearest code possible and later optimize if necessary.&lt;/p&gt;
+
+&lt;p&gt;However, this rule should not prevent from learning the performance trade offs of your language and when to use the correct data structures.
+And, like with every other performance problem, you should always &lt;em&gt;measure first&lt;/em&gt; before starting to optimize anything.&lt;/p&gt;
+
+&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/performance-timer.jpg&#34;&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&#34;north-s-law&#34;&gt;North’s Law&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“Every decision is a trade off.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ok, I admit this quote from one of Dan North’s talks - &lt;a href=&#34;https://www.youtube.com/watch?v=EauykEv_2iA&#34;&gt;Decisions, Decisions&lt;/a&gt; - is not (yet!) recognized as a law.
+But this quote has had such an impact on the way I approach all my decisions I thought I should include it here.&lt;/p&gt;
+
+&lt;p&gt;In the day to day life of a developer, we make a ton of decisions - whether big or small - every day. From naming a variable to defining the architecture of a platform, through automating (or not) tasks.&lt;/p&gt;
+
+&lt;p&gt;This quote emphasizes that whatever choice you are making, you are always giving up on something, one or more options.
+But that’s not the most important.
+The most important is to consciously make a decision and being aware of the other options and why you did not choose them. You should always thrive to make a decision by weighing the pros and cons based on what you know at that moment.
+But it should also be fine to discover later that a decision you took was wrong if you new information comes to you after. The critical thing is to remember why you took the decision, reevaluate the new options and make a new conscious choice.&lt;/p&gt;
+
+&lt;p&gt;Again.
+&amp;gt; &amp;ldquo;Every decision is a trade off.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;So make choices and raise your awareness of your options.&lt;/p&gt;
+
+&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/balance.png&#34;&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&#34;conway-s-law&#34;&gt;Conway’s Law&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“Organizations which design systems &amp;hellip; are constrained to produce designs which are copies of the communication structures of these organizations.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In the 60s, an engineer named Melvin Conway noticed that how organizations are structured influences the design of the systems they produce.
+He described this idea in a paper and the name stuck as “&lt;a href=&#34;https://en.wikipedia.org/wiki/Conway%27s_law&#34;&gt;Conway’s law&lt;/a&gt;”.&lt;/p&gt;
+
+&lt;p&gt;This law translates well into the software development world and is even reflected at the code level. The way teams are organized to deliver software components will directly influence the design of each component.
+For example, a collocated team of developers will produce a monolithic application with coupled components. On the other hand, multiple distributed teams will produce multiple separated (micro) services with a clearer separation of concern for each.
+Neither design is good or bad, but they have both been influenced by the way the team(s) communicate.
+Open source projects, with multiple individuals around the globe, are often great examples of modularity and reusable libraries.&lt;/p&gt;
+
+&lt;p&gt;Nowadays, the current trend is to break monolithic applications into micro-services. This is awesome and it will enable more velocity to deliver projects faster into production. But you should always keep in mind the Conway’s law and work as much on the organization of your company as on the technology choices.&lt;/p&gt;
+
+&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/PreferFunctionalStaffOrganization.png&#34;&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&#34;law-of-triviality-parkinson-s-law-of-triviality&#34;&gt;Law of triviality (Parkinson&amp;rsquo;s law of triviality)&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“Members of an organization give disproportionate weight to trivial issues.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The argument of &lt;a href=&#34;https://en.wikipedia.org/wiki/Law_of_triviality&#34;&gt;this law&lt;/a&gt; is that the time spent on any item of a meeting agenda is in inverse proportion to the sum of money involved.
+Indeed, people have a tendency to give more attention to a subject they fully understand and have an opinion about than a complex problem.&lt;/p&gt;
+
+&lt;p&gt;Parkinson gives the example of a meeting during which a committee is reviewing two decisions: building a nuclear reactor for the company and building a bikeshed for the employees. Constructing a reactor is a vast and complicated task and people cannot grasp it entirely. Instead, they fully rely on their processes and system experts and quickly accept the project.
+On the other hand, building a bikeshed is something that an average person can do and everyone can have an opinion on the color. In fact, every committee member will make sure to voice his opinion and the bikeshed decision will proportionally take way more time than the reactor’s.&lt;/p&gt;
+
+&lt;p&gt;This law has been popularized in the software world - and named after this story as the &lt;a href=&#34;https://en.wiktionary.org/wiki/bikeshedding&#34;&gt;bike-shed effect&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Developers, for example, can spend more time discussing the correct indentation or naming of a function than actually discussing the responsibility of a class or the architecture of an application. That’s because, again, everyone can picture the effect of a few characters changes but it takes a bigger cognitive load to project an architecture change.&lt;/p&gt;
+
+&lt;p&gt;Another place where you will notice a lot of bikeshed effects are Scrum demos.
+Don’t get me wrong, I love demos and I think that’s a great opportunity to face the users and get feedback on an application.
+But often, the discussion during a Scrum demo will slip to cosmetic questions and specific behaviors instead of looking at the bigger picture. These discussions are also important but you have to be careful to balance these with the most important - and complicated - problems.&lt;/p&gt;
+
+&lt;p&gt;Once you know the pattern, you will start noticing this behavior in a lot of meetings and people interactions.
+I am not telling you to cut every discussion about “small” problems, but raising your awareness will help you focus on the real problems and be better prepared for these meetings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/pink-bikeshed.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;These 5 laws are only a few examples of old lessons learned in our industry. There are many more to learn and discover when gaining more experience in the software development trenches.&lt;/p&gt;
+
+&lt;p&gt;Even if some of them may be seen as common-sense now, I strongly believe that knowing these principles will help you recognize patterns and react to them.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Fix the Git completion with Oh-my-Zsh on Mac</title>
@@ -1968,60 +2099,6 @@ You can find the code for these examples &lt;a href=&#34;https://github.com/raph
 		panel.add(valueBox);
 	}
 &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Gwt – Surcharger les styles par défauts</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</link>
-      <pubDate>Sat, 11 Sep 2010 12:55:17 +0000</pubDate>
-      
-      <guid>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</guid>
-      <description>&lt;p&gt;La version 2.0 de Gwt à introduit l&amp;rsquo;interface CssResource qui permet de lier des classes css à des widgets Gwt en java. Cette interface permet de bénéficier d&amp;rsquo;optimisation à la compilation et de brouiller les noms des classes pour éviter les collisions. Elle enrichi aussi la syntaxe Css, par exemple en permettant de déclarer des constantes. Il est ainsi très facile de déclarer des feuilles Css qui joueront le rôle de feuille parent de laquelle hériterons les feuilles spécifiques à chaque partie de l&amp;rsquo;interface. Cela permet par exemple de créer très facilement plusieurs thèmes.&lt;/p&gt;
-
-&lt;p&gt;Cependant, il n&amp;rsquo;est parfois pas aisé de surchargé les styles du thème par défaut. En effet, l&amp;rsquo;interface les styles déclarés avec CssResources sont injectés uniquement quand nécessaire, et parfois après ceux de la feuille de thème par défaut qui les surchargent donc. Pour pallier à ce problème, il existe une astuce c&amp;rsquo;est d&amp;rsquo;utiliser l&amp;rsquo;annotation @External&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public interface WidgetCss extends CssResource {
-        public void myButtonStyle();
-}
-
-public interface WidgetResources extends ClientBundle {
-        public WidgetResources INSTANCE = GWT.create(WidgetResources.class);
-
-        WidgetCss css();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Fichier css :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;@External .gwt-Button
-.myButtonStyle .gwt-Button{
-    color: #424242;
-    font-size: 13px;
-    cursor: pointer;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Utilisation :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public MyWidget() {
-    Button button = new Button(&amp;quot;click me !&amp;quot;);
-    button.addStyleName(css().myButtonStyle());
-}
-
-/**
-* @return Helper access to the css String;
-*/
-private WidgetResources css() {
-    return WidgetResources.INSTANCE.css();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Et voilà, la déclaration du thème par défaut gwt-button est maintenant surchargée par myButtonStyle.&lt;/p&gt;
-
-&lt;p&gt;Le style ne sera pas surchargé par le thème par défaut, et il n&amp;rsquo;est pas nécessaire un moche hack avec par exemple &amp;ldquo;!important&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Bon gwt à tous !&lt;/p&gt;
 </description>
     </item>
     
