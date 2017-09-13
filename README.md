@@ -14,3 +14,14 @@ Push the public folder to the master branch:
 
 See [this post](http://codethejason.github.io/blog/setupghpages/).
 
+
+# Editing
+
+## Create a new post:
+
+    hugo new blog/2016-03-30-testing-strategy-for-apache-spark-jobs-2-of-2.md
+
+
+## Run the server in draft mode:
+
+    hugo server --buildDrafts -w
