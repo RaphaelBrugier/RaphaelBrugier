@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/docker/index.xml</link>
+    <link>https://www.raphael-brugier.com/tags/docker/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.raphael-brugier.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Using Docker to simplify Cassandra development in JHipster</title>
-      <link>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
+      <link>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
       <pubDate>Mon, 27 Jun 2016 20:33:11 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
+      <guid>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
       <description>&lt;p&gt;JHipster is an open source project that generates a fully working application in seconds. With a minimal configuration, JHipster accelerates the start of new projects by integrating frontend, backend, security and a database.&lt;/p&gt;
 
 &lt;p&gt;Cassandra is one of the supported databases and JHipster generates all the configuration needed to access the cluster.&lt;/p&gt;
@@ -128,7 +128,7 @@ docker-compose -f src/main/docker/app.yml up -d --no-deps yourapp-app
 &lt;p&gt;Without restarting the Cassandra cluster, JHipster has created all the screens, the java code and has executed the migration script to create the new Cassandra table:&lt;/p&gt;
 
 &lt;figure&gt;
-    &lt;img src=&#34;http://www.raphael-brugier.com/img/jhipster-default-books.png&#34; width=&#34;100%&#34; /&gt;
+    &lt;img src=&#34;https://www.raphael-brugier.com/img/jhipster-default-books.png&#34; width=&#34;100%&#34; /&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;

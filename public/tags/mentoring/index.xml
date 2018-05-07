@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/mentoring/index.xml</link>
+    <link>https://www.raphael-brugier.com/tags/mentoring/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/tags/mentoring/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.raphael-brugier.com/tags/mentoring/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>5 laws every developer should know</title>
-      <link>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
+      <link>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
       <pubDate>Thu, 17 Aug 2017 17:18:44 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
+      <guid>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
       <description>&lt;p&gt;Laws - or principles - can give us guidance and teach us lessons from our peers’ mistakes. In this article, I will introduce you to five laws I always have in the back of my mind when designing or implementing a software. Some of them relate to pure development, some are related to system organizations. All of them should be useful for your growth as a software engineer.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
@@ -40,7 +40,7 @@ These real-world lessons reminded me the hard way that if anything can go wrong,
 &lt;p&gt;So, always keep Murphy in mind and design robust software.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/Murphys-law.jpg&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/Murphys-law.jpg&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;knuth-s-law&#34;&gt;Knuth’s Law&lt;/h1&gt;
@@ -59,7 +59,7 @@ These real-world lessons reminded me the hard way that if anything can go wrong,
 And, like with every other performance problem, you should always &lt;em&gt;measure first&lt;/em&gt; before starting to optimize anything.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/performance-timer.jpg&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/performance-timer.jpg&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;north-s-law&#34;&gt;North’s Law&lt;/h1&gt;
@@ -84,7 +84,7 @@ But it should also be fine to discover later that a decision you took was wrong 
 &lt;p&gt;So make choices and raise your awareness of your options.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/balance.png&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/balance.png&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;conway-s-law&#34;&gt;Conway’s Law&lt;/h1&gt;
@@ -104,7 +104,7 @@ Open source projects, with multiple individuals around the globe, are often grea
 &lt;p&gt;Nowadays, the current trend is to break monolithic applications into micro-services. This is awesome and it will enable more velocity to deliver projects faster into production. But you should always keep in mind the Conway’s law and work as much on the organization of your company as on the technology choices.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/PreferFunctionalStaffOrganization.png&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/PreferFunctionalStaffOrganization.png&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;law-of-triviality-parkinson-s-law-of-triviality&#34;&gt;Law of triviality (Parkinson&amp;rsquo;s law of triviality)&lt;/h1&gt;
@@ -130,7 +130,7 @@ But often, the discussion during a Scrum demo will slip to cosmetic questions an
 &lt;p&gt;Once you know the pattern, you will start noticing this behavior in a lot of meetings and people interactions.
 I am not telling you to cut every discussion about “small” problems, but raising your awareness will help you focus on the real problems and be better prepared for these meetings.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/pink-bikeshed.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/pink-bikeshed.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
 

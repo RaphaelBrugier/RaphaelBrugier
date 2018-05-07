@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/gwt/index.xml</link>
+    <link>https://www.raphael-brugier.com/tags/gwt/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/tags/gwt/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.raphael-brugier.com/tags/gwt/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Wordpress login form with GWT and UiBinder</title>
-      <link>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
+      <link>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
       <pubDate>Sun, 16 Jan 2011 16:40:14 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
+      <guid>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
       <description>&lt;p&gt;Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.&lt;/p&gt;
 
-&lt;p&gt;You can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;see the result there.&lt;/a&gt; Or you can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;download and run the eclipse project from there&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can &lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;see the result there.&lt;/a&gt; Or you can &lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;download and run the eclipse project from there&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;To start I&amp;rsquo;ve just copied the html from my wordpress login page into the htmlPanel. Then I&amp;rsquo;ve renamed all the &amp;ldquo;id&amp;rdquo; on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I&amp;rsquo;ve replaced the &amp;lt;form&amp;gt; by a &amp;lt;div&amp;gt;. I&amp;rsquo;ve added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I&amp;rsquo;ve just added two styles for the body.&lt;/p&gt;
 
@@ -217,16 +217,16 @@
 
 &lt;p&gt;Happy coding !&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;Result page&lt;/a&gt; Or you can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;Download the eclipse project&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;Result page&lt;/a&gt; Or you can &lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;Download the eclipse project&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>GWT and HTML under control</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
+      <link>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
       <pubDate>Sun, 16 Jan 2011 16:34:48 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
+      <guid>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
       <description>&lt;p&gt;In the past weeks I&amp;rsquo;ve seen two articles about making clean design with GWT. That was really interesting, but something still stugling me a lot. Both authors agreed not to use  layout widgets provided by GWT to build UI neither UiBinder but use instead a big ugly static String to store an HTML code/&lt;/p&gt;
 
 &lt;p&gt;Take a closer look at those two articles and come back later to find out a better way to improve your design based on GWT.&lt;/p&gt;
@@ -245,16 +245,16 @@
 
 &lt;p&gt;Putting your html within a static String is not really that clean and maintainable. So please, for God sake, do not do it ! &lt;a href=&#34;http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideUiBinder.html&#34;&gt;Learn the API&lt;/a&gt; and &lt;a href=&#34;http://www.google.com/events/io/2010/sessions.html#GWT&#34;&gt;follow the best practices&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;[update] I&amp;rsquo;ve now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see &lt;a href=&#34;http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;[update] I&amp;rsquo;ve now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see &lt;a href=&#34;https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>How-To change the style of your GWT 2.1 ValuePicker ?</title>
-      <link>http://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</link>
+      <link>https://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</link>
       <pubDate>Mon, 20 Dec 2010 21:59:06 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</guid>
+      <guid>https://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</guid>
       <description>&lt;p&gt;This class demonstrate how-to change the style of the GWT 2.1 ValuePicker.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class Main extends Composite {
@@ -308,10 +308,10 @@
     
     <item>
       <title>Gwt – Surcharger les styles par défauts</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</link>
+      <link>https://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</link>
       <pubDate>Sat, 11 Sep 2010 12:55:17 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</guid>
+      <guid>https://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</guid>
       <description>&lt;p&gt;La version 2.0 de Gwt à introduit l&amp;rsquo;interface CssResource qui permet de lier des classes css à des widgets Gwt en java. Cette interface permet de bénéficier d&amp;rsquo;optimisation à la compilation et de brouiller les noms des classes pour éviter les collisions. Elle enrichi aussi la syntaxe Css, par exemple en permettant de déclarer des constantes. Il est ainsi très facile de déclarer des feuilles Css qui joueront le rôle de feuille parent de laquelle hériterons les feuilles spécifiques à chaque partie de l&amp;rsquo;interface. Cela permet par exemple de créer très facilement plusieurs thèmes.&lt;/p&gt;
 
 &lt;p&gt;Cependant, il n&amp;rsquo;est parfois pas aisé de surchargé les styles du thème par défaut. En effet, l&amp;rsquo;interface les styles déclarés avec CssResources sont injectés uniquement quand nécessaire, et parfois après ceux de la feuille de thème par défaut qui les surchargent donc. Pour pallier à ce problème, il existe une astuce c&amp;rsquo;est d&amp;rsquo;utiliser l&amp;rsquo;annotation @External&lt;/p&gt;
@@ -362,10 +362,10 @@ private WidgetResources css() {
     
     <item>
       <title>Google I/O 2010 – GWT’s UI overhaul</title>
-      <link>http://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</link>
+      <link>https://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</link>
       <pubDate>Thu, 15 Jul 2010 20:28:53 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</guid>
+      <guid>https://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</guid>
       <description>
 
 &lt;p&gt;Le 19 et 20 mai 2010 avait lieu l&amp;rsquo;événement annuel de Google, le Google I/O à San Francisco. Près d&amp;rsquo;une centaine de présentations ont eu lieux et toutes étaient filmées ! Je débute donc une série de post pour résumer celles que je visionne, en particulier celles traitant de GWT et de Google App Engine.&lt;/p&gt;
@@ -542,10 +542,10 @@ private WidgetResources css() {
     
     <item>
       <title>GTAC 2009 – Lessons learned from testing GWT applications</title>
-      <link>http://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</link>
+      <link>https://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</link>
       <pubDate>Sun, 30 May 2010 16:00:20 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</guid>
+      <guid>https://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</guid>
       <description>
 
 &lt;p&gt;Les 21 et 22 octobre 2009 avait lieux à Zurich la conférence annuelle de Google sur les test automatisées.&lt;/p&gt;
@@ -741,10 +741,10 @@ vue.getButton.click();
     
     <item>
       <title>Critique du Livre &#39;Programmation GWT 2&#39;</title>
-      <link>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</link>
+      <link>https://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</link>
       <pubDate>Thu, 28 Jan 2010 23:04:00 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</guid>
+      <guid>https://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</guid>
       <description>&lt;p&gt;Je viens de terminer la lecture de &amp;ldquo;Programmation GWT 2&amp;rdquo; de Sami Jabber. Sorti quelques jours après la release finale de cette nouvelle version majeure du framework, il constitue un excellent point d&amp;rsquo;entrée à cette technologie autant qu&amp;rsquo;un approfondissement pour les connaisseurs.&lt;/p&gt;
 
 &lt;p&gt;Bien que je connaisse déjà (un peu) GWT et que j&amp;rsquo;expérimente la version 2 depuis quelques mois, j&amp;rsquo;ai appris énormément avec ce livre. Et surtout j&amp;rsquo;ai pris beaucoup de plaisir à le lire! Les premiers chapitres constituent de bon rappel sur le fonctionnement général.&lt;/p&gt;
@@ -767,10 +767,10 @@ vue.getButton.click();
     
     <item>
       <title>GWT Sortie de la version 2.0</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</link>
+      <link>https://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</link>
       <pubDate>Thu, 10 Dec 2009 21:51:00 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</guid>
+      <guid>https://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</guid>
       <description>
 
 &lt;p&gt;Il y a quelques jours, Google a annoncé la sortie de la version 2 de son framework GWT.&lt;/p&gt;
@@ -835,7 +835,7 @@ Le principe : différer le téléchargement des blocs indépendants de l&amp;rs
 
 &lt;p&gt;Un outil de profiling a été annoncé en même temps que cette nouvelle version de GWT. Speed tracer est en fait une extension pour Google Chrome qui permet de profiler les requêtes, les temps de parsing et les temps de rendus du navigateur. Speed tracer identifie automatiquement les problèmes de performances de votre application.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://www.raphael-brugier.com/posts/speedTracer.png&#34;&gt;&lt;img src=&#34;http://www.raphael-brugier.com/posts/speedTracer.png&#34; alt=&#34;speedTracer.png&#34; title=&#34;speedTracer.png, déc. 2009&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.raphael-brugier.com/posts/speedTracer.png&#34;&gt;&lt;img src=&#34;https://www.raphael-brugier.com/posts/speedTracer.png&#34; alt=&#34;speedTracer.png&#34; title=&#34;speedTracer.png, déc. 2009&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
 
@@ -855,10 +855,10 @@ Le principe : différer le téléchargement des blocs indépendants de l&amp;rs
     
     <item>
       <title>Google IO mai 2009 : Best Practices For Architecting Your GWT App</title>
-      <link>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</link>
+      <link>https://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</link>
       <pubDate>Sun, 06 Sep 2009 14:34:00 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</guid>
+      <guid>https://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</guid>
       <description>
 
 &lt;p&gt;Lors de la conférence annuelle de Google, en mai dernier, Ray Ryan à fait une présentation très intéressante sur les meilleures pratiques pour concevoir une application avec GWT. Cette présentation, a eu beaucoup d&amp;rsquo;écho dans la communauté GWT et plusieurs frameworks sont apparus pour faciliter l&amp;rsquo;implémentation de ces &amp;ldquo;bonne pratiques&amp;rdquo;.&lt;/p&gt;
