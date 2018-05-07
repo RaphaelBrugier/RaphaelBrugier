@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/databricks/index.xml</link>
+    <link>https://www.raphael-brugier.com/tags/databricks/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/tags/databricks/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.raphael-brugier.com/tags/databricks/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>A tour of Databricks Community Edition: a hosted Spark service</title>
-      <link>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
+      <link>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
       <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
+      <guid>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
       <description>&lt;p&gt;With the &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html&#34;&gt;recent announcement&lt;/a&gt; of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
 Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.&lt;/p&gt;
 
@@ -74,7 +74,7 @@ To attach the dependency to your Spark cluster, follow these steps:&lt;/p&gt;
 &lt;li&gt;To verify this, you can access the “Cluster” tab and see “1 library loaded” in the your cluster.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/clusterView.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/clusterView.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;step-2-twitter-credentials&#34;&gt;Step 2: Twitter credentials&lt;/h1&gt;
 
@@ -86,7 +86,7 @@ To attach the dependency to your Spark cluster, follow these steps:&lt;/p&gt;
 &lt;li&gt;These credentials will then be automatically picked by the Twitter4j library and the Spark Streaming wrapper to create a Twitter stream.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/twitterCredentials.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/twitterCredentials.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;step-3-run-the-twitter-streaming-job&#34;&gt;Step 3: Run the Twitter streaming job&lt;/h1&gt;
 
@@ -146,11 +146,11 @@ def creatingFunc(): StreamingContext = {
 
 &lt;p&gt;&lt;strong&gt;Tweets by country:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/tweetsByCountry.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/tweetsByCountry.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Tweets by language:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/tweetsByLanguage.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/tweetsByLanguage.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;We can run virtually any SQL query on the last 30 seconds of the 1% sample of tweets emitted from all-over the world!&lt;/p&gt;
 

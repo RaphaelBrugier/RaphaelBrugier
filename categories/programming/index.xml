@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/categories/programming/index.xml</link>
+    <link>https://www.raphael-brugier.com/categories/programming/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.raphael-brugier.com/categories/programming/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>5 laws every developer should know</title>
-      <link>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
+      <link>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
       <pubDate>Thu, 17 Aug 2017 17:18:44 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
+      <guid>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
       <description>&lt;p&gt;Laws - or principles - can give us guidance and teach us lessons from our peers’ mistakes. In this article, I will introduce you to five laws I always have in the back of my mind when designing or implementing a software. Some of them relate to pure development, some are related to system organizations. All of them should be useful for your growth as a software engineer.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
@@ -40,7 +40,7 @@ These real-world lessons reminded me the hard way that if anything can go wrong,
 &lt;p&gt;So, always keep Murphy in mind and design robust software.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/Murphys-law.jpg&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/Murphys-law.jpg&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;knuth-s-law&#34;&gt;Knuth’s Law&lt;/h1&gt;
@@ -59,7 +59,7 @@ These real-world lessons reminded me the hard way that if anything can go wrong,
 And, like with every other performance problem, you should always &lt;em&gt;measure first&lt;/em&gt; before starting to optimize anything.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/performance-timer.jpg&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/performance-timer.jpg&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;north-s-law&#34;&gt;North’s Law&lt;/h1&gt;
@@ -84,7 +84,7 @@ But it should also be fine to discover later that a decision you took was wrong 
 &lt;p&gt;So make choices and raise your awareness of your options.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/balance.png&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/balance.png&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;conway-s-law&#34;&gt;Conway’s Law&lt;/h1&gt;
@@ -104,7 +104,7 @@ Open source projects, with multiple individuals around the globe, are often grea
 &lt;p&gt;Nowadays, the current trend is to break monolithic applications into micro-services. This is awesome and it will enable more velocity to deliver projects faster into production. But you should always keep in mind the Conway’s law and work as much on the organization of your company as on the technology choices.&lt;/p&gt;
 
 &lt;p align=&#34;center&#34;&gt;
-  &lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/PreferFunctionalStaffOrganization.png&#34;&gt;
+  &lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/PreferFunctionalStaffOrganization.png&#34;&gt;
 &lt;/p&gt;
 
 &lt;h1 id=&#34;law-of-triviality-parkinson-s-law-of-triviality&#34;&gt;Law of triviality (Parkinson&amp;rsquo;s law of triviality)&lt;/h1&gt;
@@ -130,7 +130,7 @@ But often, the discussion during a Scrum demo will slip to cosmetic questions an
 &lt;p&gt;Once you know the pattern, you will start noticing this behavior in a lot of meetings and people interactions.
 I am not telling you to cut every discussion about “small” problems, but raising your awareness will help you focus on the real problems and be better prepared for these meetings.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/2017/08/pink-bikeshed.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/2017/08/pink-bikeshed.jpeg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
 
@@ -141,11 +141,11 @@ I am not telling you to cut every discussion about “small” problems, but rai
     
     <item>
       <title>Fix the Git completion with Oh-my-Zsh on Mac</title>
-      <link>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
+      <link>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
       <pubDate>Sun, 16 Jul 2017 22:34:32 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
+      <guid>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
 I am also using homebrew to manage the packages installed on my Mac.
 After upgrading Git recently, I have noticed the Git completion was not as powerful anymore.&lt;/p&gt;
 
@@ -224,10 +224,10 @@ $ brew install git --without-completions
     
     <item>
       <title>remove known_hosts entry with ssh keygen</title>
-      <link>http://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</link>
+      <link>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</link>
       <pubDate>Mon, 03 Jul 2017 09:26:07 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</guid>
+      <guid>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</guid>
       <description>&lt;p&gt;The easiest way to remove an entry from the &lt;code&gt;.ssh/known_hosts&lt;/code&gt; file is to use &lt;code&gt;ssh-keygen&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ssh-keygen -R hostname
@@ -237,13 +237,13 @@ $ brew install git --without-completions
     
     <item>
       <title>MongoDB and Apache Spark - Getting started tutorial</title>
-      <link>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
+      <link>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
       <pubDate>Wed, 03 May 2017 23:01:48 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
+      <guid>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
       <description>&lt;p&gt;MongoDB and Apache Spark are two popular Big Data technologies.&lt;/p&gt;
 
-&lt;p&gt;In my &lt;a href=&#34;http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
+&lt;p&gt;In my &lt;a href=&#34;https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
 
 &lt;p&gt;To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on &lt;a href=&#34;https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/&#34;&gt;the aggregation pipeline documentation using a zip code data set&lt;/a&gt;. I have prepared a Maven project and a Docker Compose file to get you started quickly.&lt;/p&gt;
 
@@ -583,10 +583,10 @@ connecting to: test
     
     <item>
       <title>Introduction to the MongoDB connector for Apache Spark</title>
-      <link>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
+      <link>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
       <pubDate>Fri, 31 Mar 2017 23:08:27 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
+      <guid>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
       <description>&lt;p&gt;MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.&lt;/p&gt;
 
 &lt;p&gt;Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the &lt;a href=&#34;https://github.com/datastax/spark-cassandra-connector&#34;&gt;Datastax’s spark-cassandra-connector&lt;/a&gt; and now the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB&amp;rsquo;s connector&lt;/a&gt; presented in this article.&lt;/p&gt;
@@ -629,7 +629,7 @@ In reality, with most of the work to optimize the data load in the workers done 
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/2017/03/mongodbsparkconnector.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/2017/03/mongodbsparkconnector.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Spark nodes deployed next to the MongoDB nodes&lt;/em&gt;&lt;/p&gt;
 
@@ -656,10 +656,10 @@ In reality, with most of the work to optimize the data load in the workers done 
     
     <item>
       <title>Add a Git hook to automatically verify a repository&#39;s email</title>
-      <link>http://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
+      <link>https://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
       <pubDate>Sat, 03 Dec 2016 13:40:15 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
+      <guid>https://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
       <description>&lt;p&gt;I use Git a lot and I often have to switch between my personal repositories (ie: Github) and my professional (Ippon) repositories on the same laptop.
 My default Git email is configured to my personal email and I have often forgotten to configure it to my professional email when creating/cloning a repository for my company.
 Like everything in Git, this can be automated to avoid mistakes.&lt;/p&gt;
@@ -703,7 +703,7 @@ $ chmod +x .git/hooks/pre-commit
 
 &lt;p&gt;Since &lt;a href=&#34;https://github.com/blog/2188-git-2-9-has-been-released&#34;&gt;its version 2.9&lt;/a&gt;, Git offers an option to share the hooks globally between the repositories. I prefer this option to duplicating hooks in every repository, even if you could use templates to automatically copy them in every new repository.&lt;/p&gt;
 
-&lt;p&gt;Create a hooks folder, for example in your &lt;a href=&#34;http://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;dotfiles&lt;/a&gt;, and configure Git globally to use this folder as the hooks folder for every repository:&lt;/p&gt;
+&lt;p&gt;Create a hooks folder, for example in your &lt;a href=&#34;https://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;dotfiles&lt;/a&gt;, and configure Git globally to use this folder as the hooks folder for every repository:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ mkdir -p ~/dotfiles/_git/hooks/
 $ git config --global core.hooksPath ~/dotfiles/_git/hooks/
@@ -777,10 +777,10 @@ $ git commit -m &amp;quot;test&amp;quot;
     
     <item>
       <title>My development environment</title>
-      <link>http://www.raphael-brugier.com/blog/my-development-environment/</link>
+      <link>https://www.raphael-brugier.com/blog/my-development-environment/</link>
       <pubDate>Sun, 27 Nov 2016 18:02:03 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/my-development-environment/</guid>
+      <guid>https://www.raphael-brugier.com/blog/my-development-environment/</guid>
       <description>&lt;p&gt;A customized development environment could be a huge productivity boost in the day to day work.
 In this post, I will share the tools and configurations I currently use.&lt;/p&gt;
 
@@ -897,10 +897,10 @@ done
     
     <item>
       <title>git commit fixup</title>
-      <link>http://www.raphael-brugier.com/blog/git-commit-fixup/</link>
+      <link>https://www.raphael-brugier.com/blog/git-commit-fixup/</link>
       <pubDate>Wed, 23 Nov 2016 18:37:21 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
+      <guid>https://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
       <description>&lt;p&gt;In this article, I will describe a git option to quickly fix a previous commit.
 This sometimes happens when I want to fix a typo in a previous commit after few new commits.
 The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent commits adding features to facilitate the code reviews.&lt;/p&gt;
@@ -975,10 +975,10 @@ Note that this option only works with an interactive rebase.&lt;/p&gt;
     
     <item>
       <title>Using Docker to simplify Cassandra development in JHipster</title>
-      <link>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
+      <link>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
       <pubDate>Mon, 27 Jun 2016 20:33:11 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
+      <guid>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
       <description>&lt;p&gt;JHipster is an open source project that generates a fully working application in seconds. With a minimal configuration, JHipster accelerates the start of new projects by integrating frontend, backend, security and a database.&lt;/p&gt;
 
 &lt;p&gt;Cassandra is one of the supported databases and JHipster generates all the configuration needed to access the cluster.&lt;/p&gt;
@@ -1093,7 +1093,7 @@ docker-compose -f src/main/docker/app.yml up -d --no-deps yourapp-app
 &lt;p&gt;Without restarting the Cassandra cluster, JHipster has created all the screens, the java code and has executed the migration script to create the new Cassandra table:&lt;/p&gt;
 
 &lt;figure&gt;
-    &lt;img src=&#34;http://www.raphael-brugier.com/img/jhipster-default-books.png&#34; width=&#34;100%&#34; /&gt;
+    &lt;img src=&#34;https://www.raphael-brugier.com/img/jhipster-default-books.png&#34; width=&#34;100%&#34; /&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
@@ -1106,10 +1106,10 @@ Ippon USA is hosting a master class on JHipster with material designed by the JH
     
     <item>
       <title>A tour of Databricks Community Edition: a hosted Spark service</title>
-      <link>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
+      <link>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
       <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
+      <guid>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
       <description>&lt;p&gt;With the &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html&#34;&gt;recent announcement&lt;/a&gt; of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
 Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.&lt;/p&gt;
 
@@ -1170,7 +1170,7 @@ To attach the dependency to your Spark cluster, follow these steps:&lt;/p&gt;
 &lt;li&gt;To verify this, you can access the “Cluster” tab and see “1 library loaded” in the your cluster.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/clusterView.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/clusterView.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;step-2-twitter-credentials&#34;&gt;Step 2: Twitter credentials&lt;/h1&gt;
 
@@ -1182,7 +1182,7 @@ To attach the dependency to your Spark cluster, follow these steps:&lt;/p&gt;
 &lt;li&gt;These credentials will then be automatically picked by the Twitter4j library and the Spark Streaming wrapper to create a Twitter stream.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/twitterCredentials.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/twitterCredentials.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;step-3-run-the-twitter-streaming-job&#34;&gt;Step 3: Run the Twitter streaming job&lt;/h1&gt;
 
@@ -1242,11 +1242,11 @@ def creatingFunc(): StreamingContext = {
 
 &lt;p&gt;&lt;strong&gt;Tweets by country:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/tweetsByCountry.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/tweetsByCountry.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Tweets by language:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/tweetsByLanguage.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/tweetsByLanguage.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;We can run virtually any SQL query on the last 30 seconds of the 1% sample of tweets emitted from all-over the world!&lt;/p&gt;
 
@@ -1263,11 +1263,11 @@ def creatingFunc(): StreamingContext = {
     
     <item>
       <title>Testing strategy for Spark Streaming – Part 2 of 2</title>
-      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
+      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
       <pubDate>Wed, 30 Mar 2016 19:25:01 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
+      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
 
 &lt;p&gt;In this post, we will look at applying the same pattern to another important part of the Spark engine: Spark Streaming.&lt;/p&gt;
 
@@ -1283,7 +1283,7 @@ def creatingFunc(): StreamingContext = {
 
 &lt;p&gt;This is better explained with the following diagram:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.raphael-brugier.com/img/sparkCapitalizedWindowedStream.png&#34; alt=&#34;Spark capitalized windowed stream&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.raphael-brugier.com/img/sparkCapitalizedWindowedStream.png&#34; alt=&#34;Spark capitalized windowed stream&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;And the code implementing this process:&lt;/p&gt;
 
@@ -1534,10 +1534,10 @@ Controlling the time is the key to having a predictable output to compare result
     
     <item>
       <title>Testing strategy for Apache Spark jobs – Part 1 of 2</title>
-      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
+      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
       <pubDate>Sat, 12 Mar 2016 18:34:26 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
+      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
       <description>&lt;p&gt;Like any other application, Apache Spark jobs deserve good testing practices and coverage.&lt;/p&gt;
 
 &lt;p&gt;Indeed, the costs of running jobs with production data makes unit testing a must-do to have a fast feedback loop and discover the errors earlier.&lt;/p&gt;
@@ -1797,10 +1797,10 @@ You can find the code for these examples &lt;a href=&#34;https://github.com/raph
     
     <item>
       <title>Retour sur QCon London 2012</title>
-      <link>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
+      <link>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
       <pubDate>Sun, 01 Apr 2012 18:58:03 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</guid>
+      <guid>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</guid>
       <description>&lt;p&gt;J&amp;rsquo;ai eu l&amp;rsquo;occasion cet année d&amp;rsquo;être envoyé par ma société, Objet Direct, assister aux 3 jours de la conférence QCon à Londres. Une excellente expérience, qui m&amp;rsquo;a permise de voir des présentations très variées aussi bien techniques que méthodologiques. Ça fait du bien de sortir de la mission pour aller voir ce qui se fait ailleurs et ça permet de revenir avec pleins d&amp;rsquo;idées de nouvelles et de motivation.&lt;/p&gt;
 
 &lt;p&gt;J&amp;rsquo;espère pouvoir appliquer toutes les bonnes pratiques que j&amp;rsquo;ai appris là bas prochainement.&lt;/p&gt;
@@ -1818,13 +1818,13 @@ You can find the code for these examples &lt;a href=&#34;https://github.com/raph
     
     <item>
       <title>Wordpress login form with GWT and UiBinder</title>
-      <link>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
+      <link>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
       <pubDate>Sun, 16 Jan 2011 16:40:14 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
+      <guid>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
       <description>&lt;p&gt;Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.&lt;/p&gt;
 
-&lt;p&gt;You can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;see the result there.&lt;/a&gt; Or you can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;download and run the eclipse project from there&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can &lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;see the result there.&lt;/a&gt; Or you can &lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;download and run the eclipse project from there&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;To start I&amp;rsquo;ve just copied the html from my wordpress login page into the htmlPanel. Then I&amp;rsquo;ve renamed all the &amp;ldquo;id&amp;rdquo; on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I&amp;rsquo;ve replaced the &amp;lt;form&amp;gt; by a &amp;lt;div&amp;gt;. I&amp;rsquo;ve added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I&amp;rsquo;ve just added two styles for the body.&lt;/p&gt;
 
@@ -2025,16 +2025,16 @@ You can find the code for these examples &lt;a href=&#34;https://github.com/raph
 
 &lt;p&gt;Happy coding !&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;Result page&lt;/a&gt; Or you can &lt;a href=&#34;http://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;Download the eclipse project&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/WpLogin.html&#34;&gt;Result page&lt;/a&gt; Or you can &lt;a href=&#34;https://www.raphael-brugier.com/posts/wpLogin/wpLogin.zip&#34;&gt;Download the eclipse project&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>GWT and HTML under control</title>
-      <link>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
+      <link>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
       <pubDate>Sun, 16 Jan 2011 16:34:48 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
+      <guid>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
       <description>&lt;p&gt;In the past weeks I&amp;rsquo;ve seen two articles about making clean design with GWT. That was really interesting, but something still stugling me a lot. Both authors agreed not to use  layout widgets provided by GWT to build UI neither UiBinder but use instead a big ugly static String to store an HTML code/&lt;/p&gt;
 
 &lt;p&gt;Take a closer look at those two articles and come back later to find out a better way to improve your design based on GWT.&lt;/p&gt;
@@ -2053,7 +2053,7 @@ You can find the code for these examples &lt;a href=&#34;https://github.com/raph
 
 &lt;p&gt;Putting your html within a static String is not really that clean and maintainable. So please, for God sake, do not do it ! &lt;a href=&#34;http://code.google.com/intl/fr/webtoolkit/doc/latest/DevGuideUiBinder.html&#34;&gt;Learn the API&lt;/a&gt; and &lt;a href=&#34;http://www.google.com/events/io/2010/sessions.html#GWT&#34;&gt;follow the best practices&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;[update] I&amp;rsquo;ve now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see &lt;a href=&#34;http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;[update] I&amp;rsquo;ve now coded a rewrite of the wordpress login page example just by using UiBinder and the HtmlPanel, see &lt;a href=&#34;https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

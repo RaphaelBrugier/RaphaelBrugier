@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/zsh/index.xml</link>
+    <link>https://www.raphael-brugier.com/tags/zsh/index.xml</link>
     <description>Recent content on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://www.raphael-brugier.com/tags/zsh/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.raphael-brugier.com/tags/zsh/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Fix the Git completion with Oh-my-Zsh on Mac</title>
-      <link>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
+      <link>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
       <pubDate>Sun, 16 Jul 2017 22:34:32 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
+      <guid>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
 I am also using homebrew to manage the packages installed on my Mac.
 After upgrading Git recently, I have noticed the Git completion was not as powerful anymore.&lt;/p&gt;
 
