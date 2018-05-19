@@ -25,3 +25,6 @@ See [this post](http://codethejason.github.io/blog/setupghpages/).
 ## Run the server in draft mode:
 
     hugo server --buildDrafts -w
+
+
+Signed commit
