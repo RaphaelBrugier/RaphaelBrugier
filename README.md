@@ -27,4 +27,3 @@ See [this post](http://codethejason.github.io/blog/setupghpages/).
     hugo server --buildDrafts -w
 
 
-Signed commit
