@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ssh on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/ssh/</link>
+    <link>https://www.raphael-brugier.com/tags/ssh/</link>
     <description>Recent content in ssh on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 03 Jul 2017 09:26:07 -0400</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>remove known_hosts entry with ssh keygen</title>
-      <link>http://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</link>
+      <link>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</link>
       <pubDate>Mon, 03 Jul 2017 09:26:07 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</guid>
+      <guid>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</guid>
       <description>The easiest way to remove an entry from the .ssh/known_hosts file is to use ssh-keygen:
 ssh-keygen -R hostname </description>
     </item>

@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MongoDB on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/mongodb/</link>
+    <link>https://www.raphael-brugier.com/tags/mongodb/</link>
     <description>Recent content in MongoDB on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 03 May 2017 23:01:48 -0400</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>MongoDB and Apache Spark - Getting started tutorial</title>
-      <link>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
+      <link>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
       <pubDate>Wed, 03 May 2017 23:01:48 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
+      <guid>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
       <description>&lt;p&gt;MongoDB and Apache Spark are two popular Big Data technologies.&lt;/p&gt;
-&lt;p&gt;In my &lt;a href=&#34;http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
+&lt;p&gt;In my &lt;a href=&#34;https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
 &lt;p&gt;To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on &lt;a href=&#34;https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/&#34;&gt;the aggregation pipeline documentation using a zip code data set&lt;/a&gt;. I have prepared a Maven project and a Docker Compose file to get you started quickly.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Introduction to the MongoDB connector for Apache Spark</title>
-      <link>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
+      <link>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
       <pubDate>Fri, 31 Mar 2017 23:08:27 -0400</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
+      <guid>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
       <description>&lt;p&gt;MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.&lt;/p&gt;
 &lt;p&gt;Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the &lt;a href=&#34;https://github.com/datastax/spark-cassandra-connector&#34;&gt;Datastax’s spark-cassandra-connector&lt;/a&gt; and now the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB&amp;rsquo;s connector&lt;/a&gt; presented in this article.&lt;/p&gt;
 &lt;p&gt;By using Apache Spark as a data processing platform on top of a MongoDB database, you can benefit from all of the major Spark API features: the RDD model, the SQL (HiveQL) abstraction and the Machine Learning libraries.&lt;/p&gt;

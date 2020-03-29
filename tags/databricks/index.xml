@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Databricks on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/databricks/</link>
+    <link>https://www.raphael-brugier.com/tags/databricks/</link>
     <description>Recent content in Databricks on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 13 Apr 2016 19:51:51 -0500</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/databricks/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/databricks/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A tour of Databricks Community Edition: a hosted Spark service</title>
-      <link>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
+      <link>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
       <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
+      <guid>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
       <description>&lt;p&gt;With the &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html&#34;&gt;recent announcement&lt;/a&gt; of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
 Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.&lt;/p&gt;</description>
     </item>

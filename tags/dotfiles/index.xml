@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dotfiles on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/dotfiles/</link>
+    <link>https://www.raphael-brugier.com/tags/dotfiles/</link>
     <description>Recent content in dotfiles on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 03 Dec 2016 13:40:15 -0500</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/dotfiles/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/dotfiles/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Add a Git hook to automatically verify a repository&#39;s email</title>
-      <link>http://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
+      <link>https://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
       <pubDate>Sat, 03 Dec 2016 13:40:15 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
+      <guid>https://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
       <description>&lt;p&gt;I use Git a lot and I often have to switch between my personal repositories (ie: Github) and my professional (Ippon) repositories on the same laptop.
 My default Git email is configured to my personal email and I have often forgotten to configure it to my professional email when creating/cloning a repository for my company.
 Like everything in Git, this can be automated to avoid mistakes.&lt;/p&gt;
@@ -25,10 +25,10 @@ Like everything in Git, this can be automated to avoid mistakes.&lt;/p&gt;
     
     <item>
       <title>My development environment</title>
-      <link>http://www.raphael-brugier.com/blog/my-development-environment/</link>
+      <link>https://www.raphael-brugier.com/blog/my-development-environment/</link>
       <pubDate>Sun, 27 Nov 2016 18:02:03 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/my-development-environment/</guid>
+      <guid>https://www.raphael-brugier.com/blog/my-development-environment/</guid>
       <description>&lt;p&gt;A customized development environment could be a huge productivity boost in the day to day work.
 In this post, I will share the tools and configurations I currently use.&lt;/p&gt;</description>
     </item>

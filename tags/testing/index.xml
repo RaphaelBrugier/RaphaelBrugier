@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>testing on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/testing/</link>
+    <link>https://www.raphael-brugier.com/tags/testing/</link>
     <description>Recent content in testing on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 30 Mar 2016 19:25:01 -0500</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/testing/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/testing/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Testing strategy for Spark Streaming – Part 2 of 2</title>
-      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
+      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
       <pubDate>Wed, 30 Mar 2016 19:25:01 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
+      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
 &lt;p&gt;In this post, we will look at applying the same pattern to another important part of the Spark engine: Spark Streaming.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Testing strategy for Apache Spark jobs – Part 1 of 2</title>
-      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
+      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
       <pubDate>Sat, 12 Mar 2016 18:34:26 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
+      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
       <description>&lt;p&gt;Like any other application, Apache Spark jobs deserve good testing practices and coverage.&lt;/p&gt;
 &lt;p&gt;Indeed, the costs of running jobs with production data makes unit testing a must-do to have a fast feedback loop and discover the errors earlier.&lt;/p&gt;
 &lt;p&gt;But because of its distributed nature and the RDD abstraction on top of the data, Spark requires special care for testing.&lt;/p&gt;

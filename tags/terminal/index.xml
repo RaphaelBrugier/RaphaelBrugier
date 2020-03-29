@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>terminal on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/terminal/</link>
+    <link>https://www.raphael-brugier.com/tags/terminal/</link>
     <description>Recent content in terminal on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 27 Nov 2016 18:02:03 -0500</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/terminal/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/terminal/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My development environment</title>
-      <link>http://www.raphael-brugier.com/blog/my-development-environment/</link>
+      <link>https://www.raphael-brugier.com/blog/my-development-environment/</link>
       <pubDate>Sun, 27 Nov 2016 18:02:03 -0500</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/my-development-environment/</guid>
+      <guid>https://www.raphael-brugier.com/blog/my-development-environment/</guid>
       <description>&lt;p&gt;A customized development environment could be a huge productivity boost in the day to day work.
 In this post, I will share the tools and configurations I currently use.&lt;/p&gt;</description>
     </item>

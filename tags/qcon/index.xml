@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>QCon on Raphael Brugier</title>
-    <link>http://www.raphael-brugier.com/tags/qcon/</link>
+    <link>https://www.raphael-brugier.com/tags/qcon/</link>
     <description>Recent content in QCon on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 01 Apr 2012 18:58:03 +0000</lastBuildDate>
     
-	<atom:link href="http://www.raphael-brugier.com/tags/qcon/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.raphael-brugier.com/tags/qcon/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Retour sur QCon London 2012</title>
-      <link>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
+      <link>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
       <pubDate>Sun, 01 Apr 2012 18:58:03 +0000</pubDate>
       
-      <guid>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</guid>
+      <guid>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</guid>
       <description>J&amp;rsquo;ai eu l&amp;rsquo;occasion cet année d&#39;être envoyé par ma société, Objet Direct, assister aux 3 jours de la conférence QCon à Londres. Une excellente expérience, qui m&amp;rsquo;a permise de voir des présentations très variées aussi bien techniques que méthodologiques. Ça fait du bien de sortir de la mission pour aller voir ce qui se fait ailleurs et ça permet de revenir avec pleins d&amp;rsquo;idées de nouvelles et de motivation.
 J&amp;rsquo;espère pouvoir appliquer toutes les bonnes pratiques que j&amp;rsquo;ai appris là bas prochainement.</description>
     </item>
