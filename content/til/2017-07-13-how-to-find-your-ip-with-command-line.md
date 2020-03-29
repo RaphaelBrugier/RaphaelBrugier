@@ -2,7 +2,7 @@
 tags = [ "til "]
 categories = [ "network" ]
 date = "2017-07-13T20:10:09-04:00"
-title = "2017 07 13 how to find your ip with command line"
+title = "How to find your ip with command line"
 slug = "2017-07-13-how-to-find-your-ip-with-command-line"
 +++
 
