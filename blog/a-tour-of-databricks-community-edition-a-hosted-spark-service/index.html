@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>A tour of Databricks Community Edition: a hosted Spark service</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="https://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="https://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="https://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="https://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="https://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="https://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="https://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="A tour of Databricks Community Edition: a hosted Spark service" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="https://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>A tour of Databricks Community Edition: a hosted Spark service</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">April 13, 2016</p>
+
+                        <div id="post-content">
+                          <p>With the <a href="https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html">recent announcement</a> of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
+Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.</p>
+<p>Databricks Cloud offers many features:</p>
+<ul>
+<li>A cluster management service.</li>
+<li>The service will spin up Amazon EC2 instances with Spark nodes already set up for you.</li>
+<li>Free 6GB memory cluster for the Community Edition and billed hourly per node for the regular version.</li>
+<li>The price will depend on the size of the instances and you can even mix on-demand and spot instances.</li>
+<li>A notebook, to write Spark code either in Scala, Python or R, with version control and user role management.</li>
+<li>A scheduling service to turn notebooks or fat JARs into managed jobs.</li>
+<li>The service also allows to manage streaming jobs and have failure notifications, as well as auto restart capabilities.</li>
+<li>And <a href="https://databricks.com/blog/2016/02/17/introducing-databricks-dashboards.html">more recently</a>, a dashboarding service to turn your notebooks snippets into custom dashboard components.</li>
+</ul>
+<p>The notebook is where you will spend most of your time. It offers a fully interactive Spark environment, with the capabilities to add any dependencies from the Maven Central repository or to upload your own JARs to the cluster.</p>
+<p>Notebooks have been used for years for data exploration, but with the rise of Data Science, there has been a lot of traction for tools such as <a href="http://jupyter.org/">Jupyter</a>, <a href="http://spark-notebook.io/">Spark notebook</a>, or <a href="https://zeppelin.incubator.apache.org/">Apache Zeppelin</a>.</p>
+<p>Jupyter is an historical Python notebook (formerly known as IPython) that have been added a Spark extension, you could use Python of course, but also R and Scala. It’s more mature than Zeppelin and Jupyter notebooks are even integrated in <a href="https://github.com/blog/1995-github-jupyter-notebooks-3">GitHub</a>.
+But it would requires some extra configuration to get Scala and Spark support.</p>
+<p>Spark notebook was one of the first notebook to appear for Spark. It is limited to the Scala language, so it might not be the best choice if you have data analysts working primarily with Python.</p>
+<p>Zeppelin is still an incubating project from the Apache Foundation but it has received a lot of traction lately and it is promising. Compared to Databricks Cloud’s built-in notebook, Zeppelin is not dedicated to Spark but supports many more technologies via various connectors such as Cassandra or Flink. You will of course have to manage the deployment and configuration by yourself, but with the main benefit of having a fined-grained control over the infrastructure. While the Community Edition of Databricks Cloud involves some restrictions – smaller Amazon EC2 instances and no access to the scheduling component – it is still a great tool to get started with Spark, especially for learning and fast prototyping.</p>
+<p>To complete this introduction, let’s write an example of a Twitter stream processing and some visualizations.</p>
+<p>In this example, we’ll subscribe to the Twitter stream API which delivers roughly a 1% sample of all the tweets published in realtime. We’ll use Spark Streaming to process the stream and identify the language and country of each tweet.
+We will store a sliding window of the results as a table and display the results as built-in visualizations in the notebook.</p>
+<h1 id="step-0-community-edition-access">Step 0: Community Edition access</h1>
+<p>You first need to <a href="http://go.databricks.com/databricks-community-edition-beta-waitlist">subscribe</a> to Databricks Community Edition. This is still a private beta version but you should receive your invitation within one week.</p>
+<p>Once you have the Databricks Cloud, <a href="https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/7631468844903857/1641217975453210/8780643444584178/latest.html">import my notebook</a>. This notebook is a partial reuse of the Databricks <a href="https://docs.cloud.databricks.com/docs/latest/databricks_guide/index.html#08%20Spark%20Streaming/03%20Twitter%20Hashtag%20Count%20-%20Scala.html">Twitter hash count</a> example.</p>
+<h1 id="step-1-prerequisite-libraries-and-imports">Step 1: prerequisite libraries and imports</h1>
+<p>The example uses the Apache Tika library for the language recognition of the tweets.
+To attach the dependency to your Spark cluster, follow these steps:</p>
+<ul>
+<li>In the workspace, in your user space, open the “Create” dialog box and choose “library”</li>
+<li>Choose “maven coordinate” as a source</li>
+<li>Use “org.apache.tika:tika-core:1.12” as the Coordinate</li>
+<li>Make sure the “Attach automatically to all clusters.” box is checked in the library details of your workspace.</li>
+<li>The library and its dependencies will now be deployed to the cluster nodes.</li>
+<li>To verify this, you can access the “Cluster” tab and see “1 library loaded” in the your cluster.</li>
+</ul>
+<p><img src="/img/clusterView.png" alt=""></p>
+<h1 id="step-2-twitter-credentials">Step 2: Twitter credentials</h1>
+<p>Because this example requires a connection to the Twitter stream API, you should create a Twitter application and acquire an OAuth token.</p>
+<ul>
+<li>Go to <a href="https://apps.twitter.com/">https://apps.twitter.com/</a> and follow the steps to create your Twitter application.</li>
+<li>You should then answer Step 2 questions to enter your credentials.</li>
+<li>These credentials will then be automatically picked by the Twitter4j library and the Spark Streaming wrapper to create a Twitter stream.</li>
+</ul>
+<p><img src="/img/twitterCredentials.png" alt=""></p>
+<h1 id="step-3-run-the-twitter-streaming-job">Step 3: Run the Twitter streaming job</h1>
+<p>Execute step 3’s code in the notebook, so as to create a StreamingContext and run it in the cluster.</p>
+<p>The code will initialize the Twitter stream, and for each tweet received, it will:</p>
+<ul>
+<li>Transform the country code from a two-letter code to a three-letter code. This is because the Databricks notebook requires an ISO 3166-1 alpha-3 code for the country.</li>
+<li>Detect the language of the tweet using the Tika library. Because tweets are small portions of text containing hashtags, usernames, etc; the detection could unfortunately be inaccurate.</li>
+<li>Wrap the result in a Tweet case class.</li>
+</ul>
+<p>The output of the stream, a sliding window of the last 30 seconds tweets, is then written to a temporary “SQL” table, to be queryable.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">case</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tweet</span><span style="color:#f92672">(</span>user<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> text<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> countryCode<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">,</span> language<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span>
+
+<span style="color:#75715e">// Initialize the language identifier library
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">LanguageIdentifier</span><span style="color:#f92672">.</span>initProfiles<span style="color:#f92672">()</span>
+
+<span style="color:#75715e">// Initialize a map to convert Countries from 2 chars iso encoding to 3 characters
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> iso2toIso3Map<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Map</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span>, <span style="color:#66d9ef">String</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Locale</span><span style="color:#f92672">.</span>getISOCountries<span style="color:#f92672">()</span>
+  <span style="color:#f92672">.</span>map<span style="color:#f92672">(</span>iso2 <span style="color:#66d9ef">=&gt;</span> iso2 <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Locale</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> iso2<span style="color:#f92672">).</span>getISO3Country<span style="color:#f92672">)</span>
+  <span style="color:#f92672">.</span>toMap
+
+<span style="color:#75715e">// detect a language from a text content using the Apache Tika library
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> detectLanguage<span style="color:#f92672">(</span>text<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">String</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">LanguageIdentifier</span><span style="color:#f92672">(</span>text<span style="color:#f92672">).</span>getLanguage
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">// This is the function that creates the SteamingContext and sets up the Spark Streaming job.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> creatingFunc<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">StreamingContext</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e">// Create a Spark Streaming Context.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">val</span> slideInterval <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">)</span>
+  <span style="color:#66d9ef">val</span> ssc <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">StreamingContext</span><span style="color:#f92672">(</span>sc<span style="color:#f92672">,</span> slideInterval<span style="color:#f92672">)</span>
+  ssc<span style="color:#f92672">.</span>remember<span style="color:#f92672">(</span><span style="color:#a6e22e">Duration</span><span style="color:#f92672">(</span><span style="color:#ae81ff">100</span><span style="color:#f92672">))</span>
+  <span style="color:#75715e">// Create a Twitter Stream for the input source. 
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">val</span> auth <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Some</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OAuthAuthorization</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ConfigurationBuilder</span><span style="color:#f92672">().</span>build<span style="color:#f92672">()))</span>
+
+  <span style="color:#66d9ef">val</span> twitterStream <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">TwitterUtils</span><span style="color:#f92672">.</span>createStream<span style="color:#f92672">(</span>ssc<span style="color:#f92672">,</span> auth<span style="color:#f92672">)</span>
+          <span style="color:#f92672">.</span>filter<span style="color:#f92672">(</span>t<span style="color:#66d9ef">=&gt;</span> t<span style="color:#f92672">.</span>getPlace <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+          <span style="color:#f92672">.</span>map<span style="color:#f92672">(</span>t <span style="color:#66d9ef">=&gt;</span> <span style="color:#a6e22e">Tweet</span><span style="color:#f92672">(</span>t<span style="color:#f92672">.</span>getUser<span style="color:#f92672">.</span>getName<span style="color:#f92672">,</span> t<span style="color:#f92672">.</span>getText<span style="color:#f92672">,</span> iso2toIso3Map<span style="color:#f92672">.</span>getOrElse<span style="color:#f92672">(</span>t<span style="color:#f92672">.</span>getPlace<span style="color:#f92672">.</span>getCountryCode<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">),</span> detectLanguage<span style="color:#f92672">(</span>t<span style="color:#f92672">.</span>getText<span style="color:#f92672">)))</span>
+                <span style="color:#f92672">.</span>window<span style="color:#f92672">(</span>windowDuration <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">30</span><span style="color:#f92672">),</span> slideDuration <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672">))</span>
+            <span style="color:#f92672">.</span>foreachRDD <span style="color:#f92672">{</span> rdd <span style="color:#66d9ef">=&gt;</span> 
+              <span style="color:#66d9ef">val</span> sqlContext <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">SQLContext</span><span style="color:#f92672">.</span>getOrCreate<span style="color:#f92672">(</span><span style="color:#a6e22e">SparkContext</span><span style="color:#f92672">.</span>getOrCreate<span style="color:#f92672">())</span>
+                  <span style="color:#75715e">// this is used to implicitly convert an RDD to a DataFrame.
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">import</span> sqlContext.implicits._
+                rdd<span style="color:#f92672">.</span>toDF<span style="color:#f92672">().</span>registerTempTable<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;tweets&#34;</span><span style="color:#f92672">)</span>
+            <span style="color:#f92672">}</span>
+  ssc
+<span style="color:#f92672">}</span>
+</code></pre></div><h1 id="step-4-visualizations">Step 4: Visualizations</h1>
+<p>Now, tweets are automatically stored and updated from the sliding window and we can query the table and use the notebook’s built-in visualizations.</p>
+<p><strong>Tweets by country:</strong></p>
+<p><img src="/img/tweetsByCountry.png" alt=""></p>
+<p><strong>Tweets by language:</strong></p>
+<p><img src="/img/tweetsByLanguage.png" alt=""></p>
+<p>We can run virtually any SQL query on the last 30 seconds of the 1% sample of tweets emitted from all-over the world!</p>
+<p>Even if the visualizations can be exported to a dashboard, they still need to be refreshed manually. This is because you cannot create Spark jobs in the community edition. However, the non-Community version allows to <a href="https://community.cloud.databricks.com/?o=7631468844903857#externalnotebook/https%3A%2F%2Fdocs.cloud.databricks.com%2Fdocs%2Flatest%2Fdatabricks_guide%2Findex.html%2302%2520Product%2520Overview%2F06%2520Jobs.html">turn this notebook into an actual Spark Streaming job</a> running indefinitely while refreshing a dashboard of visualizations.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Databricks Community Edition offers a nice subset of Databricks Cloud for free. It is a nice playground to start with Spark and notebooks. It also offers the integration of the very complete <a href="https://community.cloud.databricks.com/?o=7631468844903857#externalnotebook/https%3A%2F%2Fdocs.cloud.databricks.com%2Fdocs%2Flatest%2Fcourses%2Findex.html%23Introduction%2520to%2520Big%2520Data%2520with%2520Apache%2520Spark%2520(CS100-1x)%2FIntroduction%2520(README).html">Introduction to Big Data with Apache Spark</a> course taught by Berkeley University.</p>
+<p>Besides this, before jumping to the professional edition, you will have to consider the tradeoffs between an all-in-one service like Databricks Cloud – that can become pricey for long running jobs – versus managed clusters (Amazon EMR, Google Dataproc, …) or in-house hosting with fine grained control of the infrastructure of the nodes but with additional maintenance costs.</p>
+<p>See the notebook in action in <a href="https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/7631468844903857/1641217975453210/8780643444584178/latest.html">Databricks cloud</a>.</p>
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=Apache%20Spark,Databricks,streaming,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "raphaelbrugierblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:https://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/sw-craftmanship.jpg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">5 laws every developer should know</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">Fix the Git completion with Oh-my-Zsh on Mac</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/placeholder.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">How to find your ip with command line</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-3393491-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="https://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="https://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="https://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>

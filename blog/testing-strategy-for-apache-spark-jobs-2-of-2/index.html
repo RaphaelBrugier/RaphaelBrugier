@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Testing strategy for Spark Streaming – Part 2 of 2</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="https://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="https://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="https://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="https://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="https://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="https://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="https://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="Testing strategy for Spark Streaming – Part 2 of 2" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="https://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Testing strategy for Spark Streaming – Part 2 of 2</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">March 30, 2016</p>
+
+                        <div id="post-content">
+                          <p>In a <a href="/blog/testing-strategy-for-apache-spark-jobs-1-of-2/">previous post</a>, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.</p>
+<p>In this post, we will look at applying the same pattern to another important part of the Spark engine: Spark Streaming.</p>
+<h1 id="spark-streaming-example">Spark Streaming example</h1>
+<p>Spark Streaming is an extension of Spark to implement streaming processing on top of the batch engine. The base idea is to accumulate a flow of events in micro-batches and then process them separately. As for a signal, the stream is discretized and thus named DStream in the Spark API.</p>
+<p>For this example, we will simply generate a stream of characters in input, and have each character capitalized in the output stream. To spice up the thing, the output will be a sliding window.</p>
+<p>We will configure the batch duration to 1 second, the window duration to 3 seconds and the slide duration to 2 seconds.</p>
+<p>This is better explained with the following diagram:</p>
+<p><img src="/img/sparkCapitalizedWindowedStream.png" alt="Spark capitalized windowed stream"></p>
+<p>And the code implementing this process:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> com.ipponusa
+
+<span style="color:#66d9ef">import</span> org.apache.spark.SparkConf
+<span style="color:#66d9ef">import</span> org.apache.spark.rdd.RDD
+<span style="color:#66d9ef">import</span> org.apache.spark.streaming.<span style="color:#f92672">{</span><span style="color:#a6e22e">Seconds</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">StreamingContext</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> scala.collection.mutable
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">MainStreaming</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#66d9ef">val</span> sparkConf <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SparkConf</span><span style="color:#f92672">()</span>
+    <span style="color:#f92672">.</span>setMaster<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;local[*]&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">.</span>setAppName<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;spark-streaming-testing-example&#34;</span><span style="color:#f92672">)</span>
+
+  <span style="color:#66d9ef">val</span> ssc <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">StreamingContext</span><span style="color:#f92672">(</span>sparkConf<span style="color:#f92672">,</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+
+  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">val</span> rddQueue <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> mutable<span style="color:#f92672">.</span><span style="color:#a6e22e">Queue</span><span style="color:#f92672">[</span><span style="color:#66d9ef">RDD</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">]]()</span>
+
+    ssc<span style="color:#f92672">.</span>queueStream<span style="color:#f92672">(</span>rddQueue<span style="color:#f92672">)</span>
+      <span style="color:#f92672">.</span>map<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">.</span>toUpper<span style="color:#f92672">)</span>
+      <span style="color:#f92672">.</span>window<span style="color:#f92672">(</span>windowDuration <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">3</span><span style="color:#f92672">),</span> slideDuration <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">))</span>
+      <span style="color:#f92672">.</span>print<span style="color:#f92672">()</span>
+
+    ssc<span style="color:#f92672">.</span>start<span style="color:#f92672">()</span>
+
+    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>c <span style="color:#66d9ef">&lt;-</span> <span style="color:#e6db74">&#39;a&#39;</span> to <span style="color:#e6db74">&#39;z&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      rddQueue <span style="color:#f92672">+=</span> ssc<span style="color:#f92672">.</span>sparkContext<span style="color:#f92672">.</span>parallelize<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span>c<span style="color:#f92672">))</span>
+    <span style="color:#f92672">}</span>
+
+    ssc<span style="color:#f92672">.</span>awaitTermination<span style="color:#f92672">()</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Here, we simulate a stream of characters by continuously adding them as RDDs of one character in a mutable Queue.</p>
+<p>We create a QueueStream to wrap the Queue as an InputDStream. Because the QueueInputDStream is mainly designed for testing, each RDD is consumed one by one by default. We have configured the StreamingContext to have batches of 1 second, hence each character will be consumed by the stream logic every 1 second.</p>
+<p>When you run this code, the Spark engine will print the last 3 capitalized letters every 2 seconds.</p>
+<h1 id="testing-stream-operations">Testing stream operations</h1>
+<p>As in the previous article, the pattern to make the code testable consists in extracting the logic in a separate function that takes a DStream in parameter and that returns the resulting DStream.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> com.ipponusa
+<span style="color:#66d9ef">import</span> org.apache.spark.streaming.Seconds
+<span style="color:#66d9ef">import</span> org.apache.spark.streaming.dstream.DStream
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">StreamOperations</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#66d9ef">def</span> capitalizeWindowed<span style="color:#f92672">(</span>input<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">DStream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">DStream</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">]</span> <span style="color:#66d9ef">=</span> <span style="color:#f92672">{</span>
+    input<span style="color:#f92672">.</span>map<span style="color:#f92672">(</span><span style="color:#66d9ef">_</span><span style="color:#f92672">.</span>toUpper<span style="color:#f92672">)</span>
+          <span style="color:#f92672">.</span>window<span style="color:#f92672">(</span>windowDuration <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">3</span><span style="color:#f92672">),</span> slideDuration <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">2</span><span style="color:#f92672">))</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The main problem with testing Streams is their time-based nature. To compare the output stream to an expected other set of data, you will have to do the assertion at the instant where the engine consumes the input. Adding <code>Thread.Sleep(...)</code> would be an inaccurate solution and will have the major drawback to dramatically slow down your tests.</p>
+<p>The appropriate solution to control the time is to use the “Virtual Clock” pattern, where you replace the system’s clock with your own implementation. During the execution of the test, you can then change the value returned by the clock and therefore control the timing.</p>
+<p>Internally, Spark uses this pattern with a <a href="https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/util/Clock.scala#L23">Clock</a> interface and a default implementation returning the system time. It allows to replace this implementation by your own implementation by setting the <code>spark.streaming.clock</code> param when configuring the <code>SparkContext</code>.</p>
+<p>This is how Spark internal unit tests work, by replacing the <a href="https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/util/Clock.scala#L31">SystemClock</a> implementation with <a href="https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/util/ManualClock.scala#L27">ManualClock</a>.</p>
+<p>Unfortunately, the Clock interface has a package protected visibility limited to the <code>org.apache.spark package</code>. But we can workaround this by placing our own implementation extending the interface in this same package.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> org.apache.spark
+<span style="color:#66d9ef">import</span> java.util.Date
+<span style="color:#66d9ef">import</span> org.apache.spark.streaming.Duration
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FixedClock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">var</span> currentTime<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">extends</span> org<span style="color:#f92672">.</span>apache<span style="color:#f92672">.</span>spark<span style="color:#f92672">.</span>util<span style="color:#f92672">.</span><span style="color:#a6e22e">Clock</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">(</span><span style="color:#ae81ff">0L</span><span style="color:#f92672">)</span>
+
+  <span style="color:#66d9ef">def</span> setCurrentTime<span style="color:#f92672">(</span>time<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Date</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> synchronized <span style="color:#f92672">{</span>
+    currentTime <span style="color:#66d9ef">=</span> time<span style="color:#f92672">.</span>getTime
+    notifyAll<span style="color:#f92672">()</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> addTime<span style="color:#f92672">(</span>duration<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Duration</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> synchronized <span style="color:#f92672">{</span>
+    currentTime <span style="color:#f92672">+=</span> duration<span style="color:#f92672">.</span>toMillis
+    notifyAll<span style="color:#f92672">()</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> getTimeMillis<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span> <span style="color:#f92672">=</span> synchronized <span style="color:#f92672">{</span>
+    currentTime
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">def</span> waitTillTime<span style="color:#f92672">(</span>targetTime<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Long</span> <span style="color:#f92672">=</span> synchronized <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>currentTime <span style="color:#f92672">&lt;</span> targetTime<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      wait<span style="color:#f92672">(</span><span style="color:#ae81ff">10</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+    getTimeMillis<span style="color:#f92672">()</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>And then add an utility method to workaround the private accessibility of the <code>Clock</code> in the <code>StreamingContext</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> org.apache.spark.streaming
+<span style="color:#66d9ef">import</span> org.apache.spark.FixedClock
+
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Clock</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">def</span> getFixedClock<span style="color:#f92672">(</span>ssc<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">StreamingContext</span><span style="color:#f92672">)</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FixedClock</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    ssc<span style="color:#f92672">.</span>scheduler<span style="color:#f92672">.</span>clock<span style="color:#f92672">.</span>asInstanceOf<span style="color:#f92672">[</span><span style="color:#66d9ef">FixedClock</span><span style="color:#f92672">]</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The test can now be written:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> com.ipponusa
+<span style="color:#66d9ef">import</span> java.util.concurrent.TimeUnit
+<span style="color:#66d9ef">import</span> org.apache.spark.rdd.RDD
+<span style="color:#66d9ef">import</span> org.apache.spark.streaming.<span style="color:#f92672">{</span><span style="color:#a6e22e">Clock</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">StreamingContext</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> org.apache.spark.<span style="color:#f92672">{</span><span style="color:#a6e22e">FixedClock</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">SparkConf</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">SparkContext</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> org.scalatest.concurrent.Eventually
+<span style="color:#66d9ef">import</span> org.scalatest.time.<span style="color:#f92672">{</span><span style="color:#a6e22e">Millis</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Span</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> org.scalatest.<span style="color:#f92672">{</span><span style="color:#a6e22e">BeforeAndAfter</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">FlatSpec</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Matchers</span><span style="color:#f92672">}</span>
+<span style="color:#66d9ef">import</span> scala.collection.mutable
+<span style="color:#66d9ef">import</span> scala.collection.mutable.ListBuffer
+<span style="color:#66d9ef">import</span> scala.concurrent.duration.Duration
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StreamingTest</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">FlatSpec</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">Matchers</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">BeforeAndAfter</span> <span style="color:#66d9ef">with</span> <span style="color:#a6e22e">Eventually</span> <span style="color:#f92672">{</span>
+
+  <span style="color:#66d9ef">var</span> sc<span style="color:#66d9ef">:</span><span style="color:#66d9ef">SparkContext</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">_</span>
+  <span style="color:#66d9ef">var</span> ssc<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">StreamingContext</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">_</span>
+  <span style="color:#66d9ef">var</span> fixedClock<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FixedClock</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">_</span>
+
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">val</span> patienceConfig <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">PatienceConfig</span><span style="color:#f92672">(</span>timeout <span style="color:#66d9ef">=</span> scaled<span style="color:#f92672">(</span><span style="color:#a6e22e">Span</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1500</span><span style="color:#f92672">,</span> <span style="color:#a6e22e">Millis</span><span style="color:#f92672">)))</span>
+
+  before <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">val</span> sparkConf <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">SparkConf</span><span style="color:#f92672">()</span>
+      <span style="color:#f92672">.</span>setMaster<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;local[*]&#34;</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">.</span>setAppName<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;test-streaming&#34;</span><span style="color:#f92672">)</span>
+      <span style="color:#f92672">.</span>set<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;spark.streaming.clock&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;org.apache.spark.FixedClock&#34;</span><span style="color:#f92672">)</span>
+
+    ssc <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">StreamingContext</span><span style="color:#f92672">(</span>sparkConf<span style="color:#f92672">,</span> <span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+    sc <span style="color:#66d9ef">=</span> ssc<span style="color:#f92672">.</span>sparkContext
+    fixedClock <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Clock</span><span style="color:#f92672">.</span>getFixedClock<span style="color:#f92672">(</span>ssc<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+
+  after <span style="color:#f92672">{</span>
+    ssc<span style="color:#f92672">.</span>stop<span style="color:#f92672">(</span>stopSparkContext <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span> stopGracefully <span style="color:#66d9ef">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+
+  behavior of <span style="color:#e6db74">&#34;stream transformation&#34;</span>
+
+  it should <span style="color:#e6db74">&#34;apply transformation&#34;</span> in <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">val</span> inputData<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">mutable.Queue</span><span style="color:#f92672">[</span><span style="color:#66d9ef">RDD</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">]]</span> <span style="color:#66d9ef">=</span> mutable<span style="color:#f92672">.</span><span style="color:#a6e22e">Queue</span><span style="color:#f92672">()</span>
+    <span style="color:#66d9ef">var</span> outputCollector <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">ListBuffer</span><span style="color:#f92672">.</span>empty<span style="color:#f92672">[</span><span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">]]</span>
+
+    <span style="color:#66d9ef">val</span> inputStream <span style="color:#66d9ef">=</span> ssc<span style="color:#f92672">.</span>queueStream<span style="color:#f92672">(</span>inputData<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">val</span> outputStream <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">StreamOperations</span><span style="color:#f92672">.</span>capitalizeWindowed<span style="color:#f92672">(</span>inputStream<span style="color:#f92672">)</span>
+
+    outputStream<span style="color:#f92672">.</span>foreachRDD<span style="color:#f92672">(</span>rdd<span style="color:#66d9ef">=&gt;</span> <span style="color:#f92672">{</span>outputCollector <span style="color:#f92672">+=</span> rdd<span style="color:#f92672">.</span>collect<span style="color:#f92672">()})</span>
+
+    ssc<span style="color:#f92672">.</span>start<span style="color:#f92672">()</span>
+
+    inputData <span style="color:#f92672">+=</span> sc<span style="color:#f92672">.</span>makeRDD<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">))</span>
+    wait1sec<span style="color:#f92672">()</span> <span style="color:#75715e">// T = 1s
+</span><span style="color:#75715e"></span>
+    inputData <span style="color:#f92672">+=</span> sc<span style="color:#f92672">.</span>makeRDD<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">))</span>
+    wait1sec<span style="color:#f92672">()</span> <span style="color:#75715e">// T = 2s
+</span><span style="color:#75715e"></span>
+    assertOutput<span style="color:#f92672">(</span>outputCollector<span style="color:#f92672">,</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#39;B&#39;</span><span style="color:#f92672">))</span>
+
+    inputData <span style="color:#f92672">+=</span> sc<span style="color:#f92672">.</span>makeRDD<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">))</span>
+    wait1sec<span style="color:#f92672">()</span> <span style="color:#75715e">// T = 3s
+</span><span style="color:#75715e"></span>
+    inputData <span style="color:#f92672">+=</span> sc<span style="color:#f92672">.</span>makeRDD<span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;d&#39;</span><span style="color:#f92672">))</span>
+    wait1sec<span style="color:#f92672">()</span> <span style="color:#75715e">// T = 4s
+</span><span style="color:#75715e"></span>    assertOutput<span style="color:#f92672">(</span>outputCollector<span style="color:#f92672">,</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;B&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;C&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;D&#39;</span><span style="color:#f92672">))</span>
+
+    <span style="color:#75715e">// wait until next slide
+</span><span style="color:#75715e"></span>    wait1sec<span style="color:#f92672">()</span> <span style="color:#75715e">// T = 5s
+</span><span style="color:#75715e"></span>    wait1sec<span style="color:#f92672">()</span> <span style="color:#75715e">// T = 6s
+</span><span style="color:#75715e"></span>    assertOutput<span style="color:#f92672">(</span>outputCollector<span style="color:#f92672">,</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;D&#39;</span><span style="color:#f92672">))</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> assertOutput<span style="color:#f92672">(</span>result<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Iterable</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">]],</span> expected<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">List</span><span style="color:#f92672">[</span><span style="color:#66d9ef">Char</span><span style="color:#f92672">])</span> <span style="color:#66d9ef">=</span>
+    eventually <span style="color:#f92672">{</span>
+      result<span style="color:#f92672">.</span>last<span style="color:#f92672">.</span>toSet should equal<span style="color:#f92672">(</span>expected<span style="color:#f92672">.</span>toSet<span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">def</span> wait1sec<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+    fixedClock<span style="color:#f92672">.</span>addTime<span style="color:#f92672">(</span><span style="color:#a6e22e">Seconds</span><span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">))</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Here again, we start a StreamingContext before running the test and we’ll stop it after.
+We also replace the clock with our own implementation so that we can control the time.
+Like in the <code>Main</code> example, we use a <code>QueueInputDStream</code> to simulate the input of data.
+We also use a <code>ListBuffer</code> to stack the resulting value of the <code>OuputDStream</code> collected with the <code>forEachRDD(…)</code> method.</p>
+<p>One extra tricky thing…</p>
+<p>Because the processing of the DStream occurs in a separated thread, when we change the time to the exact instant of the sliding window trigger, it still requires a few extra ms to do the actual computation.
+Thus, as suggested in <a href="http://mkuthan.github.io/blog/2015/03/01/spark-unit-testing/">this post</a> about testing Spark, we protect the assertion with an eventually block from ScalaTest’s Eventually trait.
+The patienceConfig set the timeout to retry the assertion multiple times before a time-out.</p>
+<p>We now have a fast and predictable test to ensure the streaming operations’ correctness!</p>
+<h1 id="spark-testing-base-library">Spark-testing-base library</h1>
+<p>The <a href="https://github.com/holdenk/spark-testing-base">Spark-testing-base</a> library have some built-in trait and methods to help you test the streaming logic.</p>
+<p>When using the library, the <code>FixedClock</code> workaround is also already implemented.</p>
+<p>Let’s rewrite the window test with the StreamingSuiteBase trait:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">package</span> com.ipponusa
+<span style="color:#66d9ef">import</span> com.holdenkarau.spark.testing.StreamingSuiteBase
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StreamingWithSparkTestingTest</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">StreamingSuiteBase</span> <span style="color:#f92672">{</span>
+
+  test<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;capitalize by window&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">val</span> input <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">),</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">),</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">),</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;d&#39;</span><span style="color:#f92672">),</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;e&#39;</span><span style="color:#f92672">))</span>
+
+    <span style="color:#66d9ef">val</span> slide1 <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;B&#39;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">val</span> slide2 <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;B&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;C&#39;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#39;D&#39;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">val</span> expected <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">(</span>slide1<span style="color:#f92672">,</span> slide2<span style="color:#f92672">)</span>
+
+    testOperation<span style="color:#f92672">(</span>input<span style="color:#f92672">,</span> <span style="color:#a6e22e">StreamOperations</span><span style="color:#f92672">.</span>capitalizeWindowed<span style="color:#f92672">,</span> expected<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The <code>StreamingSuiteBase</code> trait will take care of all the setup we had manually prepared in the previous test: starting and stopping the <code>StreamingContext</code>, replacing the <code>Clock</code> in the engine, and incrementing the time when each element is consumed.</p>
+<p>Unlike the <code>RDDComparisons.compare(...)</code> method shown in the previous article, where the comparison was distributed, the elements are collected locally from the OutputDStream. Be sure not to produce too much data in your tests or you can rapidly run out of memory.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>While requiring more setup and care than testing batch jobs, it is also possible to test Spark Streaming jobs.
+Controlling the time is the key to having a predictable output to compare results to expected ones.</p>
+<p>The Spark-testing-base library can be very helpful, especially to avoid the workarounds.</p>
+<p>You can find the code of these examples on <a href="https://github.com/raphaelbrugier/spark-testing-example">Github</a>.</p>
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=Apache%20Spark,testing,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "raphaelbrugierblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:https://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/sw-craftmanship.jpg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">5 laws every developer should know</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">Fix the Git completion with Oh-my-Zsh on Mac</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/placeholder.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">How to find your ip with command line</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-3393491-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="https://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="https://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="https://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>

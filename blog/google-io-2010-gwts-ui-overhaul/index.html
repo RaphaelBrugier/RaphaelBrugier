@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Google I/O 2010 – GWT’s UI overhaul</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="https://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="https://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="https://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="https://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="https://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="https://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="https://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="Google I/O 2010 – GWT’s UI overhaul" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="https://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Google I/O 2010 – GWT’s UI overhaul</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">July 15, 2010</p>
+
+                        <div id="post-content">
+                          <p>Le 19 et 20 mai 2010 avait lieu l'événement annuel de Google, le Google I/O à San Francisco. Près d&rsquo;une centaine de présentations ont eu lieux et toutes étaient filmées ! Je débute donc une série de post pour résumer celles que je visionne, en particulier celles traitant de GWT et de Google App Engine.</p>
+<h2 id="gwts-ui-overhaul">GWT&rsquo;S UI Overhaul</h2>
+<h4 id="par-ray-rian-et-joel--webber">Par Ray Rian et Joel  Webber.</h4>
+<p>Cette présentation  présente plus en détails les nouvelles façons de construire les  interfaces  avec la version 2.0 de GWT et introduit une partie de la  future 2.1. L’équipe de GWT nomme ces nouveautés UI overhaul.</p>
+<p>Elles sont  détaillées en 4 points :</p>
+<ul>
+<li>UiBinder : La conception déclarative des  interfaces, qui permet de remplacer énormément de code java par un  fichier xml.</li>
+<li>ClientBundle : Permet de lier les ressources de l’application au code java, ainsi GWT réalise des optimisations.</li>
+<li>LayoutPanels : Présentation du nouveau système de rendu utilisant uniquement du html standard</li>
+<li>CellWidgets (2.1) : Les futurs widgets pour construire des tableaux ou des listes avec de très nombreuses données</li>
+</ul>
+<h3 id="uibinder-">UiBinder :</h3>
+<p>Le nouveau système de déclaration des interfaces avait été introduit avec Gwt 2.0, cette partie de la présentation rappelle seulement que UiBinder permet d'écrire beaucoup plus simplement les interfaces en supprimant le code inutile java. Pour l&rsquo;utiliser dans mon projet, c&rsquo;est un vrai bonheur !</p>
+<p>Par exemple, voici du code java :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    HorizontalPanel outer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HorizontalPanel<span style="color:#f92672">();</span>
+    VerticalPanel inner <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> VerticalPanel<span style="color:#f92672">();</span>
+    outer<span style="color:#f92672">.</span><span style="color:#a6e22e">setHorizontalAlignment</span><span style="color:#f92672">(</span>HorizontalPanel<span style="color:#f92672">.</span><span style="color:#a6e22e">ALIGN_RIGHT</span><span style="color:#f92672">);</span>
+    inner<span style="color:#f92672">.</span><span style="color:#a6e22e">setHorizontalAlignment</span><span style="color:#f92672">(</span>HorizontalPanel<span style="color:#f92672">.</span><span style="color:#a6e22e">ALIGN_RIGHT</span><span style="color:#f92672">);</span>
+    HorizontalPanel links <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HorizontalPanel<span style="color:#f92672">();</span>
+    links<span style="color:#f92672">.</span><span style="color:#a6e22e">setSpacing</span><span style="color:#f92672">(</span>4<span style="color:#f92672">);</span>
+    links<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>signOutLink<span style="color:#f92672">);</span>
+    links<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>aboutLink<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">final</span> Image logo <span style="color:#f92672">=</span> images<span style="color:#f92672">.</span><span style="color:#a6e22e">logo</span><span style="color:#f92672">().</span><span style="color:#a6e22e">createImage</span><span style="color:#f92672">();</span>
+    outer<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>logo<span style="color:#f92672">);</span>
+    outer<span style="color:#f92672">.</span><span style="color:#a6e22e">setCellHorizontalAlignment</span><span style="color:#f92672">(</span>logo<span style="color:#f92672">,</span> HorizontalPanel<span style="color:#f92672">.</span><span style="color:#a6e22e">ALIGN_LEFT</span><span style="color:#f92672">);</span>
+    outer<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>inner<span style="color:#f92672">);</span>
+    inner<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> HTML<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;**Welcome back, foo@example.com**&#34;</span><span style="color:#f92672">));</span>
+    inner<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>links<span style="color:#f92672">);</span>
+    signOutLink<span style="color:#f92672">.</span><span style="color:#a6e22e">addClickHandler</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">);</span>
+    aboutLink<span style="color:#f92672">.</span><span style="color:#a6e22e">addClickHandler</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">);</span>
+    initWidget<span style="color:#f92672">(</span>outer<span style="color:#f92672">);</span>
+    setStyleName<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mail-TopPanel&#34;</span><span style="color:#f92672">);</span>
+    links<span style="color:#f92672">.</span><span style="color:#a6e22e">setStyleName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mail-TopPanelLinks&#34;</span><span style="color:#f92672">);</span>
+</code></pre></div><p>Et son équivalent UiBInder :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;g:htmlpanel&gt;</span>
+    <span style="color:#f92672">&lt;div</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.logo}&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;div</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.statusDiv}&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;div&gt;</span>
+                **Welcome back, foo@example.com**
+            <span style="color:#f92672">&lt;/div&gt;</span>
+            <span style="color:#f92672">&lt;div</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.linksDiv}&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;g:anchor</span> <span style="color:#a6e22e">ui:field=</span><span style="color:#e6db74">&#34;signOutLink&#34;</span><span style="color:#f92672">&gt;</span>Sign Out<span style="color:#f92672">&lt;/g:anchor&gt;</span>
+                <span style="color:#f92672">&lt;g:anchor</span> <span style="color:#a6e22e">ui:field=</span><span style="color:#e6db74">&#34;aboutLink&#34;</span><span style="color:#f92672">&gt;</span>About<span style="color:#f92672">&lt;/g:anchor&gt;</span>
+            <span style="color:#f92672">&lt;/div&gt;</span>
+        <span style="color:#f92672">&lt;/div&gt;</span>
+    <span style="color:#f92672">&lt;/div&gt;&lt;/g:htmlpanel&gt;</span>
+</code></pre></div><h3 id="client-bundle-">Client Bundle :</h3>
+<p>Une nouveauté au moins aussi important qu&rsquo;UiBinder est le ClientBundle. L&rsquo;interface ClientBundle permet de lier les  ressources de l’applications au code java. Ainsi GWT réalise des  optimisations. Par exemple les images peuvent être packagées et les  opérations de “sprites” directement réalisées.</p>
+<p>ClientBundle permet aussi de déclarer les propriétés css dans une interface et un fichier distinct qui seront packagé par Gwt. Cela permet là encore d&rsquo;optimiser, d&rsquo;obfusquer les noms css pour éviter la collision et aussi d&rsquo;ajouter quelques propriétés Css, comme les expressions ou les constantes.</p>
+<p>De plus ClientBundle s&rsquo;intègre parfaitement avec Uibinder et il est possible de déclarer une interface Css dans le fichier java dont l&rsquo;implémentation est réalisée dans le fichier UiBinder.</p>
+<h3 id="internationalisation-i18n">Internationalisation (I18n)</h3>
+<p>UiBinder supporte désormais mieux l&rsquo;internationalisation des widgets. Grâce à la balise &lt;ui:msg&gt;, il n&rsquo;est plus nécessaire de déclarer une interface Message. Un gros travail a été effectué sur la documentation pour refléter tout ces changements, cf la <a href="http://code.google.com/webtoolkit/doc/latest/DevGuideUiBinderI18n.html">documentation I18n</a>.</p>
+<h3 id="layout-panels">Layout Panels</h3>
+<p>L’ancien système de  layout était, selon les dire même de Ray Cromwell, un cauchemar. Le  système était statique et construit à base de table imbriquées ! De plus cela ne  fonctionnait pas en “standards mode“ seulement en “quirks mode”. Le &ldquo;standards mode&rdquo; étant le futur du web, html5, il devenait critique de pouvoir l&rsquo;utiliser et de se passer du vieux positionnement à base de tables.</p>
+<p>L’alternative proposée  par les frameworks pour Gwt qui encapsulent des librairies Javascript,  type Gwt-ext, est souvent d’implémenter un nouveau système de layout. Ce  système totalement en Javascript rend souvent l’application très lente.</p>
+<p>La solution retenue  pour le nouveau système est d’utiliser des bloc div en position absolu  et du css. En effet, les propriétés Css : top left right bottom width  height permettent de positionner très exactement un bloc à l’intérieur  d’un autre.</p>
+<p>Voici par exemple le code UiBinder et son résultat html/css</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">     <span style="color:#f92672">&lt;g:docklayoutpanel</span> <span style="color:#a6e22e">unit=</span><span style="color:#e6db74">&#34;EM&#34;</span><span style="color:#f92672">&gt;</span>
+         <span style="color:#f92672">&lt;g:north</span> <span style="color:#a6e22e">size=</span><span style="color:#e6db74">&#34;15&#34;</span><span style="color:#f92672">&gt;</span>
+             <span style="color:#f92672">&lt;g:flowpanel&gt;</span>
+                 <span style="color:#f92672">&lt;g:label&gt;</span>Header<span style="color:#f92672">&lt;/g:label&gt;</span>
+             <span style="color:#f92672">&lt;/g:flowpanel&gt;</span>
+         <span style="color:#f92672">&lt;/g:north&gt;</span>
+
+         <span style="color:#f92672">&lt;g:west</span> <span style="color:#a6e22e">size=</span><span style="color:#e6db74">&#34;15&#34;</span><span style="color:#f92672">&gt;</span>
+             <span style="color:#f92672">&lt;g:flowpanel&gt;</span>
+                 <span style="color:#f92672">&lt;g:button&gt;</span>Page 1<span style="color:#f92672">&lt;/g:button&gt;</span>
+                 <span style="color:#f92672">&lt;g:button&gt;</span>Page 2<span style="color:#f92672">&lt;/g:button&gt;</span>
+             <span style="color:#f92672">&lt;/g:flowpanel&gt;</span>
+         <span style="color:#f92672">&lt;/g:west&gt;</span>
+
+         <span style="color:#f92672">&lt;g:center&gt;</span>
+             <span style="color:#f92672">&lt;g:htmlpanel&gt;</span>some html<span style="color:#f92672">&lt;/g:htmlpanel&gt;</span>
+         <span style="color:#f92672">&lt;/g:center&gt;</span>
+     <span style="color:#f92672">&lt;/g:docklayoutpanel&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; overflow: hidden; left: 0em; top: 0em; right: 0em; height: 15em;&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;&#34;</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gwt-Label&#34;</span>&gt;Header&lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; overflow: hidden; left: 0em; top: 15em; bottom: 0em; width: 15em;&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;&#34;</span>&gt;
+            &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">tabindex</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Gohuy86A&#34;</span>&gt;Page 1&lt;/<span style="color:#f92672">button</span>&gt;
+            &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span> <span style="color:#a6e22e">tabindex</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gwt-Button&#34;</span>&gt;Page 2&lt;/<span style="color:#f92672">button</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; overflow: hidden; left: 15em; top: 15em; right: 0em; bottom: 0em;&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;&#34;</span>&gt;some html&lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>On voit bien que les panels qui composent le dockLayout sont placés de façons statiques avec les propriétés css qui s&rsquo;appliquent à un placement absolu.</p>
+<h5 id="en-résumé">En résumé</h5>
+<p>Ce que le nouveau système de layout permet :</p>
+<ul>
+<li>Définir très exactement la structrure de l’interface de  l’application. Pour les widgets interne, on pourra continuer à les  définir en pur html/css classique.</li>
+<li>Travailler en “standard mode“</li>
+<li>Fonctionner sous IE6, (oui même le standards mode !)</li>
+<li>Supporter des animations. Par exemple en effet de transition entre les changements de panels.</li>
+</ul>
+<p>Attention! Le nouveau système de layout n&rsquo;est pas :</p>
+<ul>
+<li>Un remplacement total  pour le système placement HTML. Si vous utilisez déjà avec succès des  placements en HTML/CSS alors continuez avec !</li>
+<li>Un système de layout  comme Swing/swt avec des “prefered size”. Ici le  système est plus simple  et les panels ne peuvent pas se redimensionner à  partir des tailles  “préférées“, c’est à dire négociée avec les panels  du même niveau.</li>
+</ul>
+<h3 id="cellwidgets-21">CellWidgets (2.1)</h3>
+<p>La prochaine version de GWT, la 2.1, introduira entre autres de nouveaux widgets pour afficher des listes/tableaux comportements de nombreuses données. La particularité de ces widgets est de favoriser le html pur pour accélérer le rendu. En effet, l&rsquo;utilisation des widgets classiques pour afficher de grandes liste entrainait un surcout, à cause du grand nombre de fonction javascript que ces widgets possèdent. Cela menait souvent à diminuer la fluidité de la page dans le navigateur.</p>
+<p>Les cellWidget sont un version simplifié du model MVC. La vue étend la classe Cell et possède une méthode onRender() qui retourne le html pour une cellule donnée en fonction du model qu&rsquo;elle possède.</p>
+<p>Il existe déjà une application de démonstrations qui tire parti de ces nouveaux widgets :</p>
+<p><a href="http://gwt-bikeshed.appspot.com/Expenses.html">Expenses application</a></p>
+<p><a href="http://www.google.com/url?sa=D&amp;q=http%3A%2F%2Fcode.google.com%2Fp%2Fgoogle-web-toolkit%2Fsource%2Fbrowse%2Fbranches%2F2.1%2Fbikeshed%2F%23bikeshed%2Fsrc%2Fcom%2Fgoogle%2Fgwt%2Fsample%2Fexpenses%2Fgwt">Le code source</a></p>
+<h3 id="conclusion-">Conclusion :</h3>
+<p>Ma conclusion personnelle sur cette conférence est qu&rsquo;il ne suffit pas d&rsquo;utiliser GWT 2.0 pour compiler pour profiter de toute sa puissance. Comme toute toolbox, il faut prendre le temps de faire le tour de l&rsquo;api pour la maîtriser.</p>
+<h3 id="sources-">Sources :</h3>
+<p><a href="http://code.google.com/intl/fr/events/io/2010/sessions/gwt-ui-overhaul.html">Page de la conférence</a></p>
+<p><a href="http://www.youtube.com/watch?v=g2XclEOJdIc&amp;feature=PlayList&amp;p=F01F46882D8A90AF&amp;playnext_from=PL&amp;index=4">Vidéos</a></p>
+<p><a href="http://dl.google.com/googleio/2010/gwt-ui-overhaul.pdf">Slides</a></p>
+<p><a href="http://code.google.com/intl/fr/events/io/2010/sessions/gwt-ui-overhaul.html">Wave de discussion sur la conférence</a></p>
+<p><a href="https://wave.google.com/wave/waveref/googlewave.com/w+zqS7G7ZkBwa">Live Wave (notes prises par un Googler pendant la conférence)</a></p>
+
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=GWT,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    this.page.identifier = '371887625';
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "raphaelbrugierblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:https://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/sw-craftmanship.jpg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">5 laws every developer should know</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">Fix the Git completion with Oh-my-Zsh on Mac</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/placeholder.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">How to find your ip with command line</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-3393491-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="https://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="https://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="https://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>

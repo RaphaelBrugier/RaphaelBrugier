@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/raphaelbrugier
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://www.raphael-brugier.com
+  * I am raphaelbrugier (https://keybase.io/raphaelbrugier) on keybase.
+  * I have a public key ASAXrE-eBdZA1agx7Ih0HO2eZBAc28B0howGIDJT7xrFYgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101a33fcd2f045dc6f2fe72a2bf0864b398be7c45334a203e6f81e7c8675b9918b40a",
+      "host": "keybase.io",
+      "kid": "012017ac4f9e05d640d5a831ec88741ced9e64101cdbc074868c06203253ef1ac5620a",
+      "uid": "80c466b7cc463e0a4deaf23d70c39019",
+      "username": "raphaelbrugier"
+    },
+    "merkle_root": {
+      "ctime": 1507170469,
+      "hash": "dc186a4718344eb55d6eb56598cbe572b2d3e14a26ae2c0e4b555538ab4ae7770b2f074fdcfdb7dd4117a530a97d96ac796a71a9af333d4315f5290ebc63d070",
+      "hash_meta": "4af042daaefd0124f6aca0916b086c874acd5889b87d883b0c23a98d09be37f8",
+      "seqno": 1504841
+    },
+    "service": {
+      "hostname": "www.raphael-brugier.com",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.33"
+  },
+  "ctime": 1507170486,
+  "expire_in": 504576000,
+  "prev": "bf88ca81ce505c17c4e4c17f00be79d7cfd796de7ffa22dea7264d7ff8c2cc77",
+  "seqno": 9,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgF6xPngXWQNWoMeyIdBztnmQQHNvAdIaMBiAyU+8axWIKp3BheWxvYWTFA1R7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTAxYTMzZmNkMmYwNDVkYzZmMmZlNzJhMmJmMDg2NGIzOThiZTdjNDUzMzRhMjAzZTZmODFlN2M4Njc1Yjk5MThiNDBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMTdhYzRmOWUwNWQ2NDBkNWE4MzFlYzg4NzQxY2VkOWU2NDEwMWNkYmMwNzQ4NjhjMDYyMDMyNTNlZjFhYzU2MjBhIiwidWlkIjoiODBjNDY2YjdjYzQ2M2UwYTRkZWFmMjNkNzBjMzkwMTkiLCJ1c2VybmFtZSI6InJhcGhhZWxicnVnaWVyIn0sIm1lcmtsZV9yb290Ijp7ImN0aW1lIjoxNTA3MTcwNDY5LCJoYXNoIjoiZGMxODZhNDcxODM0NGViNTVkNmViNTY1OThjYmU1NzJiMmQzZTE0YTI2YWUyYzBlNGI1NTU1MzhhYjRhZTc3NzBiMmYwNzRmZGNmZGI3ZGQ0MTE3YTUzMGE5N2Q5NmFjNzk2YTcxYTlhZjMzM2Q0MzE1ZjUyOTBlYmM2M2QwNzAiLCJoYXNoX21ldGEiOiI0YWYwNDJkYWFlZmQwMTI0ZjZhY2EwOTE2YjA4NmM4NzRhY2Q1ODg5Yjg3ZDg4M2IwYzIzYTk4ZDA5YmUzN2Y4Iiwic2Vxbm8iOjE1MDQ4NDF9LCJzZXJ2aWNlIjp7Imhvc3RuYW1lIjoid3d3LnJhcGhhZWwtYnJ1Z2llci5jb20iLCJwcm90b2NvbCI6Imh0dHA6In0sInR5cGUiOiJ3ZWJfc2VydmljZV9iaW5kaW5nIiwidmVyc2lvbiI6MX0sImNsaWVudCI6eyJuYW1lIjoia2V5YmFzZS5pbyBnbyBjbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjMzIn0sImN0aW1lIjoxNTA3MTcwNDg2LCJleHBpcmVfaW4iOjUwNDU3NjAwMCwicHJldiI6ImJmODhjYTgxY2U1MDVjMTdjNGU0YzE3ZjAwYmU3OWQ3Y2ZkNzk2ZGU3ZmZhMjJkZWE3MjY0ZDdmZjhjMmNjNzciLCJzZXFubyI6OSwidGFnIjoic2lnbmF0dXJlIn2jc2lnxECm884MdHm61j7KpsiBMy2YQPox1zI+aETWyzTly5DAxqij0FoBLeVHbFU393eEeTPiH7aUIXg4y2vo5HEiWlcBqHNpZ190eXBlIKRoYXNogqR0eXBlCKV2YWx1ZcQgBCuMfzzU00a98bUoRCHTXBiND63eudmaZEubD27FxVWjdGFnzQICp3ZlcnNpb24B
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/raphaelbrugier
+
+==================================================================

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mentoring on Raphael Brugier</title>
+    <link>https://www.raphael-brugier.com/tags/mentoring/</link>
+    <description>Recent content in mentoring on Raphael Brugier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 Aug 2017 17:18:44 -0400</lastBuildDate>
+    
+	<atom:link href="https://www.raphael-brugier.com/tags/mentoring/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>5 laws every developer should know</title>
+      <link>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
+      <pubDate>Thu, 17 Aug 2017 17:18:44 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
+      <description>&lt;p&gt;Laws - or principles - can give us guidance and teach us lessons from our peers’ mistakes. In this article, I will introduce you to five laws I always have in the back of my mind when designing or implementing a software. Some of them relate to pure development, some are related to system organizations. All of them should be useful for your growth as a software engineer.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/categories/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/craftmanship/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/mentoring/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/categories/programming/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/</loc>
+    <lastmod>2017-08-17T17:18:44-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</loc>
+    <lastmod>2017-07-16T22:34:32-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/git/</loc>
+    <lastmod>2017-07-16T22:34:32-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/zsh/</loc>
+    <lastmod>2017-07-16T22:34:32-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/</loc>
+    <lastmod>2017-07-13T20:10:09-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/categories/network/</loc>
+    <lastmod>2017-07-13T20:10:09-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/til/</loc>
+    <lastmod>2017-07-13T20:10:09-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/til/</loc>
+    <lastmod>2017-07-13T20:10:09-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/til/debug-zsh-startup-time/</loc>
+    <lastmod>2017-07-10T19:43:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/categories/zsh/</loc>
+    <lastmod>2017-07-10T19:43:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</loc>
+    <lastmod>2017-07-03T09:26:07-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/ssh/</loc>
+    <lastmod>2017-07-03T09:26:07-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/apache-spark/</loc>
+    <lastmod>2017-05-03T23:01:48-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/mongodb/</loc>
+    <lastmod>2017-05-03T23:01:48-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</loc>
+    <lastmod>2017-05-03T23:01:48-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</loc>
+    <lastmod>2017-03-31T23:08:27-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/git-verify-email-hook/</loc>
+    <lastmod>2016-12-03T13:40:15-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/dotfiles/</loc>
+    <lastmod>2016-12-03T13:40:15-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/my-development-environment/</loc>
+    <lastmod>2016-11-27T18:02:03-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/terminal/</loc>
+    <lastmod>2016-11-27T18:02:03-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/git-commit-fixup/</loc>
+    <lastmod>2016-11-23T18:37:21-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/tips/</loc>
+    <lastmod>2016-11-23T18:37:21-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/about/</loc>
+    <lastmod>2016-11-10T19:47:37-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/</loc>
+    <lastmod>2016-11-10T19:47:37-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/docker/</loc>
+    <lastmod>2016-06-27T20:33:11-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/jhipster/</loc>
+    <lastmod>2016-06-27T20:33:11-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</loc>
+    <lastmod>2016-06-27T20:33:11-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</loc>
+    <lastmod>2016-04-13T19:51:51-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/databricks/</loc>
+    <lastmod>2016-04-13T19:51:51-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/streaming/</loc>
+    <lastmod>2016-04-13T19:51:51-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/testing/</loc>
+    <lastmod>2016-03-30T19:25:01-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</loc>
+    <lastmod>2016-03-30T19:25:01-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</loc>
+    <lastmod>2016-03-12T18:34:26-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/qcon/</loc>
+    <lastmod>2012-04-01T18:58:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</loc>
+    <lastmod>2012-04-01T18:58:03+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/tags/gwt/</loc>
+    <lastmod>2011-01-16T16:40:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</loc>
+    <lastmod>2011-01-16T16:40:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</loc>
+    <lastmod>2011-01-16T16:34:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</loc>
+    <lastmod>2010-12-20T21:59:06+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</loc>
+    <lastmod>2010-09-11T12:55:17+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</loc>
+    <lastmod>2010-07-15T20:28:53+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</loc>
+    <lastmod>2010-05-30T16:00:20+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</loc>
+    <lastmod>2010-01-28T23:04:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</loc>
+    <lastmod>2009-12-10T21:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</loc>
+    <lastmod>2009-09-06T14:34:00+00:00</lastmod>
+  </url>
+  
+</urlset>
