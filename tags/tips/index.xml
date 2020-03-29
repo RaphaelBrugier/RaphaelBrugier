@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tips on Raphael Brugier</title>
-    <link>https://www.raphael-brugier.com/tags/tips/</link>
+    <link>http://www.raphael-brugier.com/tags/tips/</link>
     <description>Recent content in tips on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 23 Nov 2016 18:37:21 -0500</lastBuildDate>
     
-	<atom:link href="https://www.raphael-brugier.com/tags/tips/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.raphael-brugier.com/tags/tips/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>git commit fixup</title>
-      <link>https://www.raphael-brugier.com/blog/git-commit-fixup/</link>
+      <link>http://www.raphael-brugier.com/blog/git-commit-fixup/</link>
       <pubDate>Wed, 23 Nov 2016 18:37:21 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
+      <guid>http://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
       <description>&lt;p&gt;In this article, I will describe a git option to quickly fix a previous commit.
 This sometimes happens when I want to fix a typo in a previous commit after few new commits.
 The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent commits adding features to facilitate the code reviews.&lt;/p&gt;</description>

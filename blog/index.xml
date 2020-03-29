@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on Raphael Brugier</title>
-    <link>https://www.raphael-brugier.com/blog/</link>
+    <link>http://www.raphael-brugier.com/blog/</link>
     <description>Recent content in Blogs on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 17 Aug 2017 17:18:44 -0400</lastBuildDate>
     
-	<atom:link href="https://www.raphael-brugier.com/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.raphael-brugier.com/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>5 laws every developer should know</title>
-      <link>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
+      <link>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</link>
       <pubDate>Thu, 17 Aug 2017 17:18:44 -0400</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
+      <guid>http://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/</guid>
       <description>&lt;p&gt;Laws - or principles - can give us guidance and teach us lessons from our peers’ mistakes. In this article, I will introduce you to five laws I always have in the back of my mind when designing or implementing a software. Some of them relate to pure development, some are related to system organizations. All of them should be useful for your growth as a software engineer.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Fix the Git completion with Oh-my-Zsh on Mac</title>
-      <link>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
+      <link>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</link>
       <pubDate>Sun, 16 Jul 2017 22:34:32 -0400</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
+      <guid>http://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/my-development-environment/&#34;&gt;previous post&lt;/a&gt;, I have explained how I have setup oh-my-zsh with the git plugin.
 I am also using homebrew to manage the packages installed on my Mac.
 After upgrading Git recently, I have noticed the Git completion was not as powerful anymore.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>MongoDB and Apache Spark - Getting started tutorial</title>
-      <link>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
+      <link>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
       <pubDate>Wed, 03 May 2017 23:01:48 -0400</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
+      <guid>http://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
       <description>&lt;p&gt;MongoDB and Apache Spark are two popular Big Data technologies.&lt;/p&gt;
-&lt;p&gt;In my &lt;a href=&#34;https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
+&lt;p&gt;In my &lt;a href=&#34;http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
 &lt;p&gt;To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on &lt;a href=&#34;https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/&#34;&gt;the aggregation pipeline documentation using a zip code data set&lt;/a&gt;. I have prepared a Maven project and a Docker Compose file to get you started quickly.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Introduction to the MongoDB connector for Apache Spark</title>
-      <link>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
+      <link>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
       <pubDate>Fri, 31 Mar 2017 23:08:27 -0400</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
+      <guid>http://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
       <description>&lt;p&gt;MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.&lt;/p&gt;
 &lt;p&gt;Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the &lt;a href=&#34;https://github.com/datastax/spark-cassandra-connector&#34;&gt;Datastax’s spark-cassandra-connector&lt;/a&gt; and now the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB&amp;rsquo;s connector&lt;/a&gt; presented in this article.&lt;/p&gt;
 &lt;p&gt;By using Apache Spark as a data processing platform on top of a MongoDB database, you can benefit from all of the major Spark API features: the RDD model, the SQL (HiveQL) abstraction and the Machine Learning libraries.&lt;/p&gt;
@@ -56,10 +56,10 @@ After upgrading Git recently, I have noticed the Git completion was not as power
     
     <item>
       <title>Add a Git hook to automatically verify a repository&#39;s email</title>
-      <link>https://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
+      <link>http://www.raphael-brugier.com/blog/git-verify-email-hook/</link>
       <pubDate>Sat, 03 Dec 2016 13:40:15 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
+      <guid>http://www.raphael-brugier.com/blog/git-verify-email-hook/</guid>
       <description>&lt;p&gt;I use Git a lot and I often have to switch between my personal repositories (ie: Github) and my professional (Ippon) repositories on the same laptop.
 My default Git email is configured to my personal email and I have often forgotten to configure it to my professional email when creating/cloning a repository for my company.
 Like everything in Git, this can be automated to avoid mistakes.&lt;/p&gt;
@@ -68,20 +68,20 @@ Like everything in Git, this can be automated to avoid mistakes.&lt;/p&gt;
     
     <item>
       <title>My development environment</title>
-      <link>https://www.raphael-brugier.com/blog/my-development-environment/</link>
+      <link>http://www.raphael-brugier.com/blog/my-development-environment/</link>
       <pubDate>Sun, 27 Nov 2016 18:02:03 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/my-development-environment/</guid>
+      <guid>http://www.raphael-brugier.com/blog/my-development-environment/</guid>
       <description>&lt;p&gt;A customized development environment could be a huge productivity boost in the day to day work.
 In this post, I will share the tools and configurations I currently use.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>git commit fixup</title>
-      <link>https://www.raphael-brugier.com/blog/git-commit-fixup/</link>
+      <link>http://www.raphael-brugier.com/blog/git-commit-fixup/</link>
       <pubDate>Wed, 23 Nov 2016 18:37:21 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
+      <guid>http://www.raphael-brugier.com/blog/git-commit-fixup/</guid>
       <description>&lt;p&gt;In this article, I will describe a git option to quickly fix a previous commit.
 This sometimes happens when I want to fix a typo in a previous commit after few new commits.
 The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent commits adding features to facilitate the code reviews.&lt;/p&gt;</description>
@@ -89,10 +89,10 @@ The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent co
     
     <item>
       <title>Using Docker to simplify Cassandra development in JHipster</title>
-      <link>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
+      <link>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
       <pubDate>Mon, 27 Jun 2016 20:33:11 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
+      <guid>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
       <description>&lt;p&gt;JHipster is an open source project that generates a fully working application in seconds. With a minimal configuration, JHipster accelerates the start of new projects by integrating frontend, backend, security and a database.&lt;/p&gt;
 &lt;p&gt;Cassandra is one of the supported databases and JHipster generates all the configuration needed to access the cluster.&lt;/p&gt;
 &lt;p&gt;But it is often hard for the developers to configure and maintain a local Cassandra cluster.&lt;/p&gt;
@@ -103,30 +103,30 @@ The goal is to keep a &amp;ldquo;clean&amp;rdquo; git history with consistent co
     
     <item>
       <title>A tour of Databricks Community Edition: a hosted Spark service</title>
-      <link>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
+      <link>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
       <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
+      <guid>http://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
       <description>&lt;p&gt;With the &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html&#34;&gt;recent announcement&lt;/a&gt; of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
 Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Testing strategy for Spark Streaming – Part 2 of 2</title>
-      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
+      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
       <pubDate>Wed, 30 Mar 2016 19:25:01 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
+      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
 &lt;p&gt;In this post, we will look at applying the same pattern to another important part of the Spark engine: Spark Streaming.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Testing strategy for Apache Spark jobs – Part 1 of 2</title>
-      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
+      <link>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
       <pubDate>Sat, 12 Mar 2016 18:34:26 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
+      <guid>http://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
       <description>&lt;p&gt;Like any other application, Apache Spark jobs deserve good testing practices and coverage.&lt;/p&gt;
 &lt;p&gt;Indeed, the costs of running jobs with production data makes unit testing a must-do to have a fast feedback loop and discover the errors earlier.&lt;/p&gt;
 &lt;p&gt;But because of its distributed nature and the RDD abstraction on top of the data, Spark requires special care for testing.&lt;/p&gt;
@@ -135,20 +135,20 @@ Databricks Cloud is a hosted Spark service from Databricks, the team behind Spar
     
     <item>
       <title>Retour sur QCon London 2012</title>
-      <link>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
+      <link>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</link>
       <pubDate>Sun, 01 Apr 2012 18:58:03 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</guid>
+      <guid>http://www.raphael-brugier.com/blog/retour-sur-qcon-london-2012/</guid>
       <description>J&amp;rsquo;ai eu l&amp;rsquo;occasion cet année d&#39;être envoyé par ma société, Objet Direct, assister aux 3 jours de la conférence QCon à Londres. Une excellente expérience, qui m&amp;rsquo;a permise de voir des présentations très variées aussi bien techniques que méthodologiques. Ça fait du bien de sortir de la mission pour aller voir ce qui se fait ailleurs et ça permet de revenir avec pleins d&amp;rsquo;idées de nouvelles et de motivation.
 J&amp;rsquo;espère pouvoir appliquer toutes les bonnes pratiques que j&amp;rsquo;ai appris là bas prochainement.</description>
     </item>
     
     <item>
       <title>Wordpress login form with GWT and UiBinder</title>
-      <link>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
+      <link>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</link>
       <pubDate>Sun, 16 Jan 2011 16:40:14 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
+      <guid>http://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder/</guid>
       <description>Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.
 You can see the result there. Or you can download and run the eclipse project from there.
 To start I&amp;rsquo;ve just copied the html from my wordpress login page into the htmlPanel.</description>
@@ -156,49 +156,49 @@ To start I&amp;rsquo;ve just copied the html from my wordpress login page into t
     
     <item>
       <title>GWT and HTML under control</title>
-      <link>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
+      <link>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</link>
       <pubDate>Sun, 16 Jan 2011 16:34:48 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
+      <guid>http://www.raphael-brugier.com/blog/gwt-and-html-under-control/</guid>
       <description>In the past weeks I&amp;rsquo;ve seen two articles about making clean design with GWT. That was really interesting, but something still stugling me a lot. Both authors agreed not to use layout widgets provided by GWT to build UI neither UiBinder but use instead a big ugly static String to store an HTML code/
 Take a closer look at those two articles and come back later to find out a better way to improve your design based on GWT.</description>
     </item>
     
     <item>
       <title>How-To change the style of your GWT 2.1 ValuePicker ?</title>
-      <link>https://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</link>
+      <link>http://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</link>
       <pubDate>Mon, 20 Dec 2010 21:59:06 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</guid>
+      <guid>http://www.raphael-brugier.com/blog/how-to-change-the-style-of-your-gwt-2-1-valuepicker/</guid>
       <description>This class demonstrate how-to change the style of the GWT 2.1 ValuePicker.
 public class Main extends Composite { private static class DefaultCell&amp;lt;T&amp;gt; extends AbstractCell&amp;lt;T&amp;gt; { private final Renderer&amp;lt;T&amp;gt; renderer; DefaultCell(Renderer&amp;lt;T&amp;gt; renderer) { this.renderer = renderer; } @Override public void render(Context context, T value, SafeHtmlBuilder sb) { sb.appendEscaped(renderer.render(value)); } } public interface MyResources extends CellList.Resources { @Source(&amp;#34;myStyle.css&amp;#34;) Style cellListStyle(); } Renderer&amp;lt;String&amp;gt; renderer = new AbstractRenderer&amp;lt;String&amp;gt;() { @Override public String render(String object) { return object; } }; private static MyResources RESOURCES = GWT.</description>
     </item>
     
     <item>
       <title>Gwt – Surcharger les styles par défauts</title>
-      <link>https://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</link>
+      <link>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</link>
       <pubDate>Sat, 11 Sep 2010 12:55:17 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</guid>
+      <guid>http://www.raphael-brugier.com/blog/gwt-surcharger-les-styles-par-defauts/</guid>
       <description>La version 2.0 de Gwt à introduit l&amp;rsquo;interface CssResource qui permet de lier des classes css à des widgets Gwt en java. Cette interface permet de bénéficier d&amp;rsquo;optimisation à la compilation et de brouiller les noms des classes pour éviter les collisions. Elle enrichi aussi la syntaxe Css, par exemple en permettant de déclarer des constantes. Il est ainsi très facile de déclarer des feuilles Css qui joueront le rôle de feuille parent de laquelle hériterons les feuilles spécifiques à chaque partie de l&amp;rsquo;interface.</description>
     </item>
     
     <item>
       <title>Google I/O 2010 – GWT’s UI overhaul</title>
-      <link>https://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</link>
+      <link>http://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</link>
       <pubDate>Thu, 15 Jul 2010 20:28:53 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</guid>
+      <guid>http://www.raphael-brugier.com/blog/google-io-2010-gwts-ui-overhaul/</guid>
       <description>Le 19 et 20 mai 2010 avait lieu l&#39;événement annuel de Google, le Google I/O à San Francisco. Près d&amp;rsquo;une centaine de présentations ont eu lieux et toutes étaient filmées ! Je débute donc une série de post pour résumer celles que je visionne, en particulier celles traitant de GWT et de Google App Engine.
 GWT&amp;rsquo;S UI Overhaul Par Ray Rian et Joel Webber. Cette présentation présente plus en détails les nouvelles façons de construire les interfaces avec la version 2.</description>
     </item>
     
     <item>
       <title>GTAC 2009 – Lessons learned from testing GWT applications</title>
-      <link>https://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</link>
+      <link>http://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</link>
       <pubDate>Sun, 30 May 2010 16:00:20 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</guid>
+      <guid>http://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications/</guid>
       <description>Les 21 et 22 octobre 2009 avait lieux à Zurich la conférence annuelle de Google sur les test automatisées.
 Parmi toutes les conférences proposées, une m&amp;rsquo;intéressait particulièrement puisqu&amp;rsquo;elle concerne les test d&amp;rsquo;applications réalisées en Gwt.
 Voici donc la vidéo de la présentation ainsi que les slides et quelques notes que j&amp;rsquo;ai pris en la visionnant.
@@ -207,20 +207,20 @@ Comment tester les applications Gwt ? (slide 8 ) Avec selenium : Selenium va sim
     
     <item>
       <title>Critique du Livre &#39;Programmation GWT 2&#39;</title>
-      <link>https://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</link>
+      <link>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</link>
       <pubDate>Thu, 28 Jan 2010 23:04:00 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</guid>
+      <guid>http://www.raphael-brugier.com/blog/critique-du-livre-programmation-gwt-2/</guid>
       <description>Je viens de terminer la lecture de &amp;ldquo;Programmation GWT 2&amp;rdquo; de Sami Jabber. Sorti quelques jours après la release finale de cette nouvelle version majeure du framework, il constitue un excellent point d&amp;rsquo;entrée à cette technologie autant qu&amp;rsquo;un approfondissement pour les connaisseurs.
 Bien que je connaisse déjà (un peu) GWT et que j&amp;rsquo;expérimente la version 2 depuis quelques mois, j&amp;rsquo;ai appris énormément avec ce livre. Et surtout j&amp;rsquo;ai pris beaucoup de plaisir à le lire!</description>
     </item>
     
     <item>
       <title>GWT Sortie de la version 2.0</title>
-      <link>https://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</link>
+      <link>http://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</link>
       <pubDate>Thu, 10 Dec 2009 21:51:00 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</guid>
+      <guid>http://www.raphael-brugier.com/blog/gwt-sortie-de-la-version-2-0/</guid>
       <description>Il y a quelques jours, Google a annoncé la sortie de la version 2 de son framework GWT.
 Cette nouvelle version majeur marque un tournant en apportant de nombreuses fonctionnalités destinées à faciliter la vie du développeur.
 L&amp;rsquo;accent à clairement été mis sur la rapidité dans cette nouvelle version, rapidité pour le développement et rapidité pour l&amp;rsquo;utilisateur final
@@ -229,10 +229,10 @@ UI Binder L&amp;rsquo;UI Binder tout d&amp;rsquo;abord est une nouvelle façon d
     
     <item>
       <title>Google IO mai 2009 : Best Practices For Architecting Your GWT App</title>
-      <link>https://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</link>
+      <link>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</link>
       <pubDate>Sun, 06 Sep 2009 14:34:00 +0000</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</guid>
+      <guid>http://www.raphael-brugier.com/blog/google-io-mai-2009-best-practices-for-architecting-your-gwt-app/</guid>
       <description>Lors de la conférence annuelle de Google, en mai dernier, Ray Ryan à fait une présentation très intéressante sur les meilleures pratiques pour concevoir une application avec GWT. Cette présentation, a eu beaucoup d&#39;écho dans la communauté GWT et plusieurs frameworks sont apparus pour faciliter l&amp;rsquo;implémentation de ces &amp;ldquo;bonne pratiques&amp;rdquo;.
 Voici un résumé sous forme de note de quelques points importants abordés dans cette présentation.
 AJAX  Il faut minimiser la taille des objets retournés au client.</description>

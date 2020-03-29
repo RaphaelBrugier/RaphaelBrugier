@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>JHipster on Raphael Brugier</title>
-    <link>https://www.raphael-brugier.com/tags/jhipster/</link>
+    <link>http://www.raphael-brugier.com/tags/jhipster/</link>
     <description>Recent content in JHipster on Raphael Brugier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 27 Jun 2016 20:33:11 -0500</lastBuildDate>
     
-	<atom:link href="https://www.raphael-brugier.com/tags/jhipster/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.raphael-brugier.com/tags/jhipster/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Using Docker to simplify Cassandra development in JHipster</title>
-      <link>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
+      <link>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</link>
       <pubDate>Mon, 27 Jun 2016 20:33:11 -0500</pubDate>
       
-      <guid>https://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
+      <guid>http://www.raphael-brugier.com/blog/using-docker-to-simplify-cassandra-development-in-jhipster/</guid>
       <description>&lt;p&gt;JHipster is an open source project that generates a fully working application in seconds. With a minimal configuration, JHipster accelerates the start of new projects by integrating frontend, backend, security and a database.&lt;/p&gt;
 &lt;p&gt;Cassandra is one of the supported databases and JHipster generates all the configuration needed to access the cluster.&lt;/p&gt;
 &lt;p&gt;But it is often hard for the developers to configure and maintain a local Cassandra cluster.&lt;/p&gt;
