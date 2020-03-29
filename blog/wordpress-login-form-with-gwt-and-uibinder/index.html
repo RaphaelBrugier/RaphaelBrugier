@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Wordpress login form with GWT and UiBinder</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="https://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="https://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="https://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="https://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="https://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="https://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="https://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="Wordpress login form with GWT and UiBinder" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.raphael-brugier.com/blog/wordpress-login-form-with-gwt-and-uibinder//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="https://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Wordpress login form with GWT and UiBinder</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">January 16, 2011</p>
+
+                        <div id="post-content">
+                          <p>Following my previous post, I have decided to rewrite the example of the Wordpress login form using only UiBinder and the ClientBundle/Css features that comes with GWT. This example demonstrate how you can use only htmlPanel and UiBinder to build a perfect pixel Ui just with hmtl/css and no gwt panel.</p>
+<p>You can <a href="/posts/wpLogin/WpLogin.html">see the result there.</a> Or you can <a href="/posts/wpLogin/wpLogin.zip">download and run the eclipse project from there</a>.</p>
+<p>To start I&rsquo;ve just copied the html from my wordpress login page into the htmlPanel. Then I&rsquo;ve renamed all the &ldquo;id&rdquo; on the divs into class, because gwt will only compile the css declared in the UiBinder into class css. I&rsquo;ve replaced the &lt;form&gt; by a &lt;div&gt;. I&rsquo;ve added some more styles and the image directly in the UiBinder, so GWT can compress and obfuscate it. In the application.css I&rsquo;ve just added two styles for the body.</p>
+<p>The main file that you want to see is WpForm.ui.xml :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE ui:UiBinder SYSTEM &#34;http://dl.google.com/gwt/DTD/xhtml.ent&#34;&gt;</span>
+<span style="color:#f92672">&lt;ui:UiBinder</span> <span style="color:#a6e22e">xmlns:ui=</span><span style="color:#e6db74">&#39;urn:ui:com.google.gwt.uibinder&#39;</span>
+	<span style="color:#a6e22e">xmlns:g=</span><span style="color:#e6db74">&#39;urn:import:com.google.gwt.user.client.ui&#39;</span><span style="color:#f92672">&gt;</span>
+
+	<span style="color:#f92672">&lt;ui:image</span> <span style="color:#a6e22e">field=</span><span style="color:#e6db74">&#39;logo&#39;</span> <span style="color:#a6e22e">src=</span><span style="color:#e6db74">&#39;logo-login.gif&#39;</span> <span style="color:#f92672">/&gt;</span>
+
+	<span style="color:#f92672">&lt;ui:style&gt;</span>
+		.form {
+			margin-left: 8px;
+			padding: 16px 16px 40px 16px;
+			font-weight: normal;
+			-moz-border-radius: 11px;
+			-khtml-border-radius: 11px;
+			-webkit-border-radius: 11px;
+			border-radius: 5px;
+			background: #fff;
+			border: 1px solid #e5e5e5;
+			-moz-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
+			-webkit-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
+			-khtml-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
+			box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
+			font: 11px &#34;Lucida Grande&#34;, Verdana, Arial, &#34;Bitstream Vera Sans&#34;,
+				sans-serif;
+		}
+		
+		.form .forgetmenot {
+			font-weight: normal;
+			float: left;
+			margin-bottom: 0;
+		}
+		
+		.button-primary {
+			background: #2379a1;
+			color: #ffffff;
+			font-family: &#34;Lucida Grande&#34;, Verdana, Arial, &#34;Bitstream Vera Sans&#34;,
+				sans-serif;
+			font-weight: bold;
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+			padding: 3px 10px;
+			border: none;
+			font-size: 12px;
+			border-width: 1px;
+			border-style: solid;
+			-moz-border-radius: 11px;
+			-khtml-border-radius: 11px;
+			-webkit-border-radius: 11px;
+			border-radius: 11px;
+			cursor: pointer;
+			text-decoration: none;
+			margin-top: -3px;
+		}
+		
+		.login .form p {
+			margin-bottom: 0px;
+		}
+		
+		@external gwt-Label;
+		.login .gwt-Label {
+			color: #777;
+			font-size: 13px;
+		}
+		
+		.form .forgetmenot .gwt-Label {
+			font-size: 11px;
+			line-height: 19px;
+			color: #777;
+			float: right;
+			margin-left: 5px;
+		}
+		
+		.form .submit {
+			float: right;
+		}
+		
+		.form p {
+			margin-bottom: 24px;
+		}
+		
+		@sprite .login h1 a {
+			gwt-image: &#39;logo&#39;;
+			width: 326px;
+			height: 67px;
+			text-indent: -9999px;
+			overflow: hidden;
+			padding-bottom: 15px;
+			display: block;
+		}
+		
+		.nav {
+			text-shadow: rgba(255, 255, 255, 1) 0 1px 0;
+			margin: 0 0 0 8px;
+			padding: 16px;
+		}
+		
+		.nav a {
+			color: #21759B;
+		}
+		
+		.input {
+			font-size: 24px;
+			width: 97%;
+			padding: 3px;
+			margin-top: 2px;
+			margin-right: 6px;
+			margin-bottom: 16px;
+			border: 1px solid #e5e5e5;
+			background: #fbfbfb;
+			color: #555;
+		}
+		
+		.backtoblog {
+			position: absolute;
+			top: 0;
+			left: 0;
+			border-bottom: #c6c6c6 1px solid;
+			background: #d9d9d9;
+			background: -moz-linear-gradient(bottom, #d7d7d7, #e4e4e4);
+			background: -webkit-gradient(linear, left bottom, left top, from(#d7d7d7),
+				to(#e4e4e4) );
+			height: 30px;
+			width: 100%;
+		}
+		
+		.backtoblog a {
+			text-decoration: none;
+			display: block;
+			padding: 8px 0 0 15px;
+			color: #464646;
+		}
+		
+		.login {
+			width: 320px;
+			margin: 7em auto;
+			padding-top: 30px;
+		}
+	<span style="color:#f92672">&lt;/ui:style&gt;</span>
+
+	<span style="color:#f92672">&lt;g:HTMLPanel&gt;</span>
+		<span style="color:#f92672">&lt;div</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.login}&#34;</span><span style="color:#f92672">&gt;</span>
+			<span style="color:#f92672">&lt;h1&gt;</span>
+				<span style="color:#f92672">&lt;a</span> <span style="color:#a6e22e">title=</span><span style="color:#e6db74">&#34;Propulsé par WordPress&#34;</span> <span style="color:#a6e22e">href=</span><span style="color:#e6db74">&#34;http://wordpress.org/&#34;</span><span style="color:#f92672">&gt;</span>Le blog de Raph<span style="color:#f92672">&lt;/a&gt;</span>
+			<span style="color:#f92672">&lt;/h1&gt;</span>
+			<span style="color:#f92672">&lt;div</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.form}&#34;</span><span style="color:#f92672">&gt;</span>
+				<span style="color:#f92672">&lt;p&gt;</span>
+					<span style="color:#f92672">&lt;g:Label&gt;</span>Login<span style="color:#f92672">&lt;/g:Label&gt;</span>
+					<span style="color:#f92672">&lt;br</span> <span style="color:#f92672">/&gt;</span>
+					<span style="color:#f92672">&lt;g:TextBox</span> <span style="color:#a6e22e">styleName=</span><span style="color:#e6db74">&#34;{style.input}&#34;</span> <span style="color:#f92672">/&gt;</span>
+				<span style="color:#f92672">&lt;/p&gt;</span>
+				<span style="color:#f92672">&lt;p&gt;</span>
+					<span style="color:#f92672">&lt;g:Label&gt;</span>Password<span style="color:#f92672">&lt;/g:Label&gt;</span>
+					<span style="color:#f92672">&lt;br</span> <span style="color:#f92672">/&gt;</span>
+					<span style="color:#f92672">&lt;g:TextBox</span> <span style="color:#a6e22e">styleName=</span><span style="color:#e6db74">&#34;{style.input}&#34;</span> <span style="color:#f92672">/&gt;</span>
+				<span style="color:#f92672">&lt;/p&gt;</span>
+				<span style="color:#f92672">&lt;p</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.forgetmenot}&#34;</span><span style="color:#f92672">&gt;</span>
+					<span style="color:#f92672">&lt;g:CheckBox&gt;&lt;/g:CheckBox&gt;</span>
+					<span style="color:#f92672">&lt;g:Label&gt;</span> Se souvenir de moi<span style="color:#f92672">&lt;/g:Label&gt;</span>
+				<span style="color:#f92672">&lt;/p&gt;</span>
+				<span style="color:#f92672">&lt;p</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.submit}&#34;</span><span style="color:#f92672">&gt;</span>
+					<span style="color:#f92672">&lt;g:Button</span> <span style="color:#a6e22e">styleName=</span><span style="color:#e6db74">&#34;{style.button-primary}&#34;</span><span style="color:#f92672">&gt;</span>Connect<span style="color:#f92672">&lt;/g:Button&gt;</span>
+
+				<span style="color:#f92672">&lt;/p&gt;</span>
+			<span style="color:#f92672">&lt;/div&gt;</span>
+
+			<span style="color:#f92672">&lt;p</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.nav}&#34;</span><span style="color:#f92672">&gt;</span>
+				<span style="color:#f92672">&lt;a</span> <span style="color:#a6e22e">title=</span><span style="color:#e6db74">&#34;Récupération de mot de passe&#34;</span>
+					<span style="color:#a6e22e">href=</span><span style="color:#e6db74">&#34;http://{{ site.baseurl }}&#34;</span><span style="color:#f92672">&gt;</span>Mot de passe oublié ?<span style="color:#f92672">&lt;/a&gt;</span>
+			<span style="color:#f92672">&lt;/p&gt;</span>
+		<span style="color:#f92672">&lt;/div&gt;</span>
+		<span style="color:#f92672">&lt;p</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;{style.backtoblog}&#34;</span><span style="color:#f92672">&gt;</span>
+			<span style="color:#f92672">&lt;a</span> <span style="color:#a6e22e">title=</span><span style="color:#e6db74">&#34;Êtes-vous perdu(e)?&#34;</span> <span style="color:#a6e22e">href=</span><span style="color:#e6db74">&#34;{{ site.baseurl }}&#34;</span><span style="color:#f92672">&gt;</span>← Retour sur Le blog de
+				Raph<span style="color:#f92672">&lt;/a&gt;</span>
+		<span style="color:#f92672">&lt;/p&gt;</span>
+	<span style="color:#f92672">&lt;/g:HTMLPanel&gt;</span>
+<span style="color:#f92672">&lt;/ui:UiBinder&gt;</span>
+</code></pre></div><p>WpLogin.css  :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css">    <span style="color:#f92672">*</span> {
+        <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span>;
+        <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">0</span>;
+    }
+    
+    <span style="color:#f92672">body</span> {
+        <span style="color:#66d9ef">font</span>: <span style="color:#ae81ff">11</span><span style="color:#66d9ef">px</span> <span style="color:#e6db74">&#34;Lucida Grande&#34;</span>, Verdana, Arial, <span style="color:#e6db74">&#34;Bitstream Vera Sans&#34;</span>,
+            <span style="color:#66d9ef">sans-serif</span> <span style="color:#75715e">!important</span>;
+            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f9f9f9</span> <span style="color:#75715e">!important</span>;
+    }
+</code></pre></div><p>And that&rsquo;s all !  So now, please don&rsquo;t follow the advices of writing all your html in a big static String and learn how to use the tool !</p>
+<p>Happy coding !</p>
+<p><a href="/posts/wpLogin/WpLogin.html">Result page</a> Or you can <a href="/posts/wpLogin/wpLogin.zip">Download the eclipse project</a></p>
+
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=GWT,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    this.page.identifier = '366559793';
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "raphaelbrugierblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:https://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/sw-craftmanship.jpg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">5 laws every developer should know</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">Fix the Git completion with Oh-my-Zsh on Mac</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/placeholder.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">How to find your ip with command line</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-3393491-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="https://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="https://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="https://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache Spark on Raphael Brugier</title>
+    <link>https://www.raphael-brugier.com/tags/apache-spark/</link>
+    <description>Recent content in Apache Spark on Raphael Brugier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 03 May 2017 23:01:48 -0400</lastBuildDate>
+    
+	<atom:link href="https://www.raphael-brugier.com/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MongoDB and Apache Spark - Getting started tutorial</title>
+      <link>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</link>
+      <pubDate>Wed, 03 May 2017 23:01:48 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/blog/mongodb-apache-spark-getting-started-tutorial/</guid>
+      <description>&lt;p&gt;MongoDB and Apache Spark are two popular Big Data technologies.&lt;/p&gt;
+&lt;p&gt;In my &lt;a href=&#34;https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/&#34;&gt;previous post&lt;/a&gt;, I listed the capabilities of the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB connector for Spark&lt;/a&gt;. In this tutorial, I will show you how to configure Spark to connect to MongoDB, load data, and write queries.&lt;/p&gt;
+&lt;p&gt;To demonstrate how to use Spark with MongoDB, I will use the zip codes from MongoDB tutorial on &lt;a href=&#34;https://docs.mongodb.com/v3.2/tutorial/aggregation-zip-code-data-set/&#34;&gt;the aggregation pipeline documentation using a zip code data set&lt;/a&gt;. I have prepared a Maven project and a Docker Compose file to get you started quickly.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Introduction to the MongoDB connector for Apache Spark</title>
+      <link>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</link>
+      <pubDate>Fri, 31 Mar 2017 23:08:27 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/blog/introduction-mongodb-spark-connector/</guid>
+      <description>&lt;p&gt;MongoDB is one of the most popular NoSQL databases. Its unique capabilities to store document-oriented data using the built-in sharding and replication features provide horizontal scalability as well as high availability.&lt;/p&gt;
+&lt;p&gt;Apache Spark is another popular “Big Data” technology. Spark provides a lower entry level to the world of distributed computing by offering an easier to use, faster, and in-memory framework than the MapReduce framework. Apache Spark is intended to be used with any distributed storage, e.g. HDFS, Apache Cassandra with the &lt;a href=&#34;https://github.com/datastax/spark-cassandra-connector&#34;&gt;Datastax’s spark-cassandra-connector&lt;/a&gt; and now the &lt;a href=&#34;https://docs.mongodb.com/spark-connector/v2.0/&#34;&gt;MongoDB&amp;rsquo;s connector&lt;/a&gt; presented in this article.&lt;/p&gt;
+&lt;p&gt;By using Apache Spark as a data processing platform on top of a MongoDB database, you can benefit from all of the major Spark API features: the RDD model, the SQL (HiveQL) abstraction and the Machine Learning libraries.&lt;/p&gt;
+&lt;p&gt;In this article, I present the features of the connector and some use cases. An upcoming article will be a tutorial to demonstrate how to load data from MongoDB and run queries with Spark.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>A tour of Databricks Community Edition: a hosted Spark service</title>
+      <link>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</link>
+      <pubDate>Wed, 13 Apr 2016 19:51:51 -0500</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/blog/a-tour-of-databricks-community-edition-a-hosted-spark-service/</guid>
+      <description>&lt;p&gt;With the &lt;a href=&#34;https://databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html&#34;&gt;recent announcement&lt;/a&gt; of the Community Edition, it’s time to have a look at the Databricks Cloud solution.
+Databricks Cloud is a hosted Spark service from Databricks, the team behind Spark.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing strategy for Spark Streaming – Part 2 of 2</title>
+      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</link>
+      <pubDate>Wed, 30 Mar 2016 19:25:01 -0500</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-2-of-2/</guid>
+      <description>&lt;p&gt;In a &lt;a href=&#34;https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/&#34;&gt;previous post&lt;/a&gt;, we’ve seen why it’s important to test your Spark jobs and how you could easily unit test the job’s logic, first by designing your code to be testable and then by writing unit tests.&lt;/p&gt;
+&lt;p&gt;In this post, we will look at applying the same pattern to another important part of the Spark engine: Spark Streaming.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Testing strategy for Apache Spark jobs – Part 1 of 2</title>
+      <link>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</link>
+      <pubDate>Sat, 12 Mar 2016 18:34:26 -0500</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/blog/testing-strategy-for-apache-spark-jobs-1-of-2/</guid>
+      <description>&lt;p&gt;Like any other application, Apache Spark jobs deserve good testing practices and coverage.&lt;/p&gt;
+&lt;p&gt;Indeed, the costs of running jobs with production data makes unit testing a must-do to have a fast feedback loop and discover the errors earlier.&lt;/p&gt;
+&lt;p&gt;But because of its distributed nature and the RDD abstraction on top of the data, Spark requires special care for testing.&lt;/p&gt;
+&lt;p&gt;In this post, we’ll explore how to design your code for testing, how to setup a simple unit-test for your job logic and how the &lt;a href=&#34;https://github.com/holdenk/spark-testing-base&#34;&gt;spark-testing-base&lt;/a&gt; library can help.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

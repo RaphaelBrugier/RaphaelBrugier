@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tils on Raphael Brugier</title>
+    <link>https://www.raphael-brugier.com/til/</link>
+    <description>Recent content in Tils on Raphael Brugier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Jul 2017 20:10:09 -0400</lastBuildDate>
+    
+	<atom:link href="https://www.raphael-brugier.com/til/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to find your ip with command line</title>
+      <link>https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/</link>
+      <pubDate>Thu, 13 Jul 2017 20:10:09 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/</guid>
+      <description>When you need to determine your public IP - eg for a script - you can use some public websites as an API with Curl:
+For example, I have used ifconfig.me:
+$ curl ifconfig.me 57.22.56.xxx Alternatively, the dig command is faster:
+$ dig +short myip.opendns.com @resolver1.opendns.com 57.22.56.xxx </description>
+    </item>
+    
+    <item>
+      <title>How to debug zsh startup time</title>
+      <link>https://www.raphael-brugier.com/til/debug-zsh-startup-time/</link>
+      <pubDate>Mon, 10 Jul 2017 19:43:21 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/til/debug-zsh-startup-time/</guid>
+      <description>Use the zprof module to profile the zsh functions.
+Add zmodload zsh/zprof at the beginning of the .zshrc file.
+Add zprof at the end to print the result of the profling.
+In my case the problem was nvm due to this issue.
+source</description>
+    </item>
+    
+    <item>
+      <title>remove known_hosts entry with ssh keygen</title>
+      <link>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</link>
+      <pubDate>Mon, 03 Jul 2017 09:26:07 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/til/remove-known_hosts-entry-with-ssh-keygen/</guid>
+      <description>The easiest way to remove an entry from the .ssh/known_hosts file is to use ssh-keygen:
+ssh-keygen -R hostname </description>
+    </item>
+    
+  </channel>
+</rss>

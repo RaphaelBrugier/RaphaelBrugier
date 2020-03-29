@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zsh on Raphael Brugier</title>
+    <link>https://www.raphael-brugier.com/categories/zsh/</link>
+    <description>Recent content in zsh on Raphael Brugier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Jul 2017 19:43:21 -0400</lastBuildDate>
+    
+	<atom:link href="https://www.raphael-brugier.com/categories/zsh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to debug zsh startup time</title>
+      <link>https://www.raphael-brugier.com/til/debug-zsh-startup-time/</link>
+      <pubDate>Mon, 10 Jul 2017 19:43:21 -0400</pubDate>
+      
+      <guid>https://www.raphael-brugier.com/til/debug-zsh-startup-time/</guid>
+      <description>Use the zprof module to profile the zsh functions.
+Add zmodload zsh/zprof at the beginning of the .zshrc file.
+Add zprof at the end to print the result of the profling.
+In my case the problem was nvm due to this issue.
+source</description>
+    </item>
+    
+  </channel>
+</rss>

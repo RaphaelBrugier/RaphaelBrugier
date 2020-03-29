@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>GTAC 2009 – Lessons learned from testing GWT applications</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="https://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="https://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="https://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="https://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="https://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="https://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="https://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="GTAC 2009 – Lessons learned from testing GWT applications" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.raphael-brugier.com/blog/gtac-2009-lessons-learned-from-testing-gwt-applications//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="https://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>GTAC 2009 – Lessons learned from testing GWT applications</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">May 30, 2010</p>
+
+                        <div id="post-content">
+                          <p>Les 21 et 22 octobre 2009 avait lieux à Zurich la conférence annuelle de Google sur les test automatisées.</p>
+<p>Parmi toutes les conférences proposées, une m&rsquo;intéressait particulièrement puisqu&rsquo;elle concerne les test d&rsquo;applications réalisées en Gwt.</p>
+<p>Voici donc la vidéo de la présentation ainsi que les slides et quelques notes que j&rsquo;ai pris en la visionnant.</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="comment-tester-les-applications-gwt--slide-8-">Comment tester les applications Gwt ? (slide 8 )</h2>
+<h3 id="avec-selenium-">Avec selenium :</h3>
+<p>Selenium va simuler au plus près l&rsquo;interaction qu&rsquo;a un vrai utilisateur avec le navigateur puisqu&rsquo;il démarre un vrai navigateur et réalise directement les opérations de test sur celui-ci. Cependant cette approche est très coûteuse en temps d&rsquo;exécution et surtout plus difficile pour maintenir les tests et plus dure à débugguer.</p>
+<h3 id="avec-gwttestcase-">Avec GwtTestCase :</h3>
+<p>Cet outil, fourni avec Gwt ,démarre lui aussi un navigateur embarqué pour exécuter les tests. Cependant ici, on parle de &ldquo;crossCompilation&rdquo; puisque le code java est compilée en JS à la volée pour être exécuté par le navigateur embarqué. De la même façon que le development mode. Cet outil est plus rapide que selenium et plus facile à maintenir puisque les tests sont écrits en Java et lancés de la même façons que des tests Junit. Cependant, le fait que le code final testé est du javascript (après compilation à la volée donc) rend plus difficile le débuggage.</p>
+<h3 id="avec-junit-">Avec Junit :</h3>
+<p>Ici on utilise classiquement Junit pour simuler les interactions utilisateurs. C&rsquo;est le plus facile à maintenir et débugguer, puisque le mieux maîtriser et outillé. Cependant c&rsquo;est aussi évidemment le moins réaliste puisqu&rsquo;aucun navigateur n&rsquo;est démarré pour tester le comportement réel du code compilé.</p>
+<h2 id="les-problèmes-rencontrés-pendant-les-tests">Les problèmes rencontrés pendant les tests</h2>
+<h3 id="problème-1--tester-les-appels-asynchrones-slides-9-à-13-">Problème 1 : tester les appels asynchrones (slides 9 à 13) :</h3>
+<p>Les appels aysnchrones sont la nature même des applications Ajax. C&rsquo;est le A de Ajax ! Avec ces appels, il n&rsquo;y a aucune garantie sur le temps nécessaire pour qu&rsquo;ils réussissent, ni même d&rsquo;ailleurs s&rsquo;ils réussiront un jour (les pauvres :s). Ce sont ces mêmes appels que vous utilisez avec le mécanisme RPC de Gwt :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">myservice<span style="color:#f92672">.</span><span style="color:#a6e22e">call</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> AsyncCallBack<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onSuccess</span><span style="color:#f92672">(</span>QueryResponse response<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        searchButton<span style="color:#f92672">.</span><span style="color:#a6e22e">setEnabled</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>response<span style="color:#f92672">.</span><span style="color:#a6e22e">count</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> 0 <span style="color:#f92672">{</span>
+            resultPanel<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Label<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;no team found&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//ajouter la réponse dans un panel, etc
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onFailure</span><span style="color:#f92672">(</span>Throwable ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//traiter l&#39;échec de l&#39;appel asynchrone
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Test :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">MyService myService <span style="color:#f92672">=</span> mock<span style="color:#f92672">(</span>MyService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+QueryHandler client <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> QueryHandler<span style="color:#f92672">(</span>mySerice<span style="color:#f92672">);</span>
+client<span style="color:#f92672">.</span><span style="color:#a6e22e">performQuery</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;test query&#34;</span><span style="color:#f92672">);</span>
+ArgumentCaptor<span style="color:#f92672">&amp;</span>lt<span style="color:#f92672">;</span>Asyncallback<span style="color:#f92672">&amp;</span>gt<span style="color:#f92672">;</span> captor <span style="color:#f92672">=</span> ArgumentCaptor<span style="color:#f92672">.</span><span style="color:#a6e22e">forClass</span><span style="color:#f92672">(</span>AsynCallback<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+verify<span style="color:#f92672">(</span>myService<span style="color:#f92672">).</span><span style="color:#a6e22e">call</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;test query&#34;</span><span style="color:#f92672">,</span> captor<span style="color:#f92672">.</span><span style="color:#a6e22e">capture</span><span style="color:#f92672">);</span>
+AsyncCallback<span style="color:#f92672">&amp;</span>lt<span style="color:#f92672">;</span>QueryResponse<span style="color:#f92672">&amp;</span>gt<span style="color:#f92672">;</span> callback <span style="color:#f92672">=</span> captor<span style="color:#f92672">.</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">;</span>
+
+<span style="color:#75715e">//Réel appel à onSuccess
+</span><span style="color:#75715e"></span>
+QueryResponse fakeResponse <span style="color:#f92672">=</span> createFakeResponseForTesting<span style="color:#f92672">();</span>
+callback<span style="color:#f92672">.</span><span style="color:#a6e22e">onSuccess</span><span style="color:#f92672">(</span>fakeResponse<span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//Tester les résultats.
+</span></code></pre></div><p>Ce que l&rsquo;on veut tester ici, c&rsquo;est le résultat d&rsquo;un appel à la méthode onSuccess avec le résultat d&rsquo;une réponse de callBack.</p>
+<p>Ce qu&rsquo;il faut bien voir c&rsquo;est que toute la première partie du test ( mocker le service, mocker le callback, récupérer le callback de réponse), tout ça n&rsquo;est fait que pour pouvoir appeler la méthode onSuccess du callBack ! ça fait donc beaucoup de plomberie pour tester une simple méthode !</p>
+<p>L&rsquo;astuce consiste à toujours remplacer le traitement qu&rsquo;on ferait dans la méthode onSuccess par un appel à une autre méthode : doTraiterReponse(response);</p>
+<p>Cette méthode, fera tout le travail de traitement nécessaire. Ainsi il est plus simple de la tester :</p>
+<p>QueryHandler.java :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">myservice<span style="color:#f92672">.</span><span style="color:#a6e22e">call</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> AsyncCallBack<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span>  <span style="color:#a6e22e">onSuccess</span><span style="color:#f92672">(</span>QueryResponse response<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        doTraiterReponse<span style="color:#f92672">(</span>response<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onFailure</span><span style="color:#f92672">(</span>Throwable ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//traiter l&#39;échec de l&#39;appel  asynchrone
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Test :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">QueryHandler client <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> QueryHandler<span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#75715e">// Plus besoin de service !
+</span><span style="color:#75715e"></span>
+QueryResponse fakeResponse <span style="color:#f92672">=</span> createFakeResponseForTesting<span style="color:#f92672">();</span>
+client<span style="color:#f92672">.</span><span style="color:#a6e22e">doTraiterReponse</span><span style="color:#f92672">(</span>fakeresponse<span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//Tester les résultats
+</span></code></pre></div><h3 id="problème-2--opérations-directe-sur-le-dom-slides-14-à-16">Problème 2 : Opérations directe sur le DOM (slides 14 à 16)</h3>
+<p>Gwt permet de manipuler directement le DOM du document HTML :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String selectedLanguage <span style="color:#f92672">=</span> DOM<span style="color:#f92672">.</span><span style="color:#a6e22e">getElementByID</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;languageSelection&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">getPropertyString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;value&#34;</span><span style="color:#f92672">);</span>
+</code></pre></div><p>Ici, la solution est simple :APPRENDRE L&rsquo;API !</p>
+<p>En utilisant uniquement les widgets gwt qui encapsule tout la manipulation du DOM, il est plus facile de tester unitairement ces Widgets.</p>
+<p>Ici on aurait utilisé une ListBox dans une panel.</p>
+<h3 id="problème-3--mixer-java-et-javascript-slides-17-à-19">Problème 3 : mixer Java et Javascript (slides 17 à 19)</h3>
+<p>Gwt propose un mécanisme pour encapsuler du code javascript dans des méthodes Java :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">native</span> <span style="color:#66d9ef">void</span> showPlayer <span style="color:#75715e">/*{
+</span><span style="color:#75715e">    $wnd.showPlayer;
+</span><span style="color:#75715e">}*/</span><span style="color:#f92672">;</span>
+</code></pre></div><p>Ici, le mélange javascript/java ne permet de tester unitairement avec Junit les méthodes natives.</p>
+<p>La solution la plus simple reste d&rsquo;isoler ces méthodes dans des classes dédiées et de les mocker quand elles sont utilisées.</p>
+<p>Pour tester ces méthodes, il faudra faire appels à GwtTestCase qui lui aura la capacité d&rsquo;exécuter du code mixant java (compilée à la volée en javascript) et appels natifs au code javascript.</p>
+<h3 id="problème-4--staticglobal-access-slides-20-à-27">Problème 4 : static/global access (slides 20 à 27)</h3>
+<p>Les accès statics ou aux variables globales sont difficiles à suivre, et donc à débugguer.</p>
+<p>Pour isoler les dépendances de la classe à tester, on mettra en oeuvre l&rsquo;injection de dépendance pour mocker les classes utilisées dans les tests.</p>
+<p>Pour rappel, il existe un framework d&rsquo;injection de dépendances développé par Google pour Gwt : <a href="http://code.google.com/p/google-gin/">Gin</a>.</p>
+<p>Il est basé sur Guice, le framework d&rsquo;injection de Google.</p>
+<h3 id="problème-5--séparation-des-responsabilités-slides-28-à-32">Problème 5 : Séparation des responsabilités (slides 28 à 32)</h3>
+<p>Ici le pattern MVP (Model View Presenter) est mis en avant par rapport au classique MVC.</p>
+<p>Dans MVC, la vue est écouteur du modèle. Le contrôleur modifie le modèle et la vue écoute ces changements. La vue se met à jour en écoutant tout changement du modèle.</p>
+<p>Cette mise à jour entraine forcément qu&rsquo;une partie de la logique du traitement du modèle se retrouve dans la vue, et donc une mauvaise séparation des responsabilité.</p>
+<p>Pour parer à cela, le pattern MVP à été introduit. L&rsquo;article fondateur du pattern MVP est celui de <a href="http://martinfowler.com/eaaDev/ModelViewPresenter.html">M. Fowler</a>.</p>
+<p>Dans MVP, toute la logique est concentrée dans le Presenter. Le Modèle et la Vue informe le Presenter des changements par un système d'évènements. Le Presenter réagit aux évènements et reflète les changements sur le modèle et la vue. Le plus souvent la vue sera d&rsquo;ailleurs une vue passive.</p>
+<p>Le slide 32 est particulièrement intéressant, puisque c&rsquo;est lui qui ma donné le déclic pour comprendre toute la logique de MVP.</p>
+<p>Avec un Presenter isolé de cette façons, il est facile de le tester unitairement (en pseudo code &ldquo;java&rdquo; pour plus de clarté) :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Presenter</span> <span style="color:#f92672">{</span>
+    Vue vue<span style="color:#f92672">;</span>
+    Model model<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Presenter</span><span style="color:#f92672">(</span>Vue vue<span style="color:#f92672">,</span> Model model<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">model</span> <span style="color:#f92672">=</span> model<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">vue</span> <span style="color:#f92672">=</span> vue<span style="color:#f92672">;</span>
+        attachHandler<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">attachHandler</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        vue<span style="color:#f92672">.</span><span style="color:#a6e22e">getButton</span><span style="color:#f92672">.</span><span style="color:#a6e22e">addClickHandler</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> ClickHandler<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">(</span>Event e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                model<span style="color:#f92672">.</span><span style="color:#a6e22e">save</span><span style="color:#f92672">(</span>vue<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">());</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Test :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//With
+</span><span style="color:#75715e"></span>Model mockModel <span style="color:#f92672">=</span> mock<span style="color:#f92672">(</span>Model<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+Vue mockVue <span style="color:#f92672">=</span> mock<span style="color:#f92672">(</span>Vue<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+Presenter presenter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Presenter<span style="color:#f92672">(</span>mockVue<span style="color:#f92672">,</span> mockModel<span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//Given
+</span><span style="color:#75715e"></span>Data testData <span style="color:#f92672">=</span> createFakeData<span style="color:#f92672">();</span>
+vue<span style="color:#f92672">.</span><span style="color:#a6e22e">setData</span><span style="color:#f92672">(</span>testData<span style="color:#f92672">);</span>
+
+<span style="color:#75715e">// Assert
+</span><span style="color:#75715e"></span>verify<span style="color:#f92672">(</span>mockModel<span style="color:#f92672">).</span><span style="color:#a6e22e">save</span><span style="color:#f92672">(</span>testData<span style="color:#f92672">);</span>
+vue<span style="color:#f92672">.</span><span style="color:#a6e22e">getButton</span><span style="color:#f92672">.</span><span style="color:#a6e22e">click</span><span style="color:#f92672">();</span>
+</code></pre></div><h3 id="conclusion">Conclusion</h3>
+<p>Voilà pour les quelques notes sur cette conférence, il y&rsquo;en a encore beaucoup d&rsquo;autres à regarder qui ne porte pas que sur  GWT mais sur les Test et les bonnes pratiques en général.</p>
+<p>Bon visionnage et surtout bon TDD à tous !</p>
+
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=GWT,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    this.page.identifier = '398993694';
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "raphaelbrugierblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:https://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/sw-craftmanship.jpg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">5 laws every developer should know</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">Fix the Git completion with Oh-my-Zsh on Mac</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/placeholder.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/til/2017-07-13-how-to-find-your-ip-with-command-line/">How to find your ip with command line</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-3393491-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="https://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="https://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="https://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>
