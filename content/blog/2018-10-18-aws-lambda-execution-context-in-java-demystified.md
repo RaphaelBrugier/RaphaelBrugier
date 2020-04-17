@@ -15,6 +15,8 @@ In the [AWS Lambda documentation](https://docs.aws.amazon.com/lambda/latest/dg/r
 
 The _Execution Context_ is the invisible stack that AWS creates for your Lambda in order to execute the function. AWS maintains the _Context_ ready to accept new invocations of the function for an unknown amount of time[^1] and then deletes it to free up some resource. Between each invocation, AWS freezes and unfreezes the Context.
 
+<!--more-->
+
 For a Lambda written in Java, this is how I like to represent the different layers of the _Execution Context_:
 
 {{< figure src="/img/2018/10/lambda-java-execution-context.png" width="100%">}}

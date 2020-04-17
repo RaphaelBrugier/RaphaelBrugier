@@ -129,9 +129,7 @@ docker-compose -f src/main/docker/app.yml up -d --no-deps yourapp-app
 
 Without restarting the Cassandra cluster, JHipster has created all the screens, the java code and has executed the migration script to create the new Cassandra table:
 
-<figure>
-    <img src="/img/jhipster-default-books.png" width="100%" />
-</figure>
+{{< figure src="/img/jhipster-default-books.png" width="100%">}}
 
 
 # Conclusion
