@@ -17,10 +17,7 @@
       <pubDate>Thu, 18 Oct 2018 20:08:09 +0000</pubDate>
       
       <guid>https://www.raphael-brugier.com/blog/aws-lambda-execution-context-in-java-demystified/</guid>
-      <description>&lt;p&gt;In this article, I will demystify the &lt;em&gt;Execution Context&lt;/em&gt; of a Lambda invocation and how you can take advantage of it. More specifically for Lambdas written in Java, but this can apply to any language.&lt;/p&gt;
-&lt;h1 id=&#34;lambda-execution-context&#34;&gt;Lambda Execution Context&lt;/h1&gt;
-&lt;p&gt;In the &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html&#34;&gt;AWS Lambda documentation&lt;/a&gt;, AWS describes an Execution Context as a “temporary runtime environment that initializes any external dependencies of your Lambda”.&lt;/p&gt;
-&lt;p&gt;The &lt;em&gt;Execution Context&lt;/em&gt; is the invisible stack that AWS creates for your Lambda in order to execute the function. AWS maintains the &lt;em&gt;Context&lt;/em&gt; ready to accept new invocations of the function for an unknown amount of time&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; and then deletes it to free up some resource. Between each invocation, AWS freezes and unfreezes the Context.&lt;/p&gt;</description>
+      <description>&lt;p&gt;In this article, I will demystify the &lt;em&gt;Execution Context&lt;/em&gt; of a Lambda invocation and how you can take advantage of it. More specifically for Lambdas written in Java, but this can apply to any language.&lt;/p&gt;</description>
     </item>
     
     <item>
