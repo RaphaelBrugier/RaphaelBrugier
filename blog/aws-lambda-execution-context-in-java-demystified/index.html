@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AWS Lambda Execution context in Java demystified</title>
+
+  <meta name="author" content="" />
+  <meta name="keywords" content="">
+
+  
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/darkula.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/go.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/scala.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/dockerfile.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  
+  <link href="https://www.raphael-brugier.com/css/animate.css" rel="stylesheet">
+
+  
+  
+    <link href="https://www.raphael-brugier.com/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+  
+
+
+  
+  <link href="https://www.raphael-brugier.com/css/custom.css" rel="stylesheet">
+
+  
+    
+
+  
+  <link rel="shortcut icon" href="https://www.raphael-brugier.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://www.raphael-brugier.com/img/apple-touch-icon.png" />
+  
+
+  <link href="https://www.raphael-brugier.com/css/owl.carousel.css" rel="stylesheet">
+  <link href="https://www.raphael-brugier.com/css/owl.theme.css" rel="stylesheet">
+
+  <link rel="alternate" href="https://www.raphael-brugier.com/index.xml" type="application/rss+xml" title="Raphael Brugier">
+
+  
+  <meta property="og:title" content="AWS Lambda Execution context in Java demystified" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.raphael-brugier.com/blog/aws-lambda-execution-context-in-java-demystified//" />
+  <meta property="og:image" content="" />
+
+</head>
+
+
+  <body>
+
+    <div id="all">
+
+        <header>
+
+          <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="https://www.raphael-brugier.com/">
+                  <h3>Raphael Brugier</h3>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class="dropdown">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+
+                    
+                    <li class="dropdown">
+                      <a href="https://twitter.com/rbrugier">
+                        <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://www.linkedin.com/in/raphaelbrugier">
+                        <i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                    <li class="dropdown">
+                      <a href="https://github.com/RaphaelBrugier">
+                        <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+
+                </span>
+                    </div>
+                </form>
+
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+
+        </header>
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>AWS Lambda Execution context in Java demystified</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        <p class="text-muted text-uppercase mb-small text-right">October 18, 2018</p>
+
+                        <div id="post-content">
+                          <p>In this article, I will demystify the <em>Execution Context</em> of a Lambda invocation and how you can take advantage of it. More specifically for Lambdas written in Java, but this can apply to any language.</p>
+<h1 id="lambda-execution-context">Lambda Execution Context</h1>
+<p>In the <a href="https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html">AWS Lambda documentation</a>, AWS describes an Execution Context as a “temporary runtime environment that initializes any external dependencies of your Lambda”.</p>
+<p>The <em>Execution Context</em> is the invisible stack that AWS creates for your Lambda in order to execute the function. AWS maintains the <em>Context</em> ready to accept new invocations of the function for an unknown amount of time<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> and then deletes it to free up some resource. Between each invocation, AWS freezes and unfreezes the Context.</p>
+<p>For a Lambda written in Java, this is how I like to represent the different layers of the <em>Execution Context</em>:</p>
+<figure>
+    <img src="/img/2018/10/lambda-java-execution-context.png" width="100%"/> 
+</figure>
+
+<ul>
+<li>An EC2 instance runs the entire stack. It’s not possible to physically access the instance, and AWS does not share information about this layer</li>
+<li>Container: a container is started to run each Lambda in isolation. Multiple containers run in the same instance</li>
+<li>JVM: For Lambdas written in Java, a Java Virtual Machine is started. AWS uses OpenJDK 8</li>
+<li>An instance of the JavaHandler class where the function is defined</li>
+<li>The function itself</li>
+</ul>
+<p>Between each invocation of the <code>handleRequest</code> method, the same <em>Execution Context</em> is reused. This, at least until the Lambda function does not receive requests anymore and AWS destroys the <em>Context</em> to reclaim the resources.</p>
+<h1 id="why-it-matters">Why it matters</h1>
+<p>As you can imagine, starting-up the <em>Execution Context</em> can take some time but is inevitable before running the function for the first time.
+In the Serverless terminology, this is known as the <em>&ldquo;cold start&rdquo;</em>. The very first time your Lambda function is invoked, you have to wait for the <em>Execution Context</em> to fully start.
+AWS is not billing for this amount of time, but the <em>cold start</em> for the first invocation is an important tradeoff to take into account when using Serverless technologies.</p>
+<figure>
+    <img src="/img/2018/10/lambda-java-cold-start-invocations.png" width="100%"/> 
+</figure>
+
+<p>In my test with the code presented in this article, the first invocation took 1.7 seconds to start the <em>Execution Context</em> and the following invocations between 10ms to 30ms.</p>
+<figure>
+    <img src="/img/2018/10/lambda-cold-start-xtray-metrics.png" width="100%"/> 
+</figure>
+
+<p>However, the <em>cold start</em> has a very valuable property: because the <em>Execution Context</em> is reused between invocations, we can keep a reference to the expensive objects created and access them for the future invocations.</p>
+<h1 id="static-singleton-and-the-context">Static, Singleton and the Context</h1>
+<p>Indeed, in the <a href="https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html">Lambda best practices documentation</a>, one of the best practice actually recommends taking advantage of this <em>Execution Context</em>:</p>
+<blockquote>
+<p>Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.</p>
+</blockquote>
+<p>I always found the <em>&ldquo;static initialization/constructor, global/static variables and singletons&rdquo;</em> part to be misleading, because static initialization and global variables make it very difficult to write testable code. Instead, I think it should be emphasized that the Class where the function method is running is itself already a Singleton.</p>
+<h1 id="initialize-once-reuse-every-time">Initialize once, reuse every time</h1>
+<p>For most non-trivial applications, there will always be some <em>&ldquo;expensive&rdquo;</em> initializations to perform before a function can run and execute some business logic.
+Some common tasks are: opening and maintaining a connection to a Database, maintaining an authorization token with another API, creating the AWS clients to access S3/SNS/SQS/&hellip;, etc.</p>
+<p>For all these initializations, the pattern we have followed in our Lambdas is to execute them in the constructor of the LambdaHandler class and store the objects as instance fields.
+By doing this, we effectively treat the LambdaHandler instance as the instance maintaining our application context that can be accessed by all the further function invocations.</p>
+<h1 id="demo">Demo</h1>
+<p>To demonstrate that a field of a Handler class never changes once it is instantiated in the Context, let’s run the following Lambda code. The Lambda generates a random value at various stages in the Java code: a static block (1), the constructor (2) and the invocation method (3).
+This Lambda is exposed via AWS API Gateway and gets executed by the following <a href="https://jz2ckwdte0.execute-api.us-east-1.amazonaws.com/Prod/execute/">endpoint</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LambdaHandler</span> <span style="color:#66d9ef">implements</span> RequestHandler<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">double</span> STATIC_RANDOM<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span>
+        STATIC_RANDOM <span style="color:#f92672">=</span> Math<span style="color:#f92672">.</span><span style="color:#a6e22e">random</span><span style="color:#f92672">();</span> <span style="color:#75715e">// (1) Value generated in the static block
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">double</span> constructorRandom<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">LambdaHandler</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">constructorRandom</span> <span style="color:#f92672">=</span> Math<span style="color:#f92672">.</span><span style="color:#a6e22e">random</span><span style="color:#f92672">();</span> <span style="color:#75715e">// (2) Value generated in the LambdaHandler constructor
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">handleRequest</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> Object input<span style="color:#f92672">,</span> <span style="color:#66d9ef">final</span> Context context<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">double</span> invocationRandom <span style="color:#f92672">=</span> Math<span style="color:#f92672">.</span><span style="color:#a6e22e">random</span><span style="color:#f92672">();</span> <span style="color:#75715e">// (3) Value generated in the LambdaHandler method for each invocation
+</span><span style="color:#75715e"></span>
+        String output <span style="color:#f92672">=</span> String<span style="color:#f92672">.</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span>
+                <span style="color:#e6db74">&#34;{ \&#34;1 - static value\&#34;: \&#34;%f\&#34;, \&#34; 2 - constructor value\&#34;: \&#34;%f\&#34;, \&#34;3 - invocation value\&#34;: \&#34;%f\&#34;}&#34;</span><span style="color:#f92672">,</span>
+                STATIC_RANDOM<span style="color:#f92672">,</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">constructorRandom</span><span style="color:#f92672">,</span> invocationRandom<span style="color:#f92672">);</span>
+
+        Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> headers <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+        headers<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Type&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;application/json&#34;</span><span style="color:#f92672">);</span>
+        headers<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;X-Custom-Header&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;application/json&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> GatewayResponse<span style="color:#f92672">(</span>output<span style="color:#f92672">,</span> headers<span style="color:#f92672">,</span> 200<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><ol>
+<li>The static block is executed when the <em>Execution Context</em> loads the LambdaHandler class in the JVM for the first time. The random value is stored in a static field.</li>
+<li>The constructor is executed when the <em>Execution Context</em> instantiates a LambdaHandler instance for the first time. The random value is stored in a field of the instance.</li>
+<li>The handleRequest method is executed every time the Lambda function is invoked and the random value stored in a local variable.</li>
+</ol>
+<p>Accessing the endpoint multiple times returns the following message:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{ <span style="color:#f92672">&#34;1 - static value&#34;</span>: <span style="color:#e6db74">&#34;0.936418&#34;</span>, <span style="color:#f92672">&#34; 2 - constructor value&#34;</span>: <span style="color:#e6db74">&#34;0.400978&#34;</span>, <span style="color:#f92672">&#34;3 - invocation value&#34;</span>: <span style="color:#e6db74">&#34;0.362746&#34;</span>}
+{ <span style="color:#f92672">&#34;1 - static value&#34;</span>: <span style="color:#e6db74">&#34;0.936418&#34;</span>, <span style="color:#f92672">&#34; 2 - constructor value&#34;</span>: <span style="color:#e6db74">&#34;0.400978&#34;</span>, <span style="color:#f92672">&#34;3 - invocation value&#34;</span>: <span style="color:#e6db74">&#34;0.969463&#34;</span>}
+{ <span style="color:#f92672">&#34;1 - static value&#34;</span>: <span style="color:#e6db74">&#34;0.936418&#34;</span>, <span style="color:#f92672">&#34; 2 - constructor value&#34;</span>: <span style="color:#e6db74">&#34;0.400978&#34;</span>, <span style="color:#f92672">&#34;3 - invocation value&#34;</span>: <span style="color:#e6db74">&#34;0.0.723602&#34;</span>}
+</code></pre></div><p>As expected, only the <em>invocation value</em> changes between each invocation. The values generated by both the static block and the constructor remain the same.</p>
+<p>If you access the <a href="https://jz2ckwdte0.execute-api.us-east-1.amazonaws.com/Prod/execute/">endpoint</a> from your browser multiple times, you will notice the same behavior where only the <em>invocation value</em> changes between your requests. The static and constructor values remain the same. The values will probably be different than the example above, that is because AWS has destroyed the <em>Execution Context</em> and a new one had to get created during your first request.</p>
+<blockquote>
+<p>Note: To deploy this Lambda to your own account, clone the <a href="https://github.com/raphaelbrugier/aws-lambda-java-exec-context">project repository</a> and follow the instructions in the deploy section of the README file.</p>
+</blockquote>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this article, we have seen the different layers of the Lambda <em>Execution Context</em> written in Java and how each gets executed during the cold start. Now that we know exactly the different layers, we can take advantage of it to save time during the future invocations of the Lambda.</p>
+<p>In the next article, we will see how to apply a manual Dependency Injection pattern to best use the <em>Execution Context</em> while making it more testable.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Various benchmarks on internet suggest that AWS maintains the <em>Execution Context</em> of a Java Lambda between 20 and 45 minutes after the last invocations. But, AWS does not provide official numbers. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+                        </div>
+                        <div>
+                          <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?via=rbrugier&hashtags=aws,lambda,java,"
+                             data-size="large">
+                          </a>
+                        </div>
+                        
+                        
+                        <div id="comments">
+                            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "raphaelbrugierblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:https://www.raphael-brugier.com/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        <footer id="footer">
+    <div class="container">
+
+        
+
+        <div class="col-md-4 col-sm-6">
+
+            <h4>Recent posts</h4>
+
+            <div class="blog-entries">
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/aws-lambda-execution-context-in-java-demystified/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/2018/10/serverless.png" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/aws-lambda-execution-context-in-java-demystified/">AWS Lambda Execution context in Java demystified</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/sw-craftmanship.jpg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/5-laws-every-developer-should-know/">5 laws every developer should know</a></h5>
+                    </div>
+                </div>
+                
+                <div class="item same-height-row clearfix">
+                    <div class="image same-height-always">
+                        <a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">
+                          
+                            <img src="https://www.raphael-brugier.com/img/banners/git-logo.svg" class="img-responsive" alt="">
+                          
+                        </a>
+                    </div>
+                    <div class="name same-height-always">
+                        <h5><a href="https://www.raphael-brugier.com/blog/fix-git-completion-zsh-mac-homebrew/">Fix the Git completion with Oh-my-Zsh on Mac</a></h5>
+                    </div>
+                </div>
+                
+            </div>
+
+            <hr class="hidden-md hidden-lg">
+
+        </div>
+        
+
+        
+
+    </div>
+    
+</footer>
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-12">
+            
+            <p class="pull-right">
+              Template by <a href="http://bootstrapious.com/free-templates">Bootstrapious</a>.
+              
+
+              Ported to Hugo by <a href="https://github.com/devcows/hugo-universal-theme">DevCows</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-3393491-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://www.raphael-brugier.com/js/hpneo.gmaps.js"></script>
+<script src="https://www.raphael-brugier.com/js/gmaps.init.js"></script>
+<script src="https://www.raphael-brugier.com/js/front.js"></script>
+
+
+<script src="https://www.raphael-brugier.com/js/owl.carousel.min.js"></script>
+
+
+  </body>
+</html>
